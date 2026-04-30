@@ -71,7 +71,7 @@
 
 .serif{font-family:‘Cormorant Garamond’,serif;font-weight:500}
 .gold{color:var(–gold)} .gold-br{color:var(–gold-br)}
-.cream{color:var(–cream)} .dim{color:var(–cream-2)} .muted{color:var(–ink-dim)}
+.cream{color:var(–cream)} .dim{color:var(–white);opacity:0.85} .muted{color:var(–cream-2)}
 .center{text-align:center}
 h1.title{font-family:‘Cormorant Garamond’,serif;font-size:34px;color:var(–white);text-align:center;margin:24px 0 8px;letter-spacing:.06em;line-height:1.1}
 .subtitle{font-family:‘Cormorant Garamond’,serif;font-style:italic;font-size:18px;color:var(–gold);text-align:center;margin-bottom:22px}
@@ -81,8 +81,8 @@ h1.title{font-family:‘Cormorant Garamond’,serif;font-size:34px;color:var(–
 .card::before{top:-1px;left:-1px;border-right:none;border-bottom:none}
 .card::after{bottom:-1px;right:-1px;border-left:none;border-top:none}
 
-.pin-input{width:100%;background:rgba(255,250,235,0.6);border:1px solid var(–gold-ln);color:var(–gold-br);padding:16px;font-family:‘Cormorant Garamond’,serif;font-size:32px;letter-spacing:.5em;text-align:center;font-weight:600;border-radius:0;margin:14px 0 4px}
-.pin-input:focus{outline:none;border-color:var(–gold);background:rgba(200,169,110,0.04)}
+.pin-input{width:100%;background:#FAF5E8;border:2px solid var(–gold-dk);color:var(–white);padding:16px;font-family:‘Cormorant Garamond’,serif;font-size:32px;letter-spacing:.5em;text-align:center;font-weight:700;border-radius:0;margin:14px 0 4px}
+.pin-input:focus{outline:none;border-color:var(–gold-br);background:#FFFFFF}
 .pin-error{color:var(–red);font-size:12px;text-align:center;margin-top:8px;min-height:18px;letter-spacing:.05em}
 
 .rules{background:rgba(200,169,110,0.04);border:1px solid var(–gold-ln);padding:20px 24px;margin:22px 0;text-align:left}
@@ -95,13 +95,13 @@ label.fld .lbl{display:block;font-size:10px;color:var(–gold);letter-spacing:.3
 input[type=text],input[type=tel],textarea{width:100%;background:rgba(255,250,235,0.6);border:1px solid var(–gold-ln);color:var(–cream);padding:14px 16px;font-family:‘Inter’,sans-serif;font-size:15px;line-height:1.55;border-radius:0;transition:border-color .2s,background .2s;resize:vertical}
 textarea{min-height:120px;font-size:14.5px}
 input:focus,textarea:focus{outline:none;border-color:var(–gold);background:rgba(200,169,110,0.04)}
-textarea::placeholder,input::placeholder{color:var(–ink-dim);font-style:italic}
+textarea::placeholder,input::placeholder{color:var(–cream-2);font-style:italic;opacity:0.7}
 
-.btn{display:inline-block;background:transparent;border:1px solid var(–gold);color:var(–gold-br);padding:14px 32px;font-family:‘Cormorant Garamond’,serif;font-weight:600;font-size:14px;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;transition:all .25s;margin-top:10px}
-.btn:hover{background:var(–gold);color:#FAF5E8}
+.btn{display:inline-block;background:transparent;border:1.5px solid var(–gold-dk);color:var(–gold-dk);padding:14px 32px;font-family:‘Cormorant Garamond’,serif;font-weight:700;font-size:14px;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;transition:all .25s;margin-top:10px}
+.btn:hover{background:var(–gold-dk);color:#FAF5E8}
 .btn:disabled{opacity:.4;cursor:not-allowed}
-.btn.primary{background:var(–gold-dk);color:#FAF5E8;border-color:var(–gold-dk)}
-.btn.primary:hover{background:var(–white);border-color:var(–white);color:#FAF5E8}
+.btn.primary{background:var(–white);color:#F5EFE0;border-color:var(–white);border-width:1.5px}
+.btn.primary:hover{background:#000;border-color:#000;color:#F5EFE0}
 .btn.ghost{border-color:var(–gold-dk);color:var(–cream-2)}
 .btn.danger{border-color:var(–red);color:var(–red);background:transparent}
 .btn.danger:hover{background:var(–red);color:#FAF5E8}
@@ -185,6 +185,15 @@ textarea::placeholder,input::placeholder{color:var(–ink-dim);font-style:italic
 .test-banner .desc{color:var(–cream);font-size:13px;line-height:1.55}
 .test-banner .desc b{color:var(–gold-br)}
 .test-tag{display:inline-block;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(–gold-br);background:rgba(200,169,110,0.15);padding:2px 6px;margin-left:6px;border:1px solid var(–gold-dk);font-weight:600}
+
+.test-card{background:var(–panel);border:1px solid var(–gold-ln);padding:24px 22px;margin-bottom:18px;position:relative;transition:border-color .2s}
+.test-card:hover{border-color:var(–gold)}
+.test-card .tc-tag{font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(–gold-br);font-weight:700;margin-bottom:10px}
+.test-card .tc-title{font-family:‘Cormorant Garamond’,serif;font-size:30px;color:var(–white);font-weight:600;line-height:1.05;letter-spacing:.02em}
+.test-card .tc-sub{font-family:‘Cormorant Garamond’,serif;font-style:italic;font-size:16px;color:var(–gold);margin-top:4px}
+.test-card .tc-desc{font-size:13px;color:var(–cream-2);line-height:1.5;margin-top:12px}
+.test-card .tc-stats{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(–gold-dk);margin-top:14px;padding-top:10px;border-top:1px solid var(–gold-ln)}
+.test-card .btn{margin-top:14px}
 
 @media (max-width:600px){
 body{padding:18px 10px 60px}
@@ -309,6 +318,35 @@ h1.title{font-size:26px}
     </div>
   </div>
 
+  <div id="stage-select" class="hidden">
+    <div class="top-bar">
+      <span>сотрудник: <span class="who" id="select-name">&mdash;</span></span>
+      <span class="logout" id="logout-select">выйти</span>
+    </div>
+    <h1 class="title">ВЫБЕРИ АТТЕСТАЦИЮ</h1>
+    <div class="subtitle">какую партию открываем</div>
+
+```
+<div class="test-card" data-kind="main">
+  <div class="tc-tag">основная</div>
+  <div class="tc-title">Аттестация бара</div>
+  <div class="tc-desc">36 позиций · 108 вопросов · от Dom Perignon до Да Хун Пао</div>
+  <div class="tc-stats" id="tc-stats-main">&mdash;</div>
+  <button class="btn primary full" data-pick="main">открыть &#9656;</button>
+</div>
+
+<div class="test-card" data-kind="chess">
+  <div class="tc-tag">авторская партия</div>
+  <div class="tc-title">Шах и Мат</div>
+  <div class="tc-sub">Игра чёрных королев</div>
+  <div class="tc-desc">3 позиции · 24 вопроса · Чёрная Королева, Гамбит, Шах и Мат</div>
+  <div class="tc-stats" id="tc-stats-chess">&mdash;</div>
+  <button class="btn primary full" data-pick="chess">открыть &#9656;</button>
+</div>
+```
+
+  </div>
+
   <div id="stage-home" class="hidden">
     <div class="top-bar">
       <span>сотрудник: <span class="who" id="home-name">&mdash;</span></span>
@@ -322,10 +360,10 @@ h1.title{font-size:26px}
         Дедлайн в субботу не блокирует. Все попытки в этом режиме помечены <span class="test-tag">ТЕСТ</span> в админке.
       </div>
     </div>
-    <h1 class="title">ПАРТИЯ ПОЗИЦИЙ</h1>
-    <div class="subtitle">Аттестация по 36 ключевым позициям бара</div>
+    <h1 class="title" id="home-title">ПАРТИЯ ПОЗИЦИЙ</h1>
+    <div class="subtitle" id="home-subtitle">Аттестация по 36 ключевым позициям бара</div>
     <div class="card">
-      <p class="dim" style="line-height:1.7;margin-bottom:14px">
+      <p class="dim" id="home-desc" style="line-height:1.7;margin-bottom:14px">
         Аттестация состоит из <span class="cream">108 вопросов</span> &mdash; по 3 случайных вопроса на каждую из 36 позиций.
       </p>
       <div class="rules">
@@ -352,6 +390,7 @@ h1.title{font-size:26px}
         </div>
       </div>
       <button class="btn primary full" id="start-btn" style="margin-top:24px">открыть партию &#9656;</button>
+      <button class="btn ghost full" id="back-to-select-btn" style="margin-top:10px">&#8592; к выбору теста</button>
     </div>
   </div>
 
@@ -1618,6 +1657,123 @@ const BANKS = {
         min:1, hint:"Когда подавать.",
         answer:"Как финальный коктейль вечера, особенно после яркого, фруктового коктейля. Деликатный финал, который запомнится." }
     ]
+  },
+
+  // ============================================================
+  // ШАХ И МАТ · Игра чёрных королев · 3 позиции по 8 вопросов
+  // ============================================================
+  chess_queen: {
+    name: "Чёрная Королева",
+    bank: [
+      { q:"Что такое Чёрная Королева - категория, объём и цена?",
+        groups:[["коктейл"],["120"],["1800","1 800","тысяч"]],
+        min:2, hint:"Категория + объём + цена.",
+        answer:"Авторский коктейль партии Игра чёрных королев, 120 мл, 1800 рублей." },
+      { q:"Какой главный спирт в Чёрной Королеве и какие три ключевых ароматических компонента?",
+        groups:[["водк"],["черри","cherry","вишн"],["херес","sherry","pedro","ximenez","педро","хименес"],["шокол","mozart","моцарт"]],
+        min:3, hint:"База + три ноты вкуса.",
+        answer:"База - водка. Три ключевых компонента: Cherry Brandy, херес Pedro Ximenez Barbadillo, ликёр Mozart Chocolate Dark." },
+      { q:"Опиши вкусовой профиль Чёрной Королевы. Главное - НЕ называть его сладким.",
+        groups:[["плотн","тёмн","темн"],["шокол","вишн"],["херес","дымок","sherry"],["не сладк","серьёзн","серьезн"]],
+        min:3, hint:"Цвет + ноты + характер.",
+        answer:"Тёмный, плотный, шоколадно-вишнёвый, с дымком хереса. Серьёзный, не сладкий - плотный." },
+      { q:"Кому подходит Чёрная Королева и кому НЕ предлагать?",
+        groups:[["мужчин","35"],["виски","негрон","амарон"],["мяс","фуа","тёмн","темн"],["не предлаг","полегч","десерт","сливочн","девушк"]],
+        min:3, hint:"Кому да + кому нет.",
+        answer:"Подходит: мужчинам 35+, тем кто пьёт виски, негрони, амароне. К тёмному мясу и фуа-гра. Первый коктейль вечера. НЕ предлагать: тем кто просит полегче, на десерт, девушкам которые любят сливочные напитки." },
+      { q:"Гость говорит: Сладкий? Как ответить?",
+        groups:[["не сладк"],["плотн"],["лимон","херес","сух","балансир"]],
+        min:2, hint:"Ключевое слово + чем балансируется.",
+        answer:"Не сладкий. Плотный. Сахар балансируется лимоном и сухим хересом." },
+      { q:"Гость говорит: Не пью водку. Что ответить?",
+        groups:[["каркас","нейтральн","основ","фон"],["не слышно","не главн","не чувств"],["херес","шокол","ведут","главн"]],
+        min:2, hint:"Роль водки + что ведёт вкус.",
+        answer:"Водка тут как нейтральный каркас, на вкусе её не слышно. Вкус ведут херес и шоколад." },
+      { q:"Как подаётся Чёрная Королева - бокал и декор?",
+        groups:[["купе","nick","нора"],["охлажд"],["шокол","стружк","70"],["вишн","шпажк"]],
+        min:3, hint:"Бокал + температура + два элемента декора.",
+        answer:"Бокал купе или Nick & Nora 180 мл, охлаждённый. Декор - стружка тёмного шоколада 70% и вишня на шпажке." },
+      { q:"Назови минимум три запретные формулировки про Чёрную Королеву.",
+        groups:[["сладк"],["дамск","женск"],["наливк","профан"],["самый дешёв","самый дешев","дешёв","дешев"]],
+        min:3, hint:"Что нельзя говорить - 4 варианта.",
+        answer:"Нельзя: называть сладким (он плотный); называть дамским (мужской характер); сравнивать с вишнёвой наливкой (профанация); называть самым дешёвым (все три по одной цене)." }
+    ]
+  },
+
+  chess_gambit: {
+    name: "Гамбит",
+    bank: [
+      { q:"Что такое Гамбит - категория, объём и цена?",
+        groups:[["коктейл"],["120"],["1800","1 800","тысяч"]],
+        min:2, hint:"Категория + объём + цена.",
+        answer:"Авторский коктейль партии Игра чёрных королев, 120 мл, 1800 рублей." },
+      { q:"Какой главный спирт в Гамбите и какие четыре других ингредиента?",
+        groups:[["джин","gin","house"],["nonino","нонино","аперитив"],["роз"],["онегин","яблок"],["белок","яичн"]],
+        min:4, hint:"База + четыре компонента.",
+        answer:"База - джин House. Плюс: Nonino Aperitivo, сироп розы, настойка Онегин Gourmet Яблоко, яичный белок." },
+      { q:"Опиши вкусовой профиль Гамбита. Что особенно отличает его от других коктейлей партии?",
+        groups:[["цветочн"],["яблочн","яблок"],["лёгк","легк"],["пенн","пена","шапк"],["шипуч","фин","финал","послевкус"]],
+        min:3, hint:"Вкус + текстура + финал.",
+        answer:"Цветочно-яблочный, лёгкий, с плотной пенной шапкой и шипучестью в финале." },
+      { q:"Кому подходит Гамбит и кому НЕ предлагать?",
+        groups:[["девушк","смешан","компани"],["сауэр","эспрессо","мартин"],["полегч","фотограф","фото"],["не предлаг","мужчин","крепк","деловой","делов"]],
+        min:3, hint:"Кому да + кому нет.",
+        answer:"Подходит: девушкам и смешанным компаниям 25-35, тем кто пьёт сауэры и эспрессо мартини, кто просит полегче, кто фотографирует напитки. НЕ предлагать: мужчинам которые попросили крепкое и тёмное, деловому ужину без шоу." },
+      { q:"Гость говорит: Яичный белок? Как ответить?",
+        groups:[["плотн","пенк","пен"],["сауэр"],["вкус","нет","текстур"]],
+        min:2, hint:"Зачем нужен + что с вкусом.",
+        answer:"Он даёт плотную пенку - как в сауэрах. На вкусе его нет, только текстура." },
+      { q:"Гость говорит: Не люблю сладкое. Что ответить про Гамбит?",
+        groups:[["не сладк"],["цветочн","горьк","nonino","нонино"],["сахар","балансир","уравновеш"]],
+        min:2, hint:"Профиль + что балансирует.",
+        answer:"Гамбит не сладкий - у него цветочно-горький профиль от Nonino. Сахар уравновешен." },
+      { q:"Как подаётся Гамбит - бокал и декор?",
+        groups:[["купе","180","200"],["охлажд"],["стрелк","биттер"],["лепест","роз"]],
+        min:3, hint:"Бокал + два элемента декора.",
+        answer:"Бокал купе 180-200 мл, охлаждённый. Декор - стрелка из биттера на пене (символ хода коня) плюс лепесток розы." },
+      { q:"Назови минимум три запретные формулировки про Гамбит.",
+        groups:[["слаб"],["дамск","женск"],["простой","прост"],["белок","начин","смутит"],["дешёв","дешев"]],
+        min:3, hint:"Что нельзя говорить - 5 вариантов.",
+        answer:"Нельзя: называть слабым (он лёгкий по ощущению, не слабый); называть дамским коктейлем; называть простым (там пять сбалансированных ингредиентов); начинать с яичного белка (гость смутится); говорить дешевле других (все по одной цене)." }
+    ]
+  },
+
+  chess_mate: {
+    name: "Шах и Мат",
+    bank: [
+      { q:"Что такое Шах и Мат - категория, объём и цена?",
+        groups:[["коктейл"],["120"],["30","пенк","пен"],["1800","1 800","тысяч"]],
+        min:3, hint:"Категория + объём напитка + объём пенки + цена.",
+        answer:"Авторский коктейль партии Игра чёрных королев, 120 мл напитка плюс 30 мл пенной шапки, 1800 рублей." },
+      { q:"Какой главный спирт в Шах и Мат и какие пять других компонентов?",
+        groups:[["водк","cavalli","кавалли","черник"],["mozart","моцарт","шокол","кокос","white"],["bols","болс","йогурт"],["лаванд"],["сливк"],["пенк","сифон"]],
+        min:5, hint:"База + 5 компонентов.",
+        answer:"База - водка Roberto Cavalli Черника. Плюс: Mozart White Chocolate Coconut, Bols Yogurt, сироп лаванды, сливки 11%, кокосово-белошоколадная пенка из сифона." },
+      { q:"Опиши вкусовой профиль Шах и Мат и его роль в партии.",
+        groups:[["кремов"],["кокос","шокол"],["лаванд"],["десерт","финал"]],
+        min:3, hint:"Текстура + ноты + роль.",
+        answer:"Кремовый, кокосово-шоколадный, лавандовый, десертный. Финал вечера." },
+      { q:"Кому подходит Шах и Мат и кому НЕ предлагать?",
+        groups:[["девушк","десерт","финал"],["сливочн","свидан","день рожд","торт"],["не предлаг","старт","начал","сух","плотн"]],
+        min:3, hint:"Кому да + кому нет.",
+        answer:"Подходит: девушкам, на десерт, в финал вечера, тем кто пьёт сливочные напитки, парам на свидании, вместо торта на день рождения. НЕ предлагать: на старте вечера, гостям которые просят сухое и плотное." },
+      { q:"Гость говорит: Сладкое не люблю. Что ответить про Шах и Мат?",
+        groups:[["не приторн","не сладк"],["лаванд","черник"],["свеж","балансе","балансир"]],
+        min:2, hint:"Что не приторное + что даёт свежесть.",
+        answer:"Шах и Мат не приторный - лаванда и черника дают свежесть, сладость в балансе." },
+      { q:"Гость говорит: Уже наелся. Как продать Шах и Мат?",
+        groups:[["десерт","чизкейк","мороженое","торт"],["120","не тяжёл","не тяжел","лёгк","легк"]],
+        min:2, hint:"Замена десерта + про объём.",
+        answer:"Это и есть десерт - заменит чизкейк или мороженое. 120 мл, не тяжёлый." },
+      { q:"Как подаётся Шах и Мат - бокал, что сверху и почему важна срочность?",
+        groups:[["купе","old fashioned","олд фешн","220","250"],["шахматн","фигурк","шокол"],["лаванд","цветок","микро"],["пять минут","5 мин","живёт","живет","срочн"]],
+        min:3, hint:"Бокал + декор + срочность.",
+        answer:"Бокал купе 220 мл или Old Fashioned 250 мл с одним крупным кубом. Сверху - плотная пенка из сифона 2-2.5 см, на пенке - шахматная фигурка из тёмного шоколада и микро-цветок лаванды. Подача срочная - пенка живёт пять минут." },
+      { q:"Назови минимум три запретные формулировки про Шах и Мат.",
+        groups:[["сладк","варен"],["слаб"],["молочн","профан"],["баллончик","аэрозол"],["начал","старт"]],
+        min:3, hint:"Что нельзя говорить - 5 вариантов.",
+        answer:"Нельзя: называть сладким как варенье (он не приторный); называть слабым (там 60 мл крепкого алкоголя); называть просто молочным коктейлем (профанация); говорить пена из баллончика (это сифонная пенка, не аэрозоль); предлагать в начале вечера (только финал)." }
+    ]
   }
 
 };
@@ -1636,6 +1792,16 @@ const POSITIONS_ORDER = [
   "chablis", "sancerre", "barolo", "gavi", "amarone",
   "cocktail_6"
 ];
+
+// Тест Шах и Мат - 3 позиции по 8 вопросов = 24 вопроса
+const POSITIONS_ORDER_CHESS = [
+  "chess_queen", "chess_gambit", "chess_mate"
+];
+
+const TEST_KINDS = {
+  main:  { name: "Основная аттестация бара",  positions: POSITIONS_ORDER,       qPerPosition: 3, label: "Основная" },
+  chess: { name: "Шах и Мат · Игра чёрных королев", positions: POSITIONS_ORDER_CHESS, qPerPosition: 8, label: "Шах и Мат" }
+};
 </script>
 
 <script id="logic-script">
@@ -2066,6 +2232,7 @@ function saveProgressAsync(){
       sessionId: state.sessionId, startedAt: state.startedAt,
       currentIdx: state.currentIdx, answers: state.answers, reviewResults: state.reviewResults,
       questions: state.questions, pauses: state.pauses, resumeCount: state.resumeCount,
+      testKind: state.testKind || "main",
       lastUpdate: Date.now()
     };
     await STORAGE.saveProgress(data);
@@ -2079,6 +2246,7 @@ async function saveProgressNow(){
     sessionId: state.sessionId, startedAt: state.startedAt,
     currentIdx: state.currentIdx, answers: state.answers, reviewResults: state.reviewResults,
     questions: state.questions, pauses: state.pauses, resumeCount: state.resumeCount,
+    testKind: state.testKind || "main",
     lastUpdate: Date.now()
   };
   await STORAGE.saveProgress(data);
@@ -2127,8 +2295,7 @@ document.getElementById("login-btn").addEventListener("click",async function(){
       showResumeStage(progress);
       return;
     }
-    await renderHome();
-    showStage("home");
+    await goSelect();
     return;
   }
 
@@ -2151,8 +2318,7 @@ document.getElementById("login-btn").addEventListener("click",async function(){
   }
 
   if (user.isTest){
-    await renderHome();
-    showStage("home");
+    await goSelect();
     return;
   }
 
@@ -2164,8 +2330,7 @@ document.getElementById("login-btn").addEventListener("click",async function(){
     return;
   }
 
-  await renderHome();
-  showStage("home");
+  await goSelect();
 });
 
 document.getElementById("save-name-btn").addEventListener("click",async function(){
@@ -2180,8 +2345,7 @@ document.getElementById("save-name-btn").addEventListener("click",async function
   document.getElementById("home-name").textContent=name;
   document.getElementById("test-name").textContent=name;
   document.getElementById("result-name").textContent=name;
-  await renderHome();
-  showStage("home");
+  await goSelect();
 });
 
 document.getElementById("enter-name-input").addEventListener("keydown",function(e){
@@ -2199,7 +2363,7 @@ function doLogout(){
   document.getElementById("pin-error").textContent="";
   showStage("login");
 }
-["logout-1","logout-2","logout-3","logout-admin","logout-blocked","logout-resume"].forEach(function(id){
+["logout-1","logout-2","logout-3","logout-admin","logout-blocked","logout-resume","logout-select"].forEach(function(id){
   const el = document.getElementById(id);
   if(el) el.addEventListener("click",doLogout);
 });
@@ -2208,7 +2372,7 @@ function doLogout(){
 // STAGE
 // ============================================================
 function showStage(stage){
-  ["loading","setup","share","login","name","home","test","result","admin","blocked","resume"].forEach(function(s){
+  ["loading","setup","share","login","name","select","home","test","result","admin","blocked","resume"].forEach(function(s){
     const el = document.getElementById("stage-"+s);
     if(el) el.classList.toggle("hidden", s!==stage);
   });
@@ -2249,6 +2413,7 @@ document.getElementById("resume-continue-btn").addEventListener("click", async f
   state.pauses = p.pauses || [];
   state.resumeCount = (p.resumeCount || 0) + 1;
   state.inTest = true;
+  state.testKind = p.testKind || "main";
   state.pauses.push({
     leftAt: p.lastUpdate || p.startedAt, returnedAt: Date.now(),
     durationSec: Math.round((Date.now() - (p.lastUpdate || p.startedAt)) / 1000), type: "resume"
@@ -2262,27 +2427,67 @@ document.getElementById("resume-restart-btn").addEventListener("click", async fu
   if (!confirm("Сбросить незавершённую попытку и начать тест заново?")) return;
   await STORAGE.deleteProgress(state.user.pin);
   state.pendingProgress = null;
-  if (state.user.isTest){await renderHome(); showStage("home"); return;}
+  if (state.user.isTest){await goSelect(); return;}
   if (!state.user.name || state.user.name.trim()===""){
     document.getElementById("enter-name-input").value="";
     showStage("name");
     setTimeout(function(){document.getElementById("enter-name-input").focus();},100);
     return;
   }
-  await renderHome();
-  showStage("home");
+  await goSelect();
 });
 
 // ============================================================
 // HOME
 // ============================================================
+function getCurrentTestKind(){
+  return state.testKind || "main";
+}
+
+async function goSelect(){
+  // экран выбора теста — обновляем статистику по обоим
+  const isTest = !!state.user.isTest;
+  document.getElementById("select-name").textContent = state.user.name || "—";
+  const all = await STORAGE.getUserAttempts(state.user.pin);
+  function statLine(kind){
+    const arr = all.filter(function(a){ return (a.testKind||"main")===kind; });
+    if (arr.length===0) return "ещё не сдавал · попыток 0";
+    const best = Math.max.apply(null, arr.map(function(a){return a.score;}));
+    return "попыток: " + arr.length + " · лучший: " + best + "%";
+  }
+  document.getElementById("tc-stats-main").textContent = statLine("main");
+  document.getElementById("tc-stats-chess").textContent = statLine("chess");
+  showStage("select");
+}
+
+async function goHome(kind){
+  state.testKind = kind || "main";
+  const cfg = TEST_KINDS[state.testKind];
+  // обновляем тексты главного экрана под выбранный тест
+  if (state.testKind === "chess"){
+    document.getElementById("home-title").textContent = "ШАХ И МАТ";
+    document.getElementById("home-subtitle").textContent = "Игра чёрных королев · авторская партия";
+    document.getElementById("home-desc").innerHTML =
+      'Аттестация состоит из <span class="cream">24 вопросов</span> &mdash; по 8 случайных вопросов на каждую из 3 позиций (Чёрная Королева, Гамбит, Шах и Мат).';
+  } else {
+    document.getElementById("home-title").textContent = "ПАРТИЯ ПОЗИЦИЙ";
+    document.getElementById("home-subtitle").textContent = "Аттестация по 36 ключевым позициям бара";
+    document.getElementById("home-desc").innerHTML =
+      'Аттестация состоит из <span class="cream">108 вопросов</span> &mdash; по 3 случайных вопроса на каждую из 36 позиций.';
+  }
+  await renderHome();
+  showStage("home");
+}
+
 async function renderHome(){
   const isTest = !!state.user.isTest;
+  const kind = getCurrentTestKind();
   document.getElementById("test-banner-home").classList.toggle("hidden", !isTest);
   document.getElementById("deadline-info").style.display = isTest ? "none" : "";
   if (!isTest) renderDeadlineInfo();
 
-  const attempts=await STORAGE.getUserAttempts(state.user.pin);
+  const allAttempts=await STORAGE.getUserAttempts(state.user.pin);
+  const attempts = allAttempts.filter(function(a){ return (a.testKind||"main")===kind; });
   const myStats=document.getElementById("my-stats");
   if(attempts.length===0){
     myStats.classList.add("hidden");
@@ -2304,6 +2509,17 @@ async function renderHome(){
   }
 }
 
+// клики на карточки выбора теста
+document.querySelectorAll('[data-pick]').forEach(function(btn){
+  btn.addEventListener('click', async function(){
+    const kind = btn.getAttribute('data-pick');
+    await goHome(kind);
+  });
+});
+document.getElementById("back-to-select-btn").addEventListener("click", async function(){
+  await goSelect();
+});
+
 // ============================================================
 // TEST
 // ============================================================
@@ -2313,10 +2529,12 @@ document.getElementById("start-btn").addEventListener("click", async function(){
     showStage("blocked");
     return;
   }
+  const kind = getCurrentTestKind();
+  const cfg = TEST_KINDS[kind];
   const arr=[];
-  for(const key of POSITIONS_ORDER){
+  for(const key of cfg.positions){
     const section=BANKS[key];
-    const picked=pickRandom(section.bank,QUESTIONS_PER_POSITION);
+    const picked=pickRandom(section.bank,cfg.qPerPosition);
     picked.forEach(function(q,idx){ arr.push({sectionKey:key,sectionName:section.name,q:q,sectionIdx:idx+1}); });
   }
   state.questions=arr;
@@ -2328,6 +2546,7 @@ document.getElementById("start-btn").addEventListener("click", async function(){
   state.pauses = [];
   state.resumeCount = 0;
   state.inTest = true;
+  state.testKind = kind;
   await saveProgressNow();
   showStage("test");
   renderQuestion();
@@ -2337,9 +2556,10 @@ function renderQuestion(){
   const idx=state.currentIdx;
   const item=state.questions[idx];
   const total=state.questions.length;
+  const positions = (TEST_KINDS[state.testKind || "main"] || TEST_KINDS.main).positions;
   document.getElementById("pbar").style.width = ((idx/total)*100) + "%";
-  const positionsBefore=POSITIONS_ORDER.indexOf(item.sectionKey);
-  document.getElementById("pmeta-section").textContent = "позиция " + (positionsBefore+1) + " / " + POSITIONS_ORDER.length + " · " + item.sectionName;
+  const positionsBefore=positions.indexOf(item.sectionKey);
+  document.getElementById("pmeta-section").textContent = "позиция " + (positionsBefore+1) + " / " + positions.length + " · " + item.sectionName;
   document.getElementById("pmeta-q").textContent = "вопрос " + (idx+1) + " из " + total;
   document.getElementById("q-section-name").textContent=item.sectionName;
   document.getElementById("q-num").textContent="Вопрос " + item.sectionIdx + " в позиции";
@@ -2432,13 +2652,16 @@ document.getElementById("prev-btn").addEventListener("click",function(){
 
 async function finishTest(){
   state.inTest = false;
+  const kind = state.testKind || "main";
+  const cfg = TEST_KINDS[kind];
+  const positions = cfg.positions;
   const reviews=state.questions.map(function(item,i){
     const ans=state.answers[i]||"";
     const r = (state.reviewResults && state.reviewResults[i]) || checkAnswer(item.q,ans);
     return Object.assign({}, item, {answer:ans, review:r});
   });
   const byPosition={};
-  for(const k of POSITIONS_ORDER) byPosition[k]={name:BANKS[k].name,total:0,passed:0};
+  for(const k of positions) byPosition[k]={name:BANKS[k].name,total:0,passed:0};
   reviews.forEach(function(r){ byPosition[r.sectionKey].total++; if(r.review.passed) byPosition[r.sectionKey].passed++; });
   const totalQ=reviews.length;
   const totalPassed=reviews.filter(function(r){return r.review.passed;}).length;
@@ -2451,12 +2674,14 @@ async function finishTest(){
   const durationSec = state.startedAt ? Math.round((Date.now() - state.startedAt) / 1000) : 0;
 
   state.results={reviews:reviews,byPosition:byPosition,totalQ:totalQ,totalPassed:totalPassed,overallScore:overallScore,passed:passed,
-    pauseCount:pauseCount, totalPauseSec:totalPauseSec, resumeCount: state.resumeCount, durationSec:durationSec};
+    pauseCount:pauseCount, totalPauseSec:totalPauseSec, resumeCount: state.resumeCount, durationSec:durationSec, testKind: kind};
 
   try{
     await STORAGE.addAttempt({
       name:state.user.name, pin:state.user.pin, score:overallScore, passed:passed,
       isTest: !!state.user.isTest,
+      testKind: kind,
+      testKindLabel: cfg.label,
       byPosition:Object.fromEntries(Object.entries(byPosition).map(function(e){return [e[0], e[1].passed+"/"+e[1].total];})),
       pauseCount:pauseCount, totalPauseSec:totalPauseSec, resumeCount: state.resumeCount, durationSec:durationSec,
       pauseDetails: pauses, sessionId: state.sessionId,
@@ -2472,6 +2697,9 @@ async function finishTest(){
       name: state.user.name, pin: state.user.pin,
       score: overallScore, passed: passed,
       isTest: !!state.user.isTest,
+      testKind: kind,
+      testKindLabel: cfg.label,
+      testKindFull: cfg.name,
       totalQuestions: totalQ, correctAnswers: totalPassed,
       violations: pauseCount,
       violationLog: pauses.map(function(p){
@@ -2516,8 +2744,10 @@ async function renderResult(){
 
   const br=document.getElementById("breakdown");
   br.innerHTML="";
-  for(const k of POSITIONS_ORDER){
+  const resultPositions = (TEST_KINDS[state.results.testKind || "main"] || TEST_KINDS.main).positions;
+  for(const k of resultPositions){
     const s=byPosition[k];
+    if(!s) continue;
     const pct=Math.round((s.passed/s.total)*100);
     const ok=pct>=PASS_THRESHOLD;
     br.innerHTML += '<div class="br-row">'
@@ -2571,8 +2801,7 @@ document.getElementById("restart-btn").addEventListener("click",async function()
   state.questions=[]; state.answers={}; state.currentIdx=0; state.results=null;
   document.getElementById("review-card").classList.add("hidden");
   document.getElementById("review-btn").textContent="показать ошибки";
-  await renderHome();
-  showStage("home");
+  await goSelect();
 });
 
 // ============================================================
@@ -2717,6 +2946,9 @@ async function renderAllAttempts(mode){
   });
   el.innerHTML=attempts.slice(0,80).map(function(a,i){
     const tag = a.isTest ? '<span class="test-tag">тест</span>' : '';
+    const kindLbl = a.testKindLabel || (a.testKind === "chess" ? "Шах и Мат" : "Основная");
+    const kindCls = (a.testKind === "chess") ? 'style="border-color:var(--gold);color:var(--gold-br);background:rgba(200,169,110,0.18)"' : '';
+    const kindTag = '<span class="test-tag" '+kindCls+'>'+escapeHtml(kindLbl)+'</span>';
     let alertTag = '';
     if (a.resumeCount && a.resumeCount > 0){
       alertTag += '<span class="test-tag" style="border-color:var(--red);color:var(--red);background:rgba(200,100,90,0.1)">возоб ×'+a.resumeCount+'</span>';
@@ -2726,7 +2958,7 @@ async function renderAllAttempts(mode){
     }
     return '<div class="lb-row">'
       + '<div class="lb-rank">'+(i+1)+'</div>'
-      + '<div class="lb-name">'+escapeHtml(a.name)+tag+alertTag+'</div>'
+      + '<div class="lb-name">'+escapeHtml(a.name)+kindTag+tag+alertTag+'</div>'
       + '<div class="lb-score '+(a.passed?"":"fail")+'">'+a.score+'%</div>'
       + '<div class="lb-date">'+fmtDate(a.date)+'</div>'
       + '<div class="lb-action"><span class="x" data-del-attempt="'+escapeHtml(a.id)+'">×</span></div>'
@@ -2839,7 +3071,11 @@ function buildAttemptReport(attempt){
   }
 
   let txt = "";
-  txt += "🎯 <b>NOMO · Аттестация</b>" + isTest + "\n\n";
+  txt += "🎯 <b>NOMO · Аттестация</b>" + isTest + "\n";
+  if(attempt.testKindFull || attempt.testKindLabel){
+    txt += "<i>" + escTg(attempt.testKindFull || attempt.testKindLabel) + "</i>\n";
+  }
+  txt += "\n";
   txt += "👤 <b>" + escTg(attempt.name || ("Код " + attempt.pin)) + "</b>";
   txt += " <code>" + escTg(attempt.pin) + "</code>\n\n";
   txt += passEmoji + " <b>" + attempt.score + "%</b> · " + passLabel + "\n";
