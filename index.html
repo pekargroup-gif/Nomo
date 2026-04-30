@@ -1,0 +1,2932 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOMO · Аттестация · Партия позиций</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0C0B09; --panel:#16140F; --panel-2:#1F1B14;
+    --gold:#C8A96E; --gold-br:#E8C98A; --gold-dk:#8E7849; --gold-ln:#5A4A30;
+    --cream:#EDE0C4; --cream-2:#B8A98C; --white:#F4ECDA; --ink-dim:#7A6F5C;
+    --green:#7AA47C; --red:#C8645A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{
+    background:var(--bg);color:var(--cream);font-family:'Inter',sans-serif;
+    min-height:100vh;letter-spacing:.01em;
+    -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;
+    -webkit-touch-callout:none;
+  }
+  body{
+    background:
+      radial-gradient(ellipse at top,rgba(200,169,110,0.06),transparent 60%),
+      radial-gradient(ellipse at bottom,rgba(200,169,110,0.04),transparent 50%),
+      var(--bg);
+    padding:32px 18px 80px;position:relative;
+  }
+  textarea,input{user-select:text;-webkit-user-select:text}
+  .wrap{max-width:780px;margin:0 auto;position:relative;z-index:1}
+
+#watermark{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden;opacity:1}
+.wm-row{white-space:nowrap;font-family:‘Inter’,sans-serif;font-size:18px;color:rgba(232,201,138,0.32);font-weight:700;letter-spacing:.45em;transform:rotate(-30deg);transform-origin:0 0;padding:60px 0;text-shadow:0 0 1px rgba(232,201,138,0.15)}
+#watermark2{position:fixed;inset:0;pointer-events:none;z-index:51;overflow:hidden;opacity:1}
+#watermark2 .wm-row{font-size:16px;color:rgba(232,201,138,0.22);transform:rotate(28deg);padding:80px 0}
+
+#shield{position:fixed;inset:0;background:#FFFFFF;z-index:9999;display:none;align-items:center;justify-content:center;color:#000;font-family:‘Cormorant Garamond’,serif;font-size:22px;text-align:center;padding:30px}
+#shield.on{display:flex}
+#shield .msg{max-width:400px}
+#shield .icon{font-size:40px;margin-bottom:14px;color:#888}
+#shield .small{font-size:13px;color:#888;margin-top:14px;font-family:‘Inter’;letter-spacing:.05em}
+
+#violation-alert{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);background:linear-gradient(180deg,#A04040,#7A2828);color:#fff;padding:30px 32px;z-index:9998;text-align:center;border:2px solid #fff;max-width:340px;width:88%;font-family:‘Inter’,sans-serif;display:none;box-shadow:0 0 0 9999px rgba(0,0,0,0.85),0 0 60px rgba(200,80,80,0.6);transition:transform .3s ease-out;border-radius:0}
+#violation-alert.on{display:block;transform:translate(-50%,-50%) scale(1)}
+#violation-alert .vio-icon{font-family:‘Cormorant Garamond’,serif;font-size:54px;line-height:1;margin-bottom:10px;color:#fff}
+#violation-alert .vio-title{font-family:‘Cormorant Garamond’,serif;font-size:26px;line-height:1.15;margin-bottom:10px;letter-spacing:.04em;font-weight:600}
+#violation-alert .vio-body{font-size:13.5px;line-height:1.55;color:rgba(255,255,255,0.92);margin-bottom:14px}
+#violation-alert .vio-counter{display:inline-block;background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.4);padding:8px 16px;font-family:‘Cormorant Garamond’,serif;font-size:18px;letter-spacing:.1em;font-weight:600}
+#violation-alert .vio-counter b{color:#FFD590;font-size:24px;margin:0 4px}
+#violation-alert .vio-name{font-size:11px;letter-spacing:.3em;text-transform:uppercase;margin-top:14px;color:rgba(255,255,255,0.7)}
+
+.head{text-align:center;padding:6px 0 26px;border-bottom:1px solid var(–gold-ln);margin-bottom:36px;position:relative}
+.head .crown{font-size:11px;color:var(–gold-dk);letter-spacing:.5em;margin-bottom:18px}
+.brand{font-family:‘Cormorant Garamond’,serif;font-weight:700;color:var(–gold-br);font-size:42px;line-height:1;letter-spacing:.18em}
+.brand-rule{width:160px;height:1px;background:var(–gold);margin:14px auto;position:relative}
+.brand-rule::before,.brand-rule::after{content:””;position:absolute;top:50%;width:6px;height:6px;background:var(–gold);transform:translateY(-50%) rotate(45deg)}
+.brand-rule::before{left:-3px}
+.brand-rule::after{right:-3px}
+.head .sub{font-size:11px;color:var(–cream-2);letter-spacing:.4em;text-transform:uppercase}
+
+.serif{font-family:‘Cormorant Garamond’,serif;font-weight:500}
+.gold{color:var(–gold)} .gold-br{color:var(–gold-br)}
+.cream{color:var(–cream)} .dim{color:var(–cream-2)} .muted{color:var(–ink-dim)}
+.center{text-align:center}
+h1.title{font-family:‘Cormorant Garamond’,serif;font-size:34px;color:var(–white);text-align:center;margin:24px 0 8px;letter-spacing:.06em;line-height:1.1}
+.subtitle{font-family:‘Cormorant Garamond’,serif;font-style:italic;font-size:18px;color:var(–gold);text-align:center;margin-bottom:22px}
+
+.card{background:linear-gradient(180deg,var(–panel-2),var(–panel));border:1px solid var(–gold-ln);border-radius:2px;padding:28px 30px;position:relative;margin-bottom:20px}
+.card::before,.card::after{content:””;position:absolute;width:14px;height:14px;border:1px solid var(–gold)}
+.card::before{top:-1px;left:-1px;border-right:none;border-bottom:none}
+.card::after{bottom:-1px;right:-1px;border-left:none;border-top:none}
+
+.pin-input{width:100%;background:rgba(0,0,0,0.4);border:1px solid var(–gold-ln);color:var(–gold-br);padding:16px;font-family:‘Cormorant Garamond’,serif;font-size:32px;letter-spacing:.5em;text-align:center;font-weight:600;border-radius:0;margin:14px 0 4px}
+.pin-input:focus{outline:none;border-color:var(–gold);background:rgba(200,169,110,0.04)}
+.pin-error{color:var(–red);font-size:12px;text-align:center;margin-top:8px;min-height:18px;letter-spacing:.05em}
+
+.rules{background:rgba(200,169,110,0.04);border:1px solid var(–gold-ln);padding:20px 24px;margin:22px 0;text-align:left}
+.rules h3{font-size:11px;color:var(–gold);letter-spacing:.4em;text-transform:uppercase;margin-bottom:14px;text-align:center}
+.rules li{list-style:none;padding:6px 0 6px 22px;position:relative;color:var(–cream);font-size:13.5px;line-height:1.55}
+.rules li::before{content:”\25C6”;position:absolute;left:0;color:var(–gold);font-size:9px;top:9px}
+
+label.fld{display:block;margin-top:18px}
+label.fld .lbl{display:block;font-size:10px;color:var(–gold);letter-spacing:.35em;text-transform:uppercase;margin-bottom:8px}
+input[type=text],input[type=tel],textarea{width:100%;background:rgba(0,0,0,0.4);border:1px solid var(–gold-ln);color:var(–cream);padding:14px 16px;font-family:‘Inter’,sans-serif;font-size:15px;line-height:1.55;border-radius:0;transition:border-color .2s,background .2s;resize:vertical}
+textarea{min-height:120px;font-size:14.5px}
+input:focus,textarea:focus{outline:none;border-color:var(–gold);background:rgba(200,169,110,0.04)}
+textarea::placeholder,input::placeholder{color:var(–ink-dim);font-style:italic}
+
+.btn{display:inline-block;background:transparent;border:1px solid var(–gold);color:var(–gold-br);padding:14px 32px;font-family:‘Cormorant Garamond’,serif;font-weight:600;font-size:14px;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;transition:all .25s;margin-top:10px}
+.btn:hover{background:var(–gold);color:var(–bg)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.primary{background:var(–gold);color:var(–bg)}
+.btn.primary:hover{background:var(–gold-br)}
+.btn.ghost{border-color:var(–gold-dk);color:var(–cream-2)}
+.btn.danger{border-color:var(–red);color:var(–red)}
+.btn.danger:hover{background:var(–red);color:var(–white)}
+.btn.full{width:100%;display:block}
+
+.progress{background:rgba(0,0,0,0.5);border:1px solid var(–gold-ln);height:6px;position:relative;margin:20px 0 26px}
+.progress-bar{background:linear-gradient(90deg,var(–gold-dk),var(–gold-br));height:100%;transition:width .4s ease-out}
+.progress-meta{display:flex;justify-content:space-between;font-size:10px;color:var(–cream-2);letter-spacing:.3em;text-transform:uppercase;margin-top:8px}
+
+.qsection{color:var(–gold);font-size:11px;letter-spacing:.4em;text-transform:uppercase;margin-bottom:8px}
+.qnum{font-family:‘Cormorant Garamond’,serif;font-style:italic;color:var(–gold-dk);font-size:14px;margin-bottom:6px}
+.qtext{font-family:‘Cormorant Garamond’,serif;font-size:22px;line-height:1.3;color:var(–white);margin-bottom:18px;letter-spacing:.01em}
+.hint{font-size:12px;color:var(–ink-dim);margin-top:6px;font-style:italic}
+.nav{display:flex;justify-content:space-between;gap:14px;margin-top:24px}
+
+.score-big{font-family:‘Cormorant Garamond’,serif;font-size:88px;line-height:1;font-weight:600;color:var(–gold-br);text-align:center;margin:18px 0 8px}
+.score-big.fail{color:var(–red)}
+.verdict{text-align:center;font-family:‘Cormorant Garamond’,serif;font-style:italic;font-size:22px;color:var(–cream);margin-bottom:8px;letter-spacing:.02em}
+.verdict-sub{text-align:center;color:var(–cream-2);font-size:13px;margin-bottom:24px}
+.breakdown{margin-top:24px;max-height:320px;overflow-y:auto;padding-right:8px}
+.breakdown::-webkit-scrollbar{width:6px}
+.breakdown::-webkit-scrollbar-thumb{background:var(–gold-dk)}
+.br-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(–gold-ln);gap:14px}
+.br-row:last-child{border-bottom:none}
+.br-name{font-family:‘Cormorant Garamond’,serif;font-size:16px;color:var(–cream);flex:1;line-height:1.3}
+.br-meta{font-size:10px;color:var(–cream-2);letter-spacing:.2em;text-transform:uppercase}
+.br-score{font-family:‘Cormorant Garamond’,serif;font-size:20px;font-weight:600;min-width:60px;text-align:right}
+.br-score.pass{color:var(–green)}
+.br-score.fail{color:var(–red)}
+
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0 6px}
+.stat-cell{background:rgba(200,169,110,0.05);border:1px solid var(–gold-ln);padding:16px 12px;text-align:center}
+.stat-num{font-family:‘Cormorant Garamond’,serif;font-size:32px;font-weight:600;color:var(–gold-br);line-height:1;margin-bottom:6px}
+.stat-lbl{font-size:9px;color:var(–cream-2);letter-spacing:.3em;text-transform:uppercase}
+@media (max-width:600px){.stat-num{font-size:24px} .stat-lbl{font-size:8px;letter-spacing:.2em}}
+
+.hist-row{display:grid;grid-template-columns:30px 1fr 70px 70px;gap:10px;padding:10px 0;border-bottom:1px solid rgba(90,74,48,0.3);align-items:center;font-size:12.5px}
+.hist-rank{color:var(–gold);font-family:‘Cormorant Garamond’,serif;font-size:16px;text-align:center}
+.hist-date{color:var(–cream)}
+.hist-score{font-family:‘Cormorant Garamond’,serif;font-size:16px;text-align:right;font-weight:600;color:var(–gold-br)}
+.hist-score.fail{color:var(–red)}
+.hist-status{font-size:9px;letter-spacing:.2em;text-transform:uppercase;text-align:right;color:var(–green)}
+.hist-status.fail{color:var(–red)}
+
+.review-q{border-left:2px solid var(–gold-dk);padding:14px 18px;margin:14px 0;background:rgba(200,169,110,0.03)}
+.review-q.correct{border-left-color:var(–green)}
+.review-q.wrong{border-left-color:var(–red)}
+.review-q .qt{font-family:‘Cormorant Garamond’,serif;font-size:16px;color:var(–cream);margin-bottom:8px}
+.review-q .ans{font-size:13px;color:var(–cream-2);margin-bottom:6px;line-height:1.55}
+.review-q .ans .lbl{color:var(–gold);font-size:9px;letter-spacing:.3em;text-transform:uppercase;margin-right:8px}
+.review-q .miss{font-size:12px;color:var(–red);margin-top:6px}
+
+.admin-tabs{display:flex;gap:0;margin-bottom:18px;border-bottom:1px solid var(–gold-ln)}
+.admin-tab{flex:1;text-align:center;padding:12px 8px;cursor:pointer;font-size:11px;color:var(–cream-2);letter-spacing:.3em;text-transform:uppercase;border-bottom:2px solid transparent;transition:all .2s}
+.admin-tab.active{color:var(–gold);border-bottom-color:var(–gold)}
+
+.user-row{display:grid;grid-template-columns:1fr 90px 90px;gap:10px;padding:12px 0;border-bottom:1px solid rgba(90,74,48,0.3);align-items:center}
+.user-name{color:var(–cream);font-size:14px}
+.user-pin{font-family:‘Cormorant Garamond’,serif;color:var(–gold-br);font-size:18px;letter-spacing:.2em;text-align:center;font-weight:600}
+.user-act{text-align:right}
+.user-act .btn{padding:6px 14px;font-size:10px;margin:0;letter-spacing:.15em}
+
+.lb-row{display:grid;grid-template-columns:24px 1fr 70px 60px 60px;gap:10px;padding:10px 0;border-bottom:1px solid rgba(90,74,48,0.3);align-items:center;font-size:12.5px}
+.lb-rank{color:var(–gold);font-family:‘Cormorant Garamond’,serif;font-size:16px;text-align:center}
+.lb-name{color:var(–cream)}
+.lb-score{font-family:‘Cormorant Garamond’,serif;font-size:16px;text-align:right;font-weight:600;color:var(–gold-br)}
+.lb-score.fail{color:var(–red)}
+.lb-date{color:var(–ink-dim);font-size:10px;text-align:right}
+.lb-action{text-align:right}
+.lb-action .x{color:var(–red);cursor:pointer;font-size:14px}
+
+.hidden{display:none !important}
+.footer{text-align:center;color:var(–ink-dim);font-size:10px;letter-spacing:.3em;text-transform:uppercase;margin-top:50px}
+
+.top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;font-size:11px;color:var(–cream-2);letter-spacing:.3em;text-transform:uppercase}
+.top-bar .who{color:var(–gold)}
+.top-bar .logout{color:var(–cream-2);cursor:pointer;text-decoration:underline;text-decoration-color:var(–gold-dk)}
+
+.test-banner{background:repeating-linear-gradient(45deg,rgba(232,201,138,0.08),rgba(232,201,138,0.08) 10px,rgba(232,201,138,0.04) 10px,rgba(232,201,138,0.04) 20px);border:1px dashed var(–gold);padding:14px 18px;margin-bottom:18px;text-align:center}
+.test-banner .lbl{font-size:10px;color:var(–gold-br);letter-spacing:.4em;text-transform:uppercase;margin-bottom:6px;font-weight:600}
+.test-banner .desc{color:var(–cream);font-size:13px;line-height:1.55}
+.test-banner .desc b{color:var(–gold-br)}
+.test-tag{display:inline-block;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(–gold-br);background:rgba(200,169,110,0.15);padding:2px 6px;margin-left:6px;border:1px solid var(–gold-dk);font-weight:600}
+
+@media (max-width:600px){
+body{padding:18px 10px 60px}
+.card{padding:22px 18px}
+.brand{font-size:32px}
+h1.title{font-size:26px}
+.qtext{font-size:18px}
+.score-big{font-size:64px}
+.lb-row,.hist-row{font-size:11px}
+}
+</style>
+
+</head>
+<body>
+
+<div id="shield">
+  <div class="msg">
+    <div class="icon">&#9679;</div>
+    <div>Аттестация приостановлена</div>
+    <div class="small">Вернись в окно теста. Скриншоты и переключение между приложениями запрещены.</div>
+  </div>
+</div>
+
+<div id="violation-alert">
+  <div class="vio-icon">&#9888;</div>
+  <div class="vio-title">Действие зафиксировано</div>
+  <div class="vio-body">Ты покинул(а) окно теста. Скриншот, переключение приложения и сворачивание считаются нарушением.<br><br>Это записано в журнал и видно менеджеру.</div>
+  <div class="vio-counter">нарушение <b><span class="vio-count">1</span></b> за тест</div>
+  <div class="vio-name" id="vio-name">&mdash;</div>
+</div>
+
+<div id="watermark"></div>
+<div id="watermark2"></div>
+
+<div class="wrap">
+
+  <div class="head">
+    <div class="crown">N&nbsp;O&nbsp;M&nbsp;O&nbsp;&nbsp;&middot;&nbsp;&nbsp;H&nbsp;U&nbsp;Q&nbsp;Q&nbsp;A&nbsp;.&nbsp;R&nbsp;E&nbsp;S&nbsp;T</div>
+    <div class="brand">NOMO</div>
+    <div class="brand-rule"></div>
+    <div class="sub">аттестация &middot; партия позиций</div>
+  </div>
+
+  <div id="stage-login">
+    <h1 class="title">ВХОД</h1>
+    <div class="subtitle">введи свой персональный код</div>
+    <div class="card">
+      <p class="dim center" style="margin-bottom:16px;line-height:1.6">
+        Введи свой <span class="cream">персональный 4-значный код</span>.<br>
+        Сотрудники &mdash; личный код, менеджеры &mdash; менеджерский.
+      </p>
+      <input type="tel" maxlength="6" id="pin-input" class="pin-input" inputmode="numeric" pattern="[0-9]*" placeholder="••••" autocomplete="off">
+      <div class="pin-error" id="pin-error">&nbsp;</div>
+      <button class="btn primary full" id="login-btn">войти &#9656;</button>
+      <p class="muted center" style="margin-top:16px;font-size:11px;letter-spacing:.2em;text-transform:uppercase">
+        нет кода &mdash; обратись к управляющему
+      </p>
+    </div>
+  </div>
+
+  <div id="stage-name" class="hidden">
+    <h1 class="title">ДОБРО ПОЖАЛОВАТЬ</h1>
+    <div class="subtitle">введи своё имя &mdash; это первый вход</div>
+    <div class="card">
+      <p class="dim center" style="margin-bottom:20px;line-height:1.6">
+        Этот код видит тебя впервые. Введи своё <span class="cream">имя и фамилию</span> &mdash; они будут привязаны к коду навсегда.
+      </p>
+      <label class="fld" style="margin-top:0">
+        <span class="lbl">имя &middot; фамилия</span>
+        <input type="text" id="enter-name-input" placeholder="например, Иван Петров" autocomplete="off">
+      </label>
+      <div class="pin-error" id="name-error">&nbsp;</div>
+      <button class="btn primary full" id="save-name-btn">сохранить и продолжить &#9656;</button>
+    </div>
+  </div>
+
+  <div id="stage-resume" class="hidden">
+    <div class="top-bar">
+      <span>сотрудник: <span class="who" id="resume-name">&mdash;</span></span>
+      <span class="logout" id="logout-resume">выйти</span>
+    </div>
+    <div class="card" style="border-color:var(--gold)">
+      <div class="qsection center" style="color:var(--gold-br)">&#9888; незавершённая попытка</div>
+      <h1 class="title" style="font-size:26px;margin:18px 0 6px">У ТЕБЯ ЕСТЬ НЕЗАКОНЧЕННЫЙ ТЕСТ</h1>
+      <div class="subtitle">что хочешь сделать?</div>
+      <div class="stat-grid" style="grid-template-columns:repeat(2,1fr)">
+        <div class="stat-cell"><div class="stat-num" id="resume-progress">0/108</div><div class="stat-lbl">пройдено вопросов</div></div>
+        <div class="stat-cell"><div class="stat-num" id="resume-started">&mdash;</div><div class="stat-lbl">начат</div></div>
+        <div class="stat-cell"><div class="stat-num" id="resume-pauses">0</div><div class="stat-lbl">нарушений зафиксировано</div></div>
+        <div class="stat-cell"><div class="stat-num" id="resume-pause-time">&mdash;</div><div class="stat-lbl">общее отсутствие</div></div>
+      </div>
+      <div style="background:rgba(200,100,90,0.06);border-left:3px solid var(--red);padding:14px 18px;margin:18px 0">
+        <div class="qsection" style="color:var(--red);margin-bottom:6px">внимание</div>
+        <p class="dim" style="font-size:13px;line-height:1.6">
+          Каждый <span class="cream">выход из вкладки</span>, переключение приложения и возврат фиксируются и
+          <span class="cream">видны менеджеру</span> в админке.
+        </p>
+      </div>
+      <button class="btn primary full" id="resume-continue-btn">продолжить с вопроса <span id="resume-next-num">&mdash;</span> &#9656;</button>
+      <button class="btn ghost full" id="resume-restart-btn" style="margin-top:10px">начать заново &middot; сбросить прогресс</button>
+    </div>
+  </div>
+
+  <div id="stage-blocked" class="hidden">
+    <div class="top-bar">
+      <span>сотрудник: <span class="who" id="blocked-name">&mdash;</span></span>
+      <span class="logout" id="logout-blocked">выйти</span>
+    </div>
+    <div class="card" style="text-align:center;padding:50px 24px;border-color:var(--red)">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:60px;color:var(--red);line-height:1;margin-bottom:8px">&#9888;</div>
+      <div class="qsection center" style="color:var(--red)">аттестация закрыта</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:72px;color:var(--red);line-height:1;margin:18px 0 10px;font-weight:600;letter-spacing:.05em">ПРОВАЛ</div>
+      <div class="verdict" style="color:var(--cream)">Дедлайн пропущен</div>
+      <div class="verdict-sub">Суббота, 20:00 &mdash; крайний срок сдачи аттестации за неделю.</div>
+      <div style="background:rgba(200,100,90,0.08);border-left:3px solid var(--red);padding:18px 20px;margin:24px auto;max-width:520px;text-align:left">
+        <div class="qsection" style="color:var(--red);margin-bottom:8px">что это значит</div>
+        <p class="dim" style="font-size:13.5px;line-height:1.6">
+          Ты опоздал со сдачей за эту неделю. Тест в субботу после 20:00 закрыт.
+          Следующая аттестация откроется <span class="gold-br">в воскресенье в 00:00</span>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="stage-home" class="hidden">
+    <div class="top-bar">
+      <span>сотрудник: <span class="who" id="home-name">&mdash;</span></span>
+      <span class="logout" id="logout-1">выйти</span>
+    </div>
+    <div id="test-banner-home" class="test-banner hidden">
+      <div class="lbl">&#9670; ТЕСТ-РЕЖИМ МЕНЕДЖЕРА &#9670;</div>
+      <div class="desc">
+        Ты вошёл под <b>проверочным кодом</b>. Это симуляция сотрудника &mdash; пройди тест целиком,
+        попробуй сделать <b>скрин</b>, <b>переключить вкладку</b>, нажать <b>F12</b> или <b>PrintScreen</b>.
+        Дедлайн в субботу не блокирует. Все попытки в этом режиме помечены <span class="test-tag">ТЕСТ</span> в админке.
+      </div>
+    </div>
+    <h1 class="title">ПАРТИЯ ПОЗИЦИЙ</h1>
+    <div class="subtitle">Аттестация по 36 ключевым позициям бара</div>
+    <div class="card">
+      <p class="dim" style="line-height:1.7;margin-bottom:14px">
+        Аттестация состоит из <span class="cream">108 вопросов</span> &mdash; по 3 случайных вопроса на каждую из 36 позиций.
+      </p>
+      <div class="rules">
+        <h3>правила партии</h3>
+        <ul>
+          <li>Все ответы вводятся <span class="gold-br">вручную</span> &mdash; никаких вариантов на выбор.</li>
+          <li>Вопросы каждый раз <span class="gold-br">случайные</span> из общего банка &mdash; заучить и передать соседу не получится.</li>
+          <li>Минимум для зачёта &mdash; <span class="gold-br">80 %</span>. Меньше &mdash; пересдача.</li>
+          <li><span class="gold-br">Скриншоты, переключение приложений и сворачивание &mdash; нарушение.</span> Каждое такое действие фиксируется, считается и видно менеджеру в журнале.</li>
+          <li>На каждом экране &mdash; <span class="gold-br">водяной знак с твоим именем</span>. Любой скрин уйдёт с твоей подписью.</li>
+        </ul>
+      </div>
+      <div id="deadline-info" style="background:rgba(200,169,110,0.08);border:1px solid var(--gold-ln);padding:14px 18px;margin:18px 0 8px;text-align:center">
+        <div class="qsection" style="color:var(--gold);margin-bottom:6px">дедлайн недели</div>
+        <div id="deadline-text" style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--cream);line-height:1.3">&mdash;</div>
+        <div id="deadline-sub" class="muted" style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;margin-top:6px">&mdash;</div>
+      </div>
+      <div id="my-stats" class="hidden">
+        <h3 class="qsection center" style="margin-bottom:8px">твоя статистика</h3>
+        <div class="stat-grid">
+          <div class="stat-cell"><div class="stat-num" id="stat-attempts">0</div><div class="stat-lbl">попыток</div></div>
+          <div class="stat-cell"><div class="stat-num" id="stat-best">&mdash;</div><div class="stat-lbl">лучший</div></div>
+          <div class="stat-cell"><div class="stat-num" id="stat-last">&mdash;</div><div class="stat-lbl">последний</div></div>
+        </div>
+      </div>
+      <button class="btn primary full" id="start-btn" style="margin-top:24px">открыть партию &#9656;</button>
+    </div>
+  </div>
+
+  <div id="stage-test" class="hidden">
+    <div class="top-bar">
+      <span>сотрудник: <span class="who" id="test-name">&mdash;</span></span>
+      <span class="logout" id="logout-2">выйти</span>
+    </div>
+    <div class="progress"><div class="progress-bar" id="pbar" style="width:0%"></div></div>
+    <div class="progress-meta">
+      <span id="pmeta-section">позиция 1 / 36</span>
+      <span id="pmeta-q">вопрос 1 из 108</span>
+    </div>
+    <div class="card">
+      <div class="qsection" id="q-section-name">&mdash;</div>
+      <div class="qnum" id="q-num">Вопрос 1</div>
+      <div class="qtext" id="q-text">&mdash;</div>
+      <textarea id="q-input" placeholder="Введи ответ так, как ты сказал бы гостю"></textarea>
+      <div class="hint" id="q-hint"></div>
+      <div id="q-review" class="hidden" style="margin-top:18px">
+        <div id="q-verdict" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--gold-ln);margin-bottom:14px">
+          <span id="q-verdict-icon" style="font-family:'Cormorant Garamond',serif;font-size:24px">&#9679;</span>
+          <span id="q-verdict-text" class="serif" style="font-size:18px">&mdash;</span>
+        </div>
+        <div style="background:rgba(200,169,110,0.06);border-left:3px solid var(--gold);padding:14px 18px;margin-bottom:10px">
+          <div class="qsection" style="margin-bottom:6px">правильный ответ</div>
+          <div id="q-correct" class="cream" style="font-size:14px;line-height:1.6;font-family:'Cormorant Garamond',serif;font-weight:500">&mdash;</div>
+        </div>
+        <div id="q-missed-block" class="hidden" style="background:rgba(200,100,90,0.06);border-left:3px solid var(--red);padding:12px 16px;margin-bottom:10px">
+          <div class="qsection" style="color:var(--red);margin-bottom:6px">пропущено в твоём ответе</div>
+          <div id="q-missed" class="dim" style="font-size:13px;line-height:1.55">&mdash;</div>
+        </div>
+      </div>
+      <div class="nav">
+        <button class="btn ghost" id="prev-btn">&larr; назад</button>
+        <button class="btn primary" id="next-btn">проверить &#9656;</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="stage-result" class="hidden">
+    <div class="top-bar">
+      <span>сотрудник: <span class="who" id="result-name">&mdash;</span></span>
+      <span class="logout" id="logout-3">выйти</span>
+    </div>
+    <div class="card">
+      <div class="qsection center">итог аттестации</div>
+      <div class="score-big" id="score-big">0</div>
+      <div class="verdict" id="verdict">&mdash;</div>
+      <div class="verdict-sub" id="verdict-sub">&mdash;</div>
+      <div class="stat-grid">
+        <div class="stat-cell"><div class="stat-num" id="r-attempt">1</div><div class="stat-lbl">эта попытка</div></div>
+        <div class="stat-cell"><div class="stat-num" id="r-best">0%</div><div class="stat-lbl">лучший</div></div>
+        <div class="stat-cell"><div class="stat-num" id="r-passed">0</div><div class="stat-lbl">зачётов</div></div>
+      </div>
+      <div class="breakdown" id="breakdown"></div>
+      <div class="nav" style="margin-top:30px">
+        <button class="btn ghost" id="review-btn">показать ошибки</button>
+        <button class="btn" id="restart-btn">ещё попытка</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3 class="qsection center" style="margin-bottom:14px">твоя история</h3>
+      <div id="history-list">
+        <div class="muted center" style="padding:14px 0;font-style:italic">&mdash;</div>
+      </div>
+    </div>
+    <div class="card hidden" id="review-card">
+      <h3 class="qsection center" style="margin-bottom:16px">разбор ответов</h3>
+      <div id="review-list"></div>
+    </div>
+  </div>
+
+  <div id="stage-admin" class="hidden">
+    <div class="top-bar">
+      <span class="who">режим управляющего</span>
+      <span class="logout" id="logout-admin">выйти</span>
+    </div>
+    <h1 class="title">ПАНЕЛЬ УПРАВЛЯЮЩЕГО</h1>
+    <div class="subtitle">сотрудники &middot; попытки &middot; настройки</div>
+    <div class="admin-tabs">
+      <div class="admin-tab active" data-atab="users">Сотрудники</div>
+      <div class="admin-tab" data-atab="results">Все попытки</div>
+      <div class="admin-tab" data-atab="settings">Настройки</div>
+    </div>
+    <div class="card" id="atab-users">
+      <h3 class="qsection center" style="margin-bottom:14px">список сотрудников</h3>
+      <div id="users-list">
+        <div class="muted center" style="padding:14px 0;font-style:italic">Сотрудников ещё нет.</div>
+      </div>
+      <div style="margin-top:24px;border-top:1px solid var(--gold-ln);padding-top:20px">
+        <h4 class="qsection" style="margin-bottom:10px">выпустить новый код</h4>
+        <p class="muted" style="font-size:11px;margin-bottom:14px;line-height:1.5">
+          Введи 4-значный PIN &mdash; сотрудник сам впишет имя при первом входе.
+        </p>
+        <label class="fld" style="margin-top:0">
+          <span class="lbl">персональный код &middot; 4 цифры</span>
+          <input type="tel" id="new-user-pin" maxlength="4" inputmode="numeric" pattern="[0-9]{4}" placeholder="0000">
+        </label>
+        <label class="fld">
+          <span class="lbl">имя &middot; необязательно</span>
+          <input type="text" id="new-user-name" placeholder="можно оставить пустым &mdash; введёт сам">
+        </label>
+        <div class="pin-error" id="user-add-error">&nbsp;</div>
+        <button class="btn primary" id="add-user-btn">выпустить &#9656;</button>
+      </div>
+    </div>
+    <div class="card hidden" id="atab-results">
+      <h3 class="qsection center" style="margin-bottom:14px">все попытки</h3>
+      <div id="active-sessions" class="hidden" style="background:rgba(232,201,138,0.06);border:1px dashed var(--gold);padding:14px 18px;margin-bottom:18px">
+        <div class="qsection" style="color:var(--gold-br);margin-bottom:8px">&#9203; сейчас в тесте</div>
+        <div id="active-sessions-list"></div>
+      </div>
+      <div class="admin-tabs" style="margin-bottom:14px">
+        <div class="admin-tab active" data-rsubtab="all" style="font-size:10px">Все</div>
+        <div class="admin-tab" data-rsubtab="best" style="font-size:10px">Лучший на сотрудника</div>
+      </div>
+      <div id="all-attempts">
+        <div class="muted center" style="padding:14px 0;font-style:italic">Попыток ещё нет.</div>
+      </div>
+    </div>
+    <div class="card hidden" id="atab-settings">
+      <h3 class="qsection center" style="margin-bottom:14px">настройки</h3>
+      <div style="background:rgba(122,164,124,0.06);border-left:3px solid var(--green);padding:14px 18px;margin-bottom:22px">
+        <div class="qsection" style="color:var(--green);margin-bottom:8px">&#10003; уведомления в Telegram</div>
+        <p class="dim" style="font-size:12.5px;line-height:1.6;margin-bottom:10px">
+          После каждой завершённой попытки сотрудника тебе в Telegram приходит подробный отчёт: имя, результат в %, какие позиции провалены, нарушения, время.
+        </p>
+        <p class="muted" style="font-size:11px;line-height:1.5">
+          Канал уведомлений: <span class="gold-br">@nomo_attestaciya_bot</span>. Если бот замолчал &mdash; зайди в него в Telegram и нажми Start.
+        </p>
+        <button class="btn" id="test-telegram-btn" style="font-size:11px;margin-top:12px">отправить тестовое сообщение</button>
+        <div id="test-telegram-result" style="font-size:11px;margin-top:8px"></div>
+      </div>
+      <label class="fld" style="margin-top:0">
+        <span class="lbl">сменить мастер-код</span>
+        <input type="tel" id="new-master-pin" maxlength="6" inputmode="numeric" pattern="[0-9]*" placeholder="новый код 4-6 цифр">
+      </label>
+      <div class="pin-error" id="master-pin-error">&nbsp;</div>
+      <button class="btn" id="save-master-btn">сохранить</button>
+      <div style="margin-top:24px;border-top:1px solid var(--gold-ln);padding-top:20px">
+        <h4 class="qsection" style="margin-bottom:10px;color:var(--red)">опасная зона</h4>
+        <p class="muted" style="font-size:12px;margin-bottom:14px">Удалить все попытки сотрудников на этом устройстве.</p>
+        <button class="btn danger" id="clear-attempts-btn">очистить все попытки</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    NOMO &middot; Земляной Вал 9А &middot; Москва<br>
+    <span style="color:var(--gold-dk);font-style:italic;letter-spacing:.1em;text-transform:none">primus inter pares</span>
+  </div>
+</div>
+
+<script id="bank-script">
+// ============================================================
+// КОНФИГ
+// ============================================================
+const DEFAULT_MASTER_PIN = "7777";
+const TEST_PIN = "0101";
+const PASS_THRESHOLD = 80;
+const QUESTIONS_PER_POSITION = 3;
+
+// Telegram бот для уведомлений о результатах
+const TELEGRAM_BOT_TOKEN = "8441895467:AAFS1OsuIK7EvMs2ofuXdcYe7Z04JzgYQUU";
+const TELEGRAM_CHAT_ID = "5824440463";
+
+const SEED_USERS = [
+  { pin: "0101", name: "ТЕСТ-РЕЖИМ (менеджер)", isTest: true },
+  { pin: "1024" }, { pin: "1357" }, { pin: "1492" }, { pin: "2580" },
+  { pin: "3691" }, { pin: "4729" }, { pin: "5814" }, { pin: "6325" },
+  { pin: "7148" }, { pin: "8276" }, { pin: "9135" }, { pin: "1846" },
+  { pin: "2937" }, { pin: "5061" }, { pin: "7402" }, { pin: "3805" },
+  { pin: "6217" }, { pin: "4953" }, { pin: "8194" }, { pin: "5742" }
+];
+
+// ============================================================
+// БАНК ВОПРОСОВ
+// ============================================================
+const BANKS = {
+  dom_perignon: {
+    name: "Dom Perignon",
+    bank: [
+      { q:"Что такое Dom Perignon - категория и страна. Объясни как гостю.",
+        groups:[["шампанск","champagne"],["prestige","престиж","cuvee","кюве"],["франц","france"]],
+        min:2, hint:"Категория + страна.",
+        answer:"Vintage шампанское категории Prestige Cuvee из Франции, регион Шампань. От дома Moet & Chandon." },
+      { q:"Какая минимальная выдержка у Dom Perignon?",
+        groups:[["8","восем","восьм"],["лет","год"],["осадк","sur lie","сюр ли"]],
+        min:2, hint:"Срок + где выдерживается.",
+        answer:"Минимум 8 лет выдержки на осадке (sur lie)." },
+      { q:"Почему у Dom Perignon нет плохих урожаев? Главный аргумент.",
+        groups:[["vintage","винтаж","миллезим"],["только","исключительн","выдающ","лучш"],["год","урожа"]],
+        min:2, hint:"Принцип производства.",
+        answer:"Это vintage-шампанское - выходит только в исключительные годы. Если урожай не признан выдающимся, Dom Perignon в этот год не выпускают." },
+      { q:"Какие сорта винограда в Dom Perignon?",
+        groups:[["pinot","пино","пино нуар","pinot noir"],["chardonnay","шардоне"]],
+        min:2, hint:"Два сорта.",
+        answer:"Pinot Noir и Chardonnay." },
+      { q:"Какая цена и объём бутылки Dom Perignon в нашем меню?",
+        groups:[["64","64 000","64000","шестьдесят четыр"],["750"]],
+        min:2, hint:"Цена + объём.",
+        answer:"64 000 руб за бутылку 750 мл." },
+      { q:"Гость говорит Возьмём что-то попроще. Как ответить?",
+        groups:[["вариант","есть","конечно","хорошо"],["останет","памят","незабыва","запомн"]],
+        min:2, hint:"Не сдавать сразу - вернуть к поводу.",
+        answer:"Хорошо, есть отличные варианты. Но если хотите что-то, что останется в памяти этого вечера - Dom Perignon стоит рассмотреть." },
+      { q:"Гость спрашивает В чём разница с Prosecco? Объясни.",
+        groups:[["шампан","франц","champagne"],["pinot","шардоне","pinot noir","chardonnay"],["vintage","винтаж","выдержк","8","восем"]],
+        min:2, hint:"Через виноград + регион + метод.",
+        answer:"Dom Perignon - prestige cuvee из Шампани: только Pinot Noir и Chardonnay, только лучшие урожаи, восемь лет выдержки. Prosecco - другой виноград, другой метод, другой опыт." },
+      { q:"Назови минимум две запретные формулировки про Dom Perignon.",
+        groups:[["в качестве вариант","один из"],["цена первой","цену сначала","сначала цену"],["просекко","prosecco"],["извинят","оправд"]],
+        min:2, hint:"Что нельзя делать.",
+        answer:"Нельзя: предлагать в качестве варианта из нескольких; называть цену первой; сравнивать с Prosecco; извиняться за стоимость." },
+      { q:"Главное правило про Dom Perignon - кто его реально продаёт?",
+        groups:[["повод","момент","событи","праздн"],["не официант","не я"]],
+        min:1, hint:"Цитата из чек-листа.",
+        answer:"Dom Perignon продаёт не официант. Его продаёт повод." },
+      { q:"Гость отмечает важный момент. Как предложить?",
+        groups:[["dom","перинь","периньон"],["не каждый год","только когда","выдающ"],["идеально","для того что","повод","отмеч"]],
+        min:2, hint:"Связать с поводом.",
+        answer:"Тогда Dom Perignon. Это шампанское делают не каждый год - только когда урожай признан выдающимся. Идеально для того, что вы отмечаете." }
+    ]
+  },
+
+  zacapa: {
+    name: "Zacapa Centenario 23",
+    bank: [
+      { q:"На какой высоте созревает Zacapa 23 и где?",
+        groups:[["2300","две тысячи трист","2 300"],["метр"," м "," м,"," м."],["гватем","guatemala","горах","горы"]],
+        min:2, hint:"Высота + страна.",
+        answer:"На высоте 2300 метров в горах Гватемалы." },
+      { q:"Что такое система Solera и зачем она нужна Zacapa?",
+        groups:[["смесь","купаж","разных лет","разные годы","смешив"],["глубин","сложн","разных","многих"]],
+        min:2, hint:"Принцип системы + что даёт.",
+        answer:"Solera - это смешивание ромов разных лет в каскаде бочек. Каждая бутылка содержит ромы разных возрастов - это даёт глубину и сложность вкуса." },
+      { q:"Какие ноты во вкусе Zacapa 23? Назови минимум три.",
+        groups:[["шоколад","chocolate"],["сухофрукт","изюм"],["ваниль","vanilla"],["дуб","дубов","пряност"]],
+        min:3, hint:"Три из четырёх вкусовых нот.",
+        answer:"Шоколад, сухофрукты, ваниль, лёгкая дубовая пряность." },
+      { q:"Почему высота 2300 метров важна для рома?",
+        groups:[["холодн","прохладн","низкая температур"],["замедл","медлен","дольш"],["воздух","выдержк"]],
+        min:2, hint:"Что делает горный воздух.",
+        answer:"Холодный воздух на высоте замедляет выдержку - ром получает больше времени и глубины. Это не маркетинг, это реально влияет на процесс." },
+      { q:"Гость говорит Я не пью ром. Что ответить?",
+        groups:[["друг","другой ром","не такой"],["виски","коньяк"],["горы","выдержк","solera","солера"]],
+        min:2, hint:"Через сравнение с виски/коньяком.",
+        answer:"Zacapa - это другой ром. Выдержка в горах на высоте 2300 метров, система Solera, шоколад и ваниль в финале. Если вы пьёте виски или коньяк - вам это понравится." },
+      { q:"С чем сравнивать Zacapa, а с чем - категорически нет?",
+        groups:[["виски","коньяк","бурбон"],["bacardi","бакарди","коктейл"]],
+        min:2, hint:"Что да + что нет.",
+        answer:"Сравнивать НУЖНО с виски, коньяком, бурбоном. НЕЛЬЗЯ - с Bacardi или другими ромами для коктейлей." },
+      { q:"Какая цена и объём Zacapa в нашем меню?",
+        groups:[["1750","1 750","тысяч семьсот","тыс"],["50"]],
+        min:2, hint:"Цена + объём.",
+        answer:"1 750 руб за 50 мл." },
+      { q:"Главное правило при продаже Zacapa.",
+        groups:[["стереотип","сломайт","сломать","ломайте"],["не только","не коктейл"]],
+        min:2, hint:"Цитата из чек-листа.",
+        answer:"Сломайте стереотип. Ром - не только коктейли." },
+      { q:"Гость заказал шоколадный десерт. Как предложить Zacapa?",
+        groups:[["шоколад"],["ваниль","сухофрукт"],["хорош","идеаль","подойд","к шоколад"]],
+        min:2, hint:"Через сочетание вкусов.",
+        answer:"Zacapa с её нотами шоколада, ванили и сухофруктов идеально подходит к шоколадному десерту - вкусы перекликаются." }
+    ]
+  },
+
+  dalmore_15: {
+    name: "Dalmore 15",
+    bank: [
+      { q:"В каких бочках выдерживается Dalmore 15? Опиши обе стадии.",
+        groups:[["американ","american","белый дуб"],["matusalem","матусалем","oloroso","олоросо","херес","sherry"]],
+        min:2, hint:"Две бочки.",
+        answer:"Сначала в американском белом дубе, затем - в бочках из-под хереса Matusalem Oloroso." },
+      { q:"Какие вкусовые ноты Dalmore 15 - назови минимум три.",
+        groups:[["шоколад","темн шокол","тёмн шокол"],["апельсин","цедр"],["кофе","coffee"],["пряност","специ"]],
+        min:3, hint:"Три из четырёх.",
+        answer:"Тёмный шоколад, апельсиновая цедра, кофе, глубокая пряность в финале." },
+      { q:"Из какого региона Шотландии Dalmore?",
+        groups:[["highland","хайленд","хайленды","highlands"]],
+        min:1, hint:"Регион Шотландии.",
+        answer:"Highland (Хайленды) - Highland Single Malt." },
+      { q:"В чём принципиальная разница между Dalmore 12 и Dalmore 15?",
+        groups:[["matusalem","матусалем","oloroso","олоросо","херес"],["шоколад","кофе","апельсин","темн","тёмн"]],
+        min:2, hint:"Тип бочки + ноты.",
+        answer:"Dalmore 15 имеет дополнительную выдержку в бочках Matusalem Oloroso - это даёт тёмный шоколад, кофе, апельсин. У Dalmore 12 этого нет." },
+      { q:"Какая цена и объём Dalmore 15?",
+        groups:[["5100","5 100","пять тысяч сто"],["50"]],
+        min:2, hint:"Цена + объём.",
+        answer:"5 100 руб за 50 мл." },
+      { q:"Какому гостю предлагать Dalmore 15 как апселл? Назови два сценария.",
+        groups:[["dalmore 12","далмор 12","12"],["macallan","макаллан","макален"]],
+        min:2, hint:"Два типа гостей.",
+        answer:"1) Гостю, который уже заказал Dalmore 12 - как следующий шаг. 2) Любителю Macallan - другой характер с похожим хересным профилем." },
+      { q:"Главное правило про Dalmore 15.",
+        groups:[["не старш","не просто","другой виски"]],
+        min:1, hint:"Цитата из чек-листа.",
+        answer:"Dalmore 15 - это не старший 12. Это другой виски." },
+      { q:"Гость спрашивает: Зачем переплачивать за 15, если есть 12?",
+        groups:[["matusalem","матусалем","oloroso"],["шоколад","кофе","апельсин"],["друг","меняет","другой"]],
+        min:2, hint:"Через бочку и ноты.",
+        answer:"В Dalmore 15 добавляется выдержка в бочках Matusalem Oloroso - это меняет всё: тёмный шоколад, кофе, апельсиновая цедра. Это не просто старше - это другой виски." }
+    ]
+  },
+
+  brunello: {
+    name: "Brunello di Montalcino",
+    bank: [
+      { q:"Какой виноград и какой регион у Brunello di Montalcino?",
+        groups:[["sangiovese","санджовез","санджовезе"],["grosso","гроссо"],["монтальч","montalcino","тоскан","toscana","tuscany"]],
+        min:2, hint:"Сорт + регион.",
+        answer:"Только Sangiovese Grosso, только регион Монтальчино в Тоскане." },
+      { q:"Какая минимальная выдержка Brunello по закону DOCG?",
+        groups:[["5","пять"],["лет","год"]],
+        min:2, hint:"Срок выдержки.",
+        answer:"Минимум 5 лет выдержки по закону DOCG." },
+      { q:"Кто производитель нашего Brunello?",
+        groups:[["siro","сиро"],["pacenti","паченти"]],
+        min:1, hint:"Имя хозяйства.",
+        answer:"Siro Pacenti - один из лучших производителей Монтальчино." },
+      { q:"Какая цена и объём Brunello?",
+        groups:[["21100","21 100","двадцать одна","21000"],["750"]],
+        min:2, hint:"Цена + объём бутылки.",
+        answer:"21 100 руб за бутылку 750 мл." },
+      { q:"К каким блюдам предлагать Brunello?",
+        groups:[["мясо","мясн","стейк","баранин","утка","дичь"]],
+        min:1, hint:"Тип блюд.",
+        answer:"К мясным блюдам - стейкам, баранине, дичи. Не к рыбе и не к лёгкому." },
+      { q:"Что нужно сказать гостю про подачу Brunello? Особенность.",
+        groups:[["открыва","раскрыв","подожд","подождит"],["бокал","в бокале"]],
+        min:2, hint:"Что делать после налива.",
+        answer:"Налейте, подождите 10 минут, попробуйте снова - это вино открывается в бокале." },
+      { q:"Главное правило про Brunello.",
+        groups:[["не просто","не обычн","итальянск"],["истори","в бокале"]],
+        min:1, hint:"Цитата из чек-листа.",
+        answer:"Brunello - это не просто вино. Это итальянская история в бокале." },
+      { q:"Гость говорит Возьмём Chianti, это тоже Тоскана. Как ответить?",
+        groups:[["другой класс","друг класс","другое","выш"],["один","минимум","5","пять"]],
+        min:2, hint:"Что отличает Brunello.",
+        answer:"Chianti - отличное вино. Brunello - это другой класс: один виноград, один регион, минимум пять лет." }
+    ]
+  },
+
+  cocktail_1: {
+    name: "Коктейль №1",
+    bank: [
+      { q:"Перечисли все ингредиенты Коктейля №1.",
+        groups:[["ben lomond","бен ломонд","ломонд","gin","джин"],["лесн","ягод","сироп лесн"],["сливк","сливочн"],["икра","смородин"]],
+        min:3, hint:"4 ингредиента.",
+        answer:"Джин Ben Lomond, сироп лесных ягод, сливки 11%, икра из чёрной смородины." },
+      { q:"Что особенного в джине Ben Lomond? Какие у него вкусы?",
+        groups:[["смородин"],["крыжовник","крыжовн"]],
+        min:2, hint:"Два вкуса.",
+        answer:"Ben Lomond - джин со вкусом чёрной смородины и крыжовника. Это уже не просто спирт - у него есть собственный вкус." },
+      { q:"Что такое икра в Коктейле №1 и как её описать гостю?",
+        groups:[["смородин","черн смородин","чёрн смородин"],["лопа","лопает","шарик","раскрыв"]],
+        min:2, hint:"Из чего + что делает.",
+        answer:"Икра из сока чёрной смородины - маленькие шарики, которые лопаются на языке. В этот момент весь ягодный вкус раскрывается заново." },
+      { q:"Какая цена и объём Коктейля №1?",
+        groups:[["1500","1 500","полторы","тысяч пятьсот"],["150"]],
+        min:2, hint:"Цена + объём.",
+        answer:"1 500 руб за 150 мл." },
+      { q:"Главное правило при продаже Коктейля №1.",
+        groups:[["не продав","не продай"],["икра","лопает","момент","язык"]],
+        min:2, hint:"Цитата из чек-листа.",
+        answer:"Не продавайте коктейль. Дарите момент, когда икра лопается на языке." },
+      { q:"Гость говорит Не люблю джин. Как ответить?",
+        groups:[["ben lomond","ломонд","смородин","крыжовник"],["сливк","ягодн","далек","другой"]],
+        min:2, hint:"Через состав.",
+        answer:"В №1 джин Ben Lomond - он со вкусом смородины и крыжовника. Плюс сливки и ягодный сироп. От классического джина там очень далеко." },
+      { q:"Назови минимум две запретные формулировки про Коктейль №1.",
+        groups:[["молекуляр"],["крепк"],["цена первой","сначала цена"],["все ингредиент","всё перечисл","перечисл сразу"]],
+        min:2, hint:"Что нельзя.",
+        answer:"Нельзя: называть икру молекулярной, говорить крепкий (надо насыщенный), перечислять все ингредиенты сразу, называть цену первой." },
+      { q:"Какой образ нужно создавать при описании №1 (главный приём)?",
+        groups:[["лопает","лопается","язык"]],
+        min:1, hint:"Главная фраза.",
+        answer:"Лопается на языке - это образ, который работает мгновенно." }
+    ]
+  },
+
+  cocktail_2: {
+    name: "Коктейль №2",
+    bank: [
+      { q:"Перечисли все ингредиенты Коктейля №2.",
+        groups:[["roberto cavalli","cavalli","кавалли","манго"],["джин","gin","папай"],["маракуй"],["сливочн","кордиал"],["лимон"]],
+        min:4, hint:"5 ингредиентов.",
+        answer:"Водка Roberto Cavalli со вкусом манго, джин со вкусом папайи, маракуйя, сливочный кордиал, сок лимона." },
+      { q:"Какая водка в Коктейле №2 и в чём её особенность?",
+        groups:[["roberto cavalli","cavalli","кавалли"],["манго"]],
+        min:2, hint:"Бренд + вкус.",
+        answer:"Roberto Cavalli со вкусом манго - премиальная водка от итальянского модного дома." },
+      { q:"Какой главный образ нужно создать при продаже №2?",
+        groups:[["тропич","тропик"],["десерт","в бокале"]],
+        min:2, hint:"Цитата из скрипта.",
+        answer:"Тропический десерт в бокале - это главный образ для гостя." },
+      { q:"Какая цена и объём Коктейля №2?",
+        groups:[["1600","1 600"],["170"]],
+        min:2, hint:"Цена + объём.",
+        answer:"1 600 руб за 170 мл." },
+      { q:"Гость говорит Не люблю сладкое. Как ответить?",
+        groups:[["маракуй","лимон"],["кислинк","балансир","не приторн"]],
+        min:2, hint:"Через кислоту.",
+        answer:"В №2 маракуйя и лимон дают кислинку - она балансирует сладость. Это не приторно, это сочно." },
+      { q:"Главное правило при продаже №2.",
+        groups:[["не назыв","не перечисл"],["картин","рисуйт","тропич"]],
+        min:2, hint:"Цитата из скрипта.",
+        answer:"Не называйте состав - рисуйте картину. Тропический вечер. Три фрукта в одном бокале." },
+      { q:"Какие три тропических фрукта в Коктейле №2?",
+        groups:[["манго"],["папай"],["маракуй"]],
+        min:3, hint:"Все три.",
+        answer:"Манго, папайя, маракуйя - три тропика в одном бокале." },
+      { q:"Что говорить про маракуйю в Коктейле №2?",
+        groups:[["жив","настоящ","свеж"],["не сироп","не из сиропа"]],
+        min:1, hint:"Один акцент.",
+        answer:"Живая маракуйя / настоящая маракуйя, не сироп - подчёркиваем свежесть." }
+    ]
+  },
+
+  golden_kiss: {
+    name: "Golden Kiss",
+    bank: [
+      { q:"Перечисли все ингредиенты Golden Kiss.",
+        groups:[["лимончелл","limoncello"],["малинов","малина","ликер","ликёр"],["манго"],["личи"]],
+        min:3, hint:"4 ингредиента.",
+        answer:"Лимончелло, малиновый ликёр, манго, личи." },
+      { q:"Что такое золотая пена в Golden Kiss и как она появляется?",
+        groups:[["белок","взбит","взбива"],["велюр","золот","нажим"]],
+        min:2, hint:"Белок + велюр.",
+        answer:"Коктейль взбивается с белком - поднимается плотная пена. На неё делают один нажим золотого велюра - пена становится золотой." },
+      { q:"Из какой коллекции Golden Kiss и что означает название?",
+        groups:[["гэтсби","gatsby"],["золот","золотой поцелуй","kiss"]],
+        min:2, hint:"Коллекция + перевод.",
+        answer:"Из Гэтсби-коллекции. Golden Kiss - Золотой поцелуй." },
+      { q:"Какая цена и объём Golden Kiss?",
+        groups:[["2600","2 600","две тысяч шестьсот"],["140"]],
+        min:2, hint:"Цена + объём.",
+        answer:"2 600 руб за 140 мл." },
+      { q:"Гость говорит Там белок? Я не ем... - как ответить?",
+        groups:[["пастеризован","пастер","безопасн"],["текстур","пены","для пены"],["вкуса","вкус нет","нет вкуса"]],
+        min:2, hint:"Безопасность + назначение.",
+        answer:"Это пастеризованный белок - он полностью безопасен и нужен только для текстуры пены. Вкуса белка нет совсем." },
+      { q:"Кому идеально предлагать Golden Kiss? Минимум 3 типа гостей.",
+        groups:[["девушк","свидан","праздн"],["фотогр","снима","фото"],["лёгк","легк","сладк"],["компани","новиков","выбрать","начать","первый"]],
+        min:3, hint:"Три портрета.",
+        answer:"Девушке/свиданию/празднику; гостю, который фотографирует; кто хочет лёгкое и сладкое; в начале вечера; первый коктейль." },
+      { q:"Главное правило при продаже Golden Kiss.",
+        groups:[["не продав"],["золот","губах","фото","телефон"]],
+        min:2, hint:"Цитата из скрипта.",
+        answer:"Не продавайте коктейль. Продавайте золото на губах и фото в телефоне." }
+    ]
+  },
+
+  rieslingmalina: {
+    name: "Лимонад Рислинг-малина",
+    bank: [
+      { q:"Перечисли все ингредиенты лимонада Рислинг-малина.",
+        groups:[["кордиал","рислинг"],["жасмин"],["малин","пюре малин"],["содов"]],
+        min:3, hint:"4 ингредиента.",
+        answer:"Кордиал на основе рислинга, жасмин, пюре малины, содовая." },
+      { q:"Что такое кордиал - простыми словами для гостя?",
+        groups:[["концентрир","концентр","сироп"],["фрукт","ягод","рислинг","основ"]],
+        min:2, hint:"Что это + основа.",
+        answer:"Концентрированный сироп на основе фрукта или ягоды (иногда с добавлением вина). Здесь - на основе рислинга." },
+      { q:"Какие два формата у лимонада Рислинг-малина?",
+        groups:[["600","720"],["1200","1400","1 200","1 400"]],
+        min:2, hint:"Два размера + цены.",
+        answer:"600 мл - 720 руб и 1200 мл - 1 400 руб." },
+      { q:"Гость спрашивает Он сладкий? - как ответить?",
+        groups:[["не","нет"],["кислотн","кислот","рислинг","малин"],["цветочн","жасмин"]],
+        min:2, hint:"Не сладкий - что вместо.",
+        answer:"Нет, он кислотный и лёгкий. Рислинг и малина дают кислоту, жасмин - цветочность. Сладость минимальная." },
+      { q:"Главное правило при продаже лимонадов в NOMO.",
+        groups:[["лимонад","продаёт","продается","продаётся"],["не предлаг","не вод","задайт","вопрос"]],
+        min:1, hint:"Цитата из скрипта.",
+        answer:"Лимонад тоже продаётся. Задайте вопрос - не предлагайте воду." },
+      { q:"Какая ключевая зацепка в Рислинг-малине? Что делает его особенным?",
+        groups:[["рислинг","виноградн","без алкогол"],["вкус как вино","вино без алкогол"]],
+        min:1, hint:"Главный крючок.",
+        answer:"Рислинг без алкоголя - виноградная кислотность как у вина, но без градуса. Вкус как у вина, но без алкоголя." },
+      { q:"Чем Рислинг-малина отличается от других лимонадов в меню?",
+        groups:[["нестанд","необычн","удивит","самый"],["рислинг","жасмин","кислотн"]],
+        min:2, hint:"Чем выделяется.",
+        answer:"Самый необычный лимонад в меню - рислинг даёт виноградную кислотность, жасмин - цветочность. Не приторный, кислотный, лёгкий." }
+    ]
+  },
+
+  da_hong_pao: {
+    name: "Да Хун Пао",
+    bank: [
+      { q:"Что такое Да Хун Пао - категория, регион, страна?",
+        groups:[["улун","oolong","утёсн","утесн"],["уишань","wuyi","уи"],["фуцзян","fujian","китай","china"]],
+        min:2, hint:"Тип + регион/страна.",
+        answer:"Утёсный улун с горы Уишань, провинция Фуцзянь, Китай." },
+      { q:"Как переводится Да Хун Пао?",
+        groups:[["больш","великий","big"],["красн","red"],["халат","robe"]],
+        min:2, hint:"Дословный перевод.",
+        answer:"Большой красный халат." },
+      { q:"Какие вкусовые ноты Да Хун Пао - назови минимум три.",
+        groups:[["орех","обжарен","ореховые","грецк"],["карамель","темн карамел","тёмн карамел"],["минеральн"],["послевкус","бархат","долг"]],
+        min:3, hint:"Три из четырёх.",
+        answer:"Обжаренные орехи, тёмная карамель, минеральность, долгое бархатистое послевкусие." },
+      { q:"Что значит утёсный чай? Объясни гостю.",
+        groups:[["скал","утёс","утес"],["растёт","расте","на скал"],["минераль","горн"]],
+        min:2, hint:"Где растёт + что даёт.",
+        answer:"Растёт на скалах горы Уишань. Минеральная почва и горный воздух дают чаю особый вкус - орехи и минеральность." },
+      { q:"Какая цена и объём Да Хун Пао?",
+        groups:[["900"]],
+        min:1, hint:"Одинаковая цифра 2 раза.",
+        answer:"900 руб за 900 мл." },
+      { q:"Чем Да Хун Пао отличается от Те Гуань Инь?",
+        groups:[["те гуан","tieguanyin","ти гуан"],["цветочн","лёгк","легк","зелён","зелен"],["орех","темн","тёмн","карамель","насыщенн"]],
+        min:2, hint:"Профиль каждого.",
+        answer:"Те Гуань Инь - цветочный, лёгкий, зелёный профиль. Да Хун Пао - тёмный улун: обжаренные орехи, карамель, насыщенный." },
+      { q:"Главное правило при продаже чая в NOMO.",
+        groups:[["не дежурн","не обычн","не просто"],["финал","вечер","истори"]],
+        min:1, hint:"Цитата из скрипта.",
+        answer:"Чай - это не дежурный напиток. Это финал вечера с историей." },
+      { q:"Какая легенда у Да Хун Пао? В одной фразе.",
+        groups:[["монах","халат","укрыли","накрыли"],["скал","утёс","утес","трещин"]],
+        min:1, hint:"Кратко.",
+        answer:"Первые кусты росли в трещинах скал и были укрыты красными халатами монахов - отсюда название Большой красный халат." }
+    ]
+  },
+
+  tesseron: {
+    name: "Tesseron Lot 29 XO",
+    bank: [
+      { q:"Что значит Lot 29 в названии Tesseron?",
+        groups:[["1929","год","урожа"],["купаж","преоблада","основ"]],
+        min:2, hint:"Год + что это означает.",
+        answer:"В купаже преобладают коньяки урожая 1929 года." },
+      { q:"Что такое Grande Champagne? Объясни гостю.",
+        groups:[["не регион","не шампан","не шампань"],["крю","cru","почв","меловы"],["лучш","высш","grand cru"]],
+        min:2, hint:"Что это и не что.",
+        answer:"Это не регион Шампань. Это лучший крю в Коньяке - меловые холмы. Как Гран Крю в Бургундии." },
+      { q:"Какая категория у Tesseron Lot 29?",
+        groups:[["xo","exception"]],
+        min:2, hint:"Категория.",
+        answer:"XO Exception - высшая категория." },
+      { q:"С каким легендарным брендом связан Tesseron исторически?",
+        groups:[["hennessy","хеннес","эннес"],["paradis","паради"]],
+        min:1, hint:"Бренд + линейка.",
+        answer:"Tesseron - семейный дом, который поставлял коньяк для Hennessy Paradis." },
+      { q:"Какая цена и объём Tesseron Lot 29?",
+        groups:[["14900","14 900","четырнадцать тысяч"],["50"]],
+        min:2, hint:"Цена + объём.",
+        answer:"14 900 руб за 50 мл." },
+      { q:"Какие вкусовые ноты Tesseron - назови минимум три.",
+        groups:[["лип","цвет"],["сухофрукт"],["шоколад"],["специ","прян"],["послевкус","бесконечн"]],
+        min:3, hint:"Три из пяти.",
+        answer:"Цветы липы, сухофрукты, шоколад, специи, бесконечное послевкусие." },
+      { q:"Главное правило при продаже Tesseron.",
+        groups:[["1929"],["в бокале","нельзя объяснить","только попроб"]],
+        min:1, hint:"Цитата из скрипта.",
+        answer:"1929 год в бокале. Некоторые вещи нельзя объяснить - только попробовать." },
+      { q:"Гость спрашивает Чем он лучше Hennessy XO?",
+        groups:[["семейн","малый","большой дом"],["grande champagne","гранд шампань","1929"]],
+        min:2, hint:"Через категорию + год.",
+        answer:"Hennessy XO - безупречный купаж большого дома. Tesseron - семейный дом, Grande Champagne, коньяки 1929 года в купаже." }
+    ]
+  },
+
+  hana_awaka: {
+    name: "Hana-Awaka",
+    bank: [
+      { q:"Что такое Hana-Awaka - категория, страна?",
+        groups:[["игрист","sparkling"],["сакэ","sake","саке"],["япон","japan"]],
+        min:2, hint:"Категория + страна.",
+        answer:"Игристое сакэ из Японии." },
+      { q:"Как переводится Hana-Awaka?",
+        groups:[["цветущ","цветущая","цветущая пена","флауэр"]],
+        min:1, hint:"Перевод.",
+        answer:"Цветущая пена." },
+      { q:"С чем сравнивать Hana-Awaka, чтобы снять страх у гостя?",
+        groups:[["просекко","prosecco","игрист вин","шампанск"]],
+        min:1, hint:"Аналогия.",
+        answer:"С Просекко или игристым вином - те же пузырьки, та же лёгкость, но с японским характером." },
+      { q:"Какая цена и объём Hana-Awaka?",
+        groups:[["1800","1 800","тысяч восемьсот"],["250"]],
+        min:2, hint:"Цена + объём.",
+        answer:"1 800 руб за 250 мл." },
+      { q:"Гость говорит Я не люблю сакэ. Как ответить?",
+        groups:[["друг","другое","другой"],["игрист","пузырьк","лёгк","легк","цветочн"],["не горяч","не крепк","не то"]],
+        min:2, hint:"Через сравнение с обычным сакэ.",
+        answer:"Hana-Awaka - это другое сакэ. Игристое, лёгкое, цветочное. Это не то крепкое, что пьют горячим." },
+      { q:"Главное правило при продаже Hana-Awaka.",
+        groups:[["игрист","сакэ"],["думал","всё","все попроб","попробов"]],
+        min:1, hint:"Цитата из скрипта.",
+        answer:"Игристое сакэ - для тех, кто думал, что уже всё попробовал." },
+      { q:"Кому идеально предлагать Hana-Awaka? Назови два сценария.",
+        groups:[["аперитив"],["просекко","альтернатив","вместо"],["необычн","нестанд"]],
+        min:2, hint:"Два сценария.",
+        answer:"Как аперитив; как альтернативу Просекко; гостю, который хочет необычное; гостю, который не любит обычное сакэ." }
+    ]
+  },
+
+  cocktail_17: {
+    name: "Коктейль №17",
+    bank: [
+      { q:"Перечисли все ингредиенты Коктейля №17.",
+        groups:[["настойк","дикая вишн","диков"],["йогурт","ликер йогурт","ликёр йогурт"],["гранат"],["черри","cherry","черри бренди"]],
+        min:3, hint:"4 ингредиента.",
+        answer:"Настойка дикой вишни, йогуртовый ликёр, гранат, черри бренди." },
+      { q:"Чем дикая вишня отличается от обычной - что это даёт коктейлю?",
+        groups:[["горьковат","горч","терпк"],["глуб","насыщенн","ягодн"]],
+        min:2, hint:"Вкус + что даёт.",
+        answer:"Дикая вишня - горьковатее, глубже обычной. Даёт ягодную глубину коктейлю." },
+      { q:"Какая цена и объём Коктейля №17?",
+        groups:[["2200","2 200","две тысяч двести"],["120"]],
+        min:2, hint:"Цена + объём.",
+        answer:"2 200 руб за 120 мл. Самый дорогой авторский коктейль в меню." },
+      { q:"Какой ингредиент даёт коктейлю №17 кремовую текстуру?",
+        groups:[["йогурт","йогуртов","ликер йогурт","ликёр йогурт"]],
+        min:1, hint:"Один ингредиент.",
+        answer:"Йогуртовый ликёр - он даёт кремовую, бархатистую текстуру." },
+      { q:"Что такое черри бренди - объясни гостю.",
+        groups:[["вишн","cherry"],["бренди","дистиллят"],["не ликер","не ликёр","не сладк"]],
+        min:2, hint:"Что это + важный нюанс.",
+        answer:"Вишнёвый бренди - дистиллят с вишнёвым вкусом, не ликёр. Даёт глубину и тепло." },
+      { q:"Какие три вишнёвых ингредиента в Коктейле №17?",
+        groups:[["настойк","дикая вишн"],["гранат"],["черри","черри бренди"]],
+        min:3, hint:"Все три.",
+        answer:"Настойка дикой вишни, гранат и черри бренди - вишнёвый круг." },
+      { q:"Главное правило при продаже Коктейля №17.",
+        groups:[["самый дорог","дорого","самый особенн"],["характер","не цену"]],
+        min:2, hint:"Цитата из скрипта.",
+        answer:"Самый дорогой - значит самый особенный. Продавайте характер, не цену." },
+      { q:"Кому НЕ предлагать №17 как первый коктейль?",
+        groups:[["новичк","первый","нач"]],
+        min:1, hint:"Кому не подойдёт.",
+        answer:"Новичку - это не первый коктейль. Слишком насыщенный, тёмный, почти десертный." }
+    ]
+  },
+
+  porto_tawny: {
+    name: "Porto Tawny 10",
+    bank: [
+      { q:"Что значит Tawny - простыми словами?",
+        groups:[["янтар","amber","янтарн"],["мал бочк","малых бочк","оксидац","воздух","контакт"]],
+        min:2, hint:"Цвет + способ выдержки.",
+        answer:"Янтарный (не рубиновый). Выдерживается в малых бочках с доступом воздуха - это даёт орехи и карамель." },
+      { q:"Кто производитель нашего Porto Tawny?",
+        groups:[["dow","доу","доуc"]],
+        min:1, hint:"Имя дома.",
+        answer:"Dow's - один из великих домов Дору." },
+      { q:"Какие вкусовые ноты Porto Tawny 10 - назови минимум три.",
+        groups:[["орех"],["карамель"],["абрикос"],["ваниль"]],
+        min:3, hint:"Три из четырёх.",
+        answer:"Орехи, карамель, абрикос, ваниль." },
+      { q:"Какая особенность подачи Porto Tawny? Что важно сказать гостю?",
+        groups:[["охлажд","холодн","прохладн"]],
+        min:1, hint:"Температура.",
+        answer:"Подаётся слегка охлаждённым - это необычно для крепкого вина. Удивляет гостя." },
+      { q:"Какая цена и объём Porto Tawny?",
+        groups:[["1300","1 300","тысяч триста"],["75"]],
+        min:2, hint:"Цена + объём.",
+        answer:"1 300 руб за 75 мл." },
+      { q:"Гость говорит Я не пью портвейн. Как ответить?",
+        groups:[["не тот","другой"],["янтар","орехов","карамель"],["охлажд","маленьк"]],
+        min:2, hint:"Через образ.",
+        answer:"Tawny - это не тот портвейн. Янтарный, ореховый, карамельный. Подаётся охлаждённым." },
+      { q:"К какому десерту Porto Tawny подходит идеально?",
+        groups:[["шокол"]],
+        min:1, hint:"Один десерт.",
+        answer:"К шоколадному десерту - карамель и орехи в портвейне идеально работают с шоколадом." },
+      { q:"Главное правило при продаже Porto Tawny.",
+        groups:[["не тот","не такой"],["янтар","орех","терпен","10 лет"]],
+        min:1, hint:"Цитата из скрипта.",
+        answer:"Tawny - это не тот портвейн. Это янтарь, орехи и 10 лет терпения." }
+    ]
+  },
+
+  negroni: {
+    name: "Негрони",
+    bank: [
+      { q:"Перечисли ингредиенты Негрони (равные части).",
+        groups:[["джин","gin","би джин"],["вермут","корсиери","корсьери"],["селект","select"]],
+        min:3, hint:"3 равные части.",
+        answer:"Би Джин, Вермут Корсиери, Селект (горький ликёр). Равные части 1:1:1." },
+      { q:"В каком году и где был придуман Негрони?",
+        groups:[["1919","девятнадцат","девятнадцатого"],["флоренц","florence"]],
+        min:2, hint:"Год + город.",
+        answer:"Флоренция, 1919 год." },
+      { q:"Кто и как заказал первый Негрони?",
+        groups:[["граф","негрон","count"],["americano","американо","крепче","джин","сод"]],
+        min:2, hint:"Кто + что попросил.",
+        answer:"Граф Негрони попросил бармена сделать Americano крепче - добавить джин вместо содовой." },
+      { q:"Что такое Селект и чем он отличается от Кампари?",
+        groups:[["венецианск","venice"],["мягч","пряный","альтернатив"]],
+        min:2, hint:"Регион + профиль.",
+        answer:"Венецианский горький ликёр, альтернатива Кампари. Чуть мягче, более пряный." },
+      { q:"Какая цена и объём Негрони?",
+        groups:[["900"],["120"]],
+        min:2, hint:"Цена + объём.",
+        answer:"900 руб за 120 мл." },
+      { q:"Главное правило при продаже Негрони.",
+        groups:[["не извин","не оправд"],["горечь","горч","характер","негрон"]],
+        min:2, hint:"Цитата из скрипта.",
+        answer:"Не извиняйтесь за горечь. Горечь - это и есть Негрони." },
+      { q:"Когда и кому идеально предлагать Негрони?",
+        groups:[["аперит","нач","начале вечер"],["горьк","кампар","апероль"]],
+        min:1, hint:"Время + типаж.",
+        answer:"Как аперитив, в начале вечера. Гостям, которые любят горькое - Кампари, Апероль." },
+      { q:"Гость говорит Я не люблю горькое. Что предложить вместо?",
+        groups:[["апероль","aperol","спритц","spritz"],["беллини","bellini","просекко"]],
+        min:1, hint:"Альтернатива.",
+        answer:"Апероль Спритц - мягкий и фруктовый. Или Беллини - просекко с персиком." }
+    ]
+  },
+
+  dalmore_12: {
+    name: "Dalmore 12",
+    bank: [
+      { q:"Из какого региона Шотландии Dalmore?",
+        groups:[["highland","хайленд"]],
+        min:1, hint:"Регион.",
+        answer:"Highlands (Хайленды) - шотландские горы." },
+      { q:"Какая особенность выдержки Dalmore 12 - что особенного в бочках?",
+        groups:[["херес","sherry","хереc"],["частичн","часть"]],
+        min:2, hint:"Тип + способ.",
+        answer:"Частично выдерживается в бочках из-под хереса - это даёт фруктовость и глубину." },
+      { q:"Какие ноты во вкусе Dalmore 12 - назови минимум две.",
+        groups:[["апельсин"],["шоколад","темн шоколад","тёмн шоколад"],["корица","специ","пряност"]],
+        min:2, hint:"Две из трёх.",
+        answer:"Апельсин, тёмный шоколад, корица и специи." },
+      { q:"Что особенного на этикетке Dalmore?",
+        groups:[["олен","stag"],["12","двенадцать","рога","рогам"]],
+        min:2, hint:"Образ + деталь.",
+        answer:"Олень с 12 рогами - двенадцать рогов символизируют 12 лет выдержки." },
+      { q:"Какая цена и объём Dalmore 12?",
+        groups:[["2600","2 600","две тысяч шестьсот"],["50"]],
+        min:2, hint:"Цена + объём.",
+        answer:"2 600 руб за 50 мл." },
+      { q:"Главное правило при продаже Dalmore 12.",
+        groups:[["не продав"],["горы","олен","шокол","апельсин"]],
+        min:1, hint:"Цитата из скрипта.",
+        answer:"Не продавайте виски. Продавайте горы, оленя и шоколад с апельсином." },
+      { q:"Чем Dalmore 12 отличается от Macallan 12?",
+        groups:[["macallan","макалл","ваниль","карамель","мягко"],["dalmore","далмор","херес","апельсин","шокол","фруктов"]],
+        min:2, hint:"Профили обоих.",
+        answer:"Macallan - ваниль и карамель, очень мягко. Dalmore - фруктовее, с хересом, апельсином и специями." }
+    ]
+  },
+
+  laphroaig: {
+    name: "Laphroaig 10",
+    bank: [
+      { q:"Из какого региона Шотландии Laphroaig?",
+        groups:[["islay","айлей","айла"]],
+        min:1, hint:"Остров/регион.",
+        answer:"Остров Айлей (Islay)." },
+      { q:"Какие три главных вкусовых ноты Laphroaig 10?",
+        groups:[["торф","peat","дым","smoke"],["йод","медиц"],["морск","море","sea"]],
+        min:3, hint:"Три ноты.",
+        answer:"Торф/дым, йод/медицинские ноты, морской воздух/бриз." },
+      { q:"Какая неожиданная нота в финале Laphroaig?",
+        groups:[["ваниль","vanilla"]],
+        min:1, hint:"Одна нота.",
+        answer:"Мягкая ваниль в финале - неожиданность после дыма." },
+      { q:"Какая цена и объём Laphroaig 10?",
+        groups:[["1750","1 750","тысяч семьсот пятьдесят"],["50"]],
+        min:2, hint:"Цена + объём.",
+        answer:"1 750 руб за 50 мл. Самый доступный односолодовый в меню." },
+      { q:"Какая ключевая фраза снимает страх у гостя при продаже Laphroaig?",
+        groups:[["либо люб","либо запомн","либо никогда","сразу"]],
+        min:1, hint:"Цитата.",
+        answer:"Его либо любят сразу - либо никогда не забывают." },
+      { q:"Кому НЕ предлагать Laphroaig?",
+        groups:[["новичк","перв","впервые","первый виски"]],
+        min:1, hint:"Один типаж.",
+        answer:"Новичкам как первый виски - может отпугнуть от виски навсегда." },
+      { q:"Главное правило при продаже Laphroaig.",
+        groups:[["не извин","не оправд"],["дым","характер","смелость"]],
+        min:2, hint:"Цитата из скрипта.",
+        answer:"Не извиняйтесь за дым. Дым - это характер. Продавайте смелость." },
+      { q:"Гость спрашивает Это же медицинский запах? Что ответить?",
+        groups:[["йод","йодн"],["айлей","торф","море","морск","воздух"]],
+        min:2, hint:"Через происхождение.",
+        answer:"Йодные ноты - да, это Айлей. Их дают торф и морской воздух прямо у дистиллерии." }
+    ]
+  },
+
+  macallan_12: {
+    name: "Macallan Double Cask 12",
+    bank: [
+      { q:"Из какого региона Шотландии Macallan?",
+        groups:[["speyside","спейсайд","спейсаид"]],
+        min:1, hint:"Регион.",
+        answer:"Speyside (Спейсайд)." },
+      { q:"Что значит Double Cask?",
+        groups:[["две","двух","двойн"],["американ","american"],["европ","european"]],
+        min:2, hint:"Что и в чём.",
+        answer:"Выдержка в двух типах бочек: американский белый дуб и европейский дуб." },
+      { q:"Что даёт каждая из двух бочек Macallan 12?",
+        groups:[["американ","ваниль","карамель"],["европ","сухофрукт","пряност"]],
+        min:2, hint:"Две бочки + ноты.",
+        answer:"Американский дуб - ваниль и карамель. Европейский дуб - сухофрукты и пряности." },
+      { q:"Какие основные вкусовые ноты Macallan 12 - назови две.",
+        groups:[["ваниль","vanilla"],["карамель","caramel"]],
+        min:2, hint:"Якорные ноты.",
+        answer:"Ваниль и карамель." },
+      { q:"Какая цена и объём Macallan 12?",
+        groups:[["2600","2 600","две тысяч шестьсот"],["50"]],
+        min:2, hint:"Цена + объём.",
+        answer:"2 600 руб за 50 мл." },
+      { q:"Кому идеально предлагать Macallan 12 как первый виски?",
+        groups:[["впервые","новичк","первый раз","начин"],["известн","надежн","надёжн"],["коньяк","бурбон"]],
+        min:2, hint:"Несколько типов.",
+        answer:"Тому, кто впервые заказывает виски; кто хочет известное и надёжное; любителю коньяка/бурбона." },
+      { q:"Главное правило при продаже Macallan 12.",
+        groups:[["не продав","не продай"],["тепло","раскрыв","медленн"]],
+        min:1, hint:"Цитата из скрипта.",
+        answer:"Не продавайте виски. Продавайте тепло, которое раскрывается медленно." },
+      { q:"Гость говорит Не люблю виски, он резкий. Что ответить?",
+        groups:[["не резк","нет резк","другой опыт"],["ваниль","карамель","мягк","тепло"]],
+        min:2, hint:"Через профиль.",
+        answer:"Macallan 12 - это совсем другой опыт. Никакой резкости. Ваниль, карамель, мягкое тепло." }
+    ]
+  },
+
+  pitahaya: {
+    name: "Лимонад Питахайя",
+    bank: [
+      { q:"Что даёт лимонаду Питахайя его яркий фуксийный цвет? Главный аргумент при продаже.",
+        groups:[["питахай","pitahaya"],["цвет","фуксий","ярк"]],
+        min:2, hint:"Назови ингредиент + что он даёт.",
+        answer:"Питахайя даёт глубокий фуксийный цвет - это главный аргумент при продаже. Цвет продаёт лимонад сам, нужно его показывать." },
+      { q:"Какие три компонента в авторском лимонаде Питахайя?",
+        groups:[["питахай","pitahaya"],["малин","пюре малин"],["ягод","лесн"]],
+        min:2, hint:"Тропический фрукт + ягоды.",
+        answer:"Питахайя, пюре малины, лесные ягоды - три компонента ручной работы. Не заводской концентрат." },
+      { q:"Что НЕЛЬЗЯ говорить про лимонад Питахайя? Назови минимум два запрета.",
+        groups:[["обычн"],["занудн","состав","объясн"],["цена первой","сначала цена"]],
+        min:2, hint:"Запретные формулировки.",
+        answer:"Нельзя: называть обычный лимонад, занудно перечислять состав, называть цену первой. Нужно: показывать цвет и говорить авторский." }
+    ]
+  },
+
+  mango_passion: {
+    name: "Лимонад Манго-Маракуйя",
+    bank: [
+      { q:"Какие два объёма и цены у лимонада Манго-Маракуйя?",
+        groups:[["600","720"],["1200","1.2","1400"]],
+        min:2, hint:"Два размера + цены.",
+        answer:"600 мл - 720 руб (на одного-двоих) и 1,2 литра - 1 400 руб (на компанию). Большой графин выгоднее от двух человек." },
+      { q:"Что визуально цепляет гостя в лимонаде Манго-Маракуйя? Уникальный приём.",
+        groups:[["косточк","маракуй"],["живые","настоящ","видн"]],
+        min:1, hint:"Тактильно-визуальная деталь.",
+        answer:"Косточки маракуйи - гость их видит. Это доказательство, что фрукт настоящий, а не сироп. Часть wow-эффекта." },
+      { q:"Гость за рулём. Что предложить и как обосновать?",
+        groups:[["манго","маракуй"],["безалкоголь","без алкогол","свеж","фрукт","пюре"],["сытн","ярк","лимонад"]],
+        min:2, hint:"Безалкогольная альтернатива.",
+        answer:"Лимонад манго-маракуйя - пюре свежих фруктов, сытно по ощущениям, никаких вопросов по дороге домой. Порция 600 мл - 720 руб." }
+    ]
+  },
+
+  smoothie: {
+    name: "Смузи Киви-Яблоко",
+    bank: [
+      { q:"Какая цена и объём смузи Киви-Яблоко?",
+        groups:[["750"],["300"]],
+        min:2, hint:"Цена + объём.",
+        answer:"750 руб за 300 мл." },
+      { q:"Чего НЕТ в смузи Киви-Яблоко? Назови минимум два без.",
+        groups:[["молок","без молок"],["сахар","без сахар","добавлен"]],
+        min:2, hint:"Что отсутствует - главный плюс.",
+        answer:"Без молока и без добавленного сахара - только свежие фрукты и лёд. Полностью растительный." },
+      { q:"Кому и когда идеально предлагать смузи Киви-Яблоко? Назови два сценария.",
+        groups:[["утр","бранч","день"],["после спорт","трениров","зож","следит"]],
+        min:1, hint:"Время + тип гостя.",
+        answer:"Утром, на бранч, после тренировки. Тем, кто следит за питанием, не пьёт алкоголь, хочет лёгкое и натуральное." }
+    ]
+  },
+
+  pinot_rose: {
+    name: "Pinot Noir Rose Extra Brut",
+    bank: [
+      { q:"Какой метод производства у Pinot Noir Rose и какой сорт винограда?",
+        groups:[["классич","traditionnelle","метод"],["pinot","пино нуар","пино"]],
+        min:2, hint:"Технология + сорт.",
+        answer:"Классический метод (Methode Traditionnelle), как у шампанского. Сорт - Pinot Noir. Производитель Chateau Pinot, Кубань." },
+      { q:"Что значит экстра-брют - простыми словами для гостя?",
+        groups:[["сух","самый сух"],["сахар","6","меньше"]],
+        min:1, hint:"Уровень сахара.",
+        answer:"Самый сухой стиль игристого - меньше 6 г сахара на литр. Максимум вкуса винограда, минимум сладости." },
+      { q:"Какая цена и объём Pinot Noir Rose за бокал?",
+        groups:[["1440","1 440"],["125"]],
+        min:2, hint:"Цена + объём бокала.",
+        answer:"1 440 руб за 125 мл." }
+    ]
+  },
+
+  viognier: {
+    name: "Viognier Famille Descombe",
+    bank: [
+      { q:"Какой сорт винограда и какой регион у Viognier Famille Descombe?",
+        groups:[["вионье","viognier"],["лангедок","languedoc","франц"]],
+        min:2, hint:"Сорт + регион.",
+        answer:"Сорт Вионье, регион Лангедок, Франция. Редкий ароматный белый сорт." },
+      { q:"Какие ароматические ноты у Viognier - назови минимум две.",
+        groups:[["персик"],["абрикос"],["жимолост","цветочн","белые цвет"]],
+        min:2, hint:"Самый ароматный белый сорт.",
+        answer:"Персик, абрикос, жимолость, белые цветы. Вионье - самый ароматный белый сорт, аромат чувствуется сразу у бокала." },
+      { q:"К каким блюдам предлагать Viognier?",
+        groups:[["рыб","морепродукт"],["курица","белое мясо"],["сыр","твёрд"]],
+        min:1, hint:"Гастропара.",
+        answer:"К рыбе, белому мясу, твёрдым сырам. Не к красному мясу и не к острой кухне." }
+    ]
+  },
+
+  moscato: {
+    name: "Moscato (ЮАР)",
+    bank: [
+      { q:"Что особенного в сорте Мускат - в одной фразе для гостя?",
+        groups:[["самый ароматн","самый ярк","ароматн"],["аромат","нюхать","понюх","рядом","бокал"]],
+        min:1, hint:"Главная зацепка.",
+        answer:"Мускат - единственный сорт, аромат которого чувствуется в бокале рядом. Самый ароматный белый сорт - можно дать понюхать." },
+      { q:"Какой алкоголь у Муската - около какого процента, и как это подать?",
+        groups:[["5","низк","около"],["вечер","весь","можно пить","следит"]],
+        min:1, hint:"Цифра + аргумент.",
+        answer:"Около 5% - можно пить весь вечер. Это достоинство для тех, кто следит за алкоголем, не недостаток." },
+      { q:"Какие конкретные вкусовые образы у Муската? Минимум один.",
+        groups:[["персик"],["личи"],["белые цвет","цветочн"]],
+        min:1, hint:"Конкретные образы вместо абстракций.",
+        answer:"Персик, личи, белые цветы - конкретные образы работают лучше абстракций." }
+    ]
+  },
+
+  malbec_tamari: {
+    name: "Malbec Tamari Special Selection",
+    bank: [
+      { q:"Какой регион у Malbec Tamari и почему он важен?",
+        groups:[["мендос","mendoza"],["высокогор","высота","900","1500","метр"]],
+        min:1, hint:"Регион + особенность.",
+        answer:"Мендоса в Аргентине - высокогорный виноградник 900-1500 метров. Один из лучших винных регионов мира для Мальбека." },
+      { q:"К каким блюдам идеально подходит Malbec? Минимум два варианта.",
+        groups:[["стейк","мяс"],["бургер"],["сыр","твёрд"]],
+        min:2, hint:"Гастропара.",
+        answer:"К стейку, мясу, бургеру, твёрдым сырам. Не к рыбе и не к морепродуктам." },
+      { q:"Какие вкусовые ноты у Malbec - назови минимум две.",
+        groups:[["слив"],["ежевик","темные ягод"],["шоколад","темн шокол","тёмн шокол"],["табак"]],
+        min:2, hint:"Тёмные ягоды и пряности.",
+        answer:"Слива, ежевика, тёмный шоколад, нотки табака. Мягкие танины, бархатистое тело - не грубое." }
+    ]
+  },
+
+  shiraz: {
+    name: "Shiraz (ЮАР)",
+    bank: [
+      { q:"Откуда наш Shiraz - страна и регион?",
+        groups:[["юар","south africa","южноаф"],["западный кейп","western cape","кейп"]],
+        min:1, hint:"Страна + регион.",
+        answer:"ЮАР, регион Западный Кейп - лучший винный регион страны. Океанский климат и горные склоны." },
+      { q:"Чем южноафриканский Shiraz отличается по стилю от австралийского?",
+        groups:[["пряный","пряност"],["элегант","не джем","не jam","не австралийск"]],
+        min:1, hint:"Свой стиль.",
+        answer:"Пряный и элегантный. Не австралийский джем, не французская строгость - своя история." },
+      { q:"К каким блюдам предлагать Shiraz?",
+        groups:[["мяс","мясн"]],
+        min:1, hint:"Главная гастропара.",
+        answer:"К мясу - насыщенное, с пряностями и характером." }
+    ]
+  },
+
+  madeira: {
+    name: "Madeira Full Rich",
+    bank: [
+      { q:"Что значит Full Rich в стилях Мадейры?",
+        groups:[["самый насыщ","самый сладк","насыщенн"]],
+        min:1, hint:"Самый какой стиль.",
+        answer:"Самый насыщенный и сладкий стиль Мадейры. Есть Dry, Medium Dry, Medium Rich и Full Rich - Full Rich тёмный, карамельный, выразительный." },
+      { q:"Кто производитель нашей Мадейры и с какого года основан дом?",
+        groups:[["cossart","коссарт"],["1745"]],
+        min:1, hint:"Дом + год.",
+        answer:"Cossart Gordon - один из старейших домов Мадейры, основан в 1745 году. Почти три века." },
+      { q:"К чему подавать Madeira Full Rich и как? Минимум один сценарий.",
+        groups:[["дижестив","финал","к десерт","сыр","сига","кофе"],["небольш","75","медлен"]],
+        min:1, hint:"Роль + способ.",
+        answer:"Это дижестив - финал вечера. К десерту, сыру с плесенью, кофе, сигаре. Подаётся 75 мл, пьётся медленно." }
+    ]
+  },
+
+  clase_azul: {
+    name: "Clase Azul Reposado",
+    bank: [
+      { q:"Что особенного в декантере (бутылке) Clase Azul?",
+        groups:[["ручн","расписан","роспись","расписы"],["уникальн","арт","произвед","коллекц"]],
+        min:1, hint:"Главная зацепка.",
+        answer:"Декантер расписан вручную мексиканскими мастерами - каждая бутылка уникальна. Это арт-объект и текила одновременно." },
+      { q:"Состав и выдержка Clase Azul Reposado.",
+        groups:[["100","голуб агав","blue agave","агава"],["8","восем","восьм"],["дуб","oak"]],
+        min:2, hint:"Агава + срок выдержки + где.",
+        answer:"100% голубая агава, 8 месяцев в дубовых бочках. Ваниль, карамель, лёгкий дым." },
+      { q:"Как правильно пить Clase Azul и с чем сравнивать?",
+        groups:[["neat","чист","не коктейл","со льд"],["виски","коньяк","бурбон"]],
+        min:2, hint:"Способ + аналогия.",
+        answer:"Пьётся медленно, как хороший виски - neat или со льдом. НЕ в коктейль (это трата продукта). Сравнивать с виски/коньяком." }
+    ]
+  },
+
+  hendricks_amazonia: {
+    name: "Hendrick's Amazonia",
+    bank: [
+      { q:"Что делает Hendrick's Amazonia особенным джином?",
+        groups:[["лимит","limited","ограниченн"],["амазон","ботаник"]],
+        min:2, hint:"Серия + ингредиенты.",
+        answer:"Лимитированная серия с амазонскими ботаниками - такого нет в обычных барах. Та же дистиллерия, что выпустила оригинальный Hendrick's." },
+      { q:"Какие именно амазонские ботаники в Hendrick's Amazonia? Назови минимум один.",
+        groups:[["кокос","кокосов","пальм"],["victoria","victoria amazonica","лили","амазоник"]],
+        min:1, hint:"Конкретные растения.",
+        answer:"Цветок кокосовой пальмы и лилия Victoria Amazonica - гигантская амазонская лилия с листьями до двух метров в диаметре." },
+      { q:"Какая цена и объём Hendrick's Amazonia?",
+        groups:[["1500","1 500"],["50"]],
+        min:2, hint:"Цена + объём.",
+        answer:"1 500 руб за 50 мл." }
+    ]
+  },
+
+  cocktail_la_tomato: {
+    name: "Коктейль №4",
+    bank: [
+      { q:"Что такое Ля Томато - ключевой ингредиент этого коктейля?",
+        groups:[["ликер","ликёр"],["томат"]],
+        min:2, hint:"Простыми словами для гостя.",
+        answer:"Ликёр из томата. Редкий ингредиент - большинство гостей его не встречали. Якорное слово при продаже." },
+      { q:"Какой главный образ нужно создать при продаже Коктейля №4?",
+        groups:[["изящн","элегант"],["блади","bloody","мэри","мери"]],
+        min:2, hint:"Цитата из скрипта.",
+        answer:"Изящнее, чем Блади Мэри - это ключевая фраза при продаже. Сделать паузу - гость сразу понимает характер." },
+      { q:"Какие ингредиенты в Коктейле №4? Назови минимум три.",
+        groups:[["текил","tequila","бланк"],["ля томат","la tomato","томатн ликер","ликёр томат","ликер томат"],["совиньон","sauvignon"],["агав","сироп"],["соль","гимала"],["томат","вяленый"]],
+        min:3, hint:"Минимум три из шести.",
+        answer:"Текила бланко, ликёр Ля Томато, Совиньон Блан, сироп агавы, гималайская соль на борту бокала, вяленый томат как съедобный декор." }
+    ]
+  },
+
+  cocktail_daiginjo: {
+    name: "Коктейль №5",
+    bank: [
+      { q:"Что такое Дайгиндзё - в одной фразе для гостя?",
+        groups:[["высш","премиум","лучш"],["сакэ","sake","саке"]],
+        min:1, hint:"Класс сакэ.",
+        answer:"Высший класс сакэ - шлифовка риса более 50%, самый чистый класс. Не рядовое сакэ." },
+      { q:"Какой ингредиент даёт Коктейлю №5 кремовую текстуру?",
+        groups:[["йогурт","йогуртов"]],
+        min:1, hint:"Один ингредиент.",
+        answer:"Йогуртовый ликёр - даёт кремовость без тяжести." },
+      { q:"Какие три ингредиента в Коктейле №5?",
+        groups:[["сакэ","саке","sake","дайгиндз"],["йогурт","йогуртов"],["лимон","лимонн"]],
+        min:3, hint:"Все три.",
+        answer:"Сакэ Дайгиндзё, йогуртовый ликёр, лимонный ликёр. Минимализм - три ингредиента, ничего лишнего, каждый слышен." }
+    ]
+  },
+
+  chablis: {
+    name: "Chablis Domaine Mosnier",
+    bank: [
+      { q:"Какой сорт винограда у Шабли и из какого региона?",
+        groups:[["шардоне","chardonnay"],["бургунд","burgundy","bourgogne"],["франц","france"]],
+        min:2, hint:"Сорт + регион + страна.",
+        answer:"Шардоне из Бургундии, Франция. Тот же регион, что великие красные вина Бургундии." },
+      { q:"Что такое устричные почвы Шабли - главная зацепка для гостя?",
+        groups:[["окаменел","окаменевш","устриц","ракушек","oyster"]],
+        min:1, hint:"Уникальный геологический факт.",
+        answer:"Виноградники растут на окаменевших устрицах - в этой почве миллионы лет назад было море. Это даёт минеральность. Гость запоминает навсегда." },
+      { q:"Что важно сказать гостю про бочки в Шабли? Это плюс или минус?",
+        groups:[["без бочк","нет бочк"],["чистот","масл","ваниль"]],
+        min:1, hint:"Главное достоинство стиля.",
+        answer:"Никакой бочки - никакого масла и ванили. Это достоинство, не недостаток. Освобождение для тех, кто устал от тяжёлых Шардоне." },
+      { q:"К каким блюдам предлагать Шабли? Минимум два варианта.",
+        groups:[["устриц"],["рыб","судак","треск","камбала","морепродукт"],["сыр","бри","камамбер","козий"]],
+        min:2, hint:"Гастропары.",
+        answer:"К устрицам - классическая пара. К белой рыбе (судак, треска, камбала). К мягким сырам (бри, камамбер, козий)." },
+      { q:"Что НЕЛЬЗЯ говорить про Шабли? Назови минимум два запрета.",
+        groups:[["просто шардоне","обычн шардоне"],["массов","calif","кали","австрал"],["цена первой","сначала цена"],["нейтраль"]],
+        min:2, hint:"Запретные формулировки.",
+        answer:"Нельзя: называть просто Шардоне; сравнивать с массовыми Шардоне (Калифорния, Австралия); говорить нейтральное; называть цену первой." },
+      { q:"Какая цена и объём Шабли в нашем меню?",
+        groups:[["11550","11 550","одиннадцать"],["750"]],
+        min:2, hint:"Цена + объём бутылки.",
+        answer:"11 550 руб за бутылку 750 мл." },
+      { q:"Главное правило при продаже Шабли - ключевая фраза.",
+        groups:[["устрич","окаменел"],["без бочк","чистот"]],
+        min:1, hint:"Цитата из скрипта.",
+        answer:"Устричные почвы и никакой бочки - только чистота. Это слышат все, даже те, кто не разбирается в вине." }
+    ]
+  },
+
+  sancerre: {
+    name: "Sancerre La Clef du Recit",
+    bank: [
+      { q:"Какой сорт винограда у Сансера и из какого региона?",
+        groups:[["совиньон","sauvignon","совин"],["луар","loire"],["франц","france"]],
+        min:2, hint:"Сорт + регион + страна.",
+        answer:"Совиньон Блан из долины Луары, Франция. Луара - лучший адрес для Совиньона в мире." },
+      { q:"Чем луарский Совиньон отличается от новозеландского? Главное отличие.",
+        groups:[["сдержан","элегант","без агресс","тонк"],["новозелан","нз","new zealand"]],
+        min:1, hint:"Стиль.",
+        answer:"Луарский Совиньон сдержанный и элегантный, без агрессии. Новозеландский - яркий и агрессивный. Это два разных характера." },
+      { q:"Какая метафора работает при описании минеральности Сансера?",
+        groups:[["камень","камн"],["после дождя"]],
+        min:1, hint:"Образ из скрипта.",
+        answer:"Минеральный, как камень после дождя. Метафора работает даже для тех, кто не разбирается в вине." },
+      { q:"К каким блюдам предлагать Сансер? Минимум два варианта.",
+        groups:[["морепродукт","устриц"],["рыб","лосос","судак","окунь"],["сыр","коз","шевр","кроттен"]],
+        min:2, hint:"Гастропары.",
+        answer:"К морепродуктам, белой и красной рыбе (лосось, судак, морской окунь), к козьему сыру (Шевр, Кроттен де Шавиньоль)." },
+      { q:"Что НЕЛЬЗЯ говорить про Сансер? Назови минимум два запрета.",
+        groups:[["просто совиньон","обычн совиньон"],["новозелан","нз"],["цена первой","сначала цена"],["кисл","кислое"]],
+        min:2, hint:"Запретные формулировки.",
+        answer:"Нельзя: называть просто Совиньон; сравнивать с новозеландским; говорить кислое (надо живое); называть цену первой." },
+      { q:"Какая цена и объём Сансера в меню?",
+        groups:[["14200","14 200","четырнадцать"],["750"]],
+        min:2, hint:"Цена + объём.",
+        answer:"14 200 руб за бутылку 750 мл." },
+      { q:"Какая ключевая фраза описывает характер Сансера?",
+        groups:[["вино с характер","характер","ведёт","ведет"]],
+        min:1, hint:"Цитата из основного скрипта.",
+        answer:"Вино с характером - оно ведёт. После этой фразы пауза - гость хочет понять, что это значит, и попробовать." }
+    ]
+  },
+
+  barolo: {
+    name: "Barolo Ceretto",
+    bank: [
+      { q:"Какой виноград и какой регион у Бароло?",
+        groups:[["неббиоло","nebbiolo"],["пьемонт","piemonte","piedmont"],["итал","ital"]],
+        min:2, hint:"Сорт + регион + страна.",
+        answer:"Неббиоло из Пьемонта, Италия. Нигде в мире Неббиоло не достигает такого результата, как в Пьемонте." },
+      { q:"Какой исторический титул у Бароло - главная зацепка для гостя?",
+        groups:[["король","king"],["итальянск","итал","italian"]],
+        min:2, hint:"Цитата из скрипта.",
+        answer:"Король итальянских вин - официальный исторический титул, не маркетинг. Единственное итальянское вино с таким званием." },
+      { q:"Кто производитель нашего Бароло и с какого года?",
+        groups:[["ceretto","черетто"],["1937"]],
+        min:2, hint:"Дом + год.",
+        answer:"Ceretto, с 1937 года. Почти сто лет одна семья - один из символов современного Бароло." },
+      { q:"Какой неожиданный аромат у Бароло? Что цепляет гостя?",
+        groups:[["роз"],["дёгот","дегот","смол"]],
+        min:2, hint:"Два ярких образа в одном бокале.",
+        answer:"Роза и дёготь в одном бокале. Неожиданное сочетание - это Неббиоло. Гость хочет это почувствовать." },
+      { q:"Что обязательно нужно сделать перед подачей Бароло?",
+        groups:[["декантац","декантир","декант"]],
+        min:1, hint:"Один обязательный шаг.",
+        answer:"Декантировать. После декантации танины становятся бархатными - это важно сказать гостю, чтобы не пугать танинами." },
+      { q:"К каким блюдам предлагать Бароло? Минимум два варианта.",
+        groups:[["говядин","мяс","стейк"],["ягнёнок","ягненок","баран","оленин","дич"],["пармез","грана","сыр"]],
+        min:2, hint:"Гастропары.",
+        answer:"К говядине, ягнёнку, дичи. К пьемонтской классике (тартар из мяса, паста с трюфелем). К твёрдым сырам - пармезан, Грана Падано." },
+      { q:"Какая цена и объём Бароло в меню?",
+        groups:[["22000","22 000","двадцать две","двадцать два"],["750"]],
+        min:2, hint:"Цена + объём.",
+        answer:"22 000 руб за бутылку 750 мл." },
+      { q:"Что НЕЛЬЗЯ говорить про Бароло? Минимум два запрета.",
+        groups:[["терпк","структурн"],["тяжёл","тяжел"],["танин","пугат"],["цена первой","сначала цена"]],
+        min:2, hint:"Запретные формулировки.",
+        answer:"Нельзя: терпкое, структурное (надо роза и дёготь); тяжёлое; пугать танинами (после декантации они бархатные); называть цену первой." }
+    ]
+  },
+
+  gavi: {
+    name: "Gavi di Gavi Fontanafredda",
+    bank: [
+      { q:"Какой сорт винограда и какой регион у Гави де Гави?",
+        groups:[["кортезе","cortese"],["пьемонт","piemonte"],["итал","ital"]],
+        min:2, hint:"Сорт + регион + страна.",
+        answer:"Сорт Кортезе из Пьемонта, Италия. Тот же регион, что и Бароло." },
+      { q:"Главная зацепка про Гави при продаже - связь с чем?",
+        groups:[["барол","barolo"],["тот же","регион барол"]],
+        min:1, hint:"Цитата из скрипта.",
+        answer:"Тот же регион, что и Бароло. Гость слышит статус сразу, даже не зная Кортезе." },
+      { q:"Кто производитель нашего Гави и с какого года?",
+        groups:[["fontanafredda","фонтанафредда","фонтана"],["1858"]],
+        min:2, hint:"Дом + год.",
+        answer:"Fontanafredda, с 1858 года. Один из старейших домов Пьемонта - почти двести лет." },
+      { q:"Что значит DOCG в категории Гави де Гави?",
+        groups:[["высш","самый","best"],["стандарт","сертификат","категор"]],
+        min:1, hint:"Самый высокий уровень.",
+        answer:"Высший стандарт Италии - выше нет. Высший итальянский сертификат, гость слышит ценность без объяснений." },
+      { q:"Какая особенность вкуса в финале Гави де Гави?",
+        groups:[["миндаль","миндальн","almond"]],
+        min:1, hint:"Финал-якорь.",
+        answer:"Миндальный финал - характерная подпись Кортезе. Лёгкая горчинка миндаля в послевкусии." },
+      { q:"Какая цена за бокал и за бутылку Гави де Гави?",
+        groups:[["1750","1 750","тысяч семьсот"],["10500","10 500","десять","десят"]],
+        min:2, hint:"Бокал + бутылка.",
+        answer:"1 750 руб за 125 мл (бокал) или 10 500 руб за 750 мл (бутылка)." },
+      { q:"Главное правило при продаже Гави - что предложить гостю, чтобы снизить барьер?",
+        groups:[["бокал"],["начнём","начнем","снижа"]],
+        min:1, hint:"Тактика.",
+        answer:"Начнём с бокала. Бокал снижает барьер - это почти всегда путь к бутылке." }
+    ]
+  },
+
+  amarone: {
+    name: "Amarone Speri",
+    bank: [
+      { q:"Что такое Аппассименто - главная зацепка для гостя?",
+        groups:[["виноград","ягод"],["сушат","сушка","сушится"],["месяц","100","сто","трёх","трех","три"]],
+        min:2, hint:"Уникальный метод + срок.",
+        answer:"Виноград сушат три месяца перед прессованием. Нигде в мире так не делают. После этой фразы - пауза, гость уже представляет процесс." },
+      { q:"Какие сорта винограда в Амароне? Назови минимум два.",
+        groups:[["корвин","corvina"],["мерло","merlot","рондин"],["молинар","molinara"]],
+        min:2, hint:"Купаж Венето.",
+        answer:"Корвина, Мерло (или Рондинелла), Молинара - классический купаж Вальполичеллы." },
+      { q:"Кто производитель нашего Амароне и с какого года?",
+        groups:[["speri","спери"],["1874"]],
+        min:2, hint:"Дом + год.",
+        answer:"Speri, с 1874 года. Семейная легенда Вальполичеллы - 150 лет одна семья, один регион, один стиль." },
+      { q:"Как называется флагманский виноградник Амароне Speri?",
+        groups:[["monte sant","сант'урбан","сант урбан","sant urbano","sant'urbano","монте сант"]],
+        min:1, hint:"Имя участка.",
+        answer:"Vigneto Monte Sant'Urbano - конкретный флагманский виноградник семьи Speri." },
+      { q:"Гость говорит Амароне крепкое, я не хочу. Как ответить?",
+        groups:[["натуральн","естествен"],["сахар","концентрац","сушк"],["не добав","без добавок"]],
+        min:2, hint:"Через метод.",
+        answer:"Высокая крепость - из-за концентрации сахара при сушке винограда, а не добавок. Натуральная крепость - это честность, не страшно." },
+      { q:"К каким блюдам предлагать Амароне? Минимум два варианта.",
+        groups:[["говядин","мяс","утк"],["оленин","дич"],["пармез","грана","сыр"]],
+        min:2, hint:"Гастропары.",
+        answer:"К говядине, утке, оленине. К твёрдым сырам - пармезан, Грана Падано. Также как самостоятельное вино на финал вечера." },
+      { q:"Что обязательно нужно сделать перед подачей Амароне?",
+        groups:[["декантац","декантир","декант"]],
+        min:1, hint:"Один обязательный шаг.",
+        answer:"Декантировать. Концентрированное вино после Аппассименто требует доступа воздуха, чтобы раскрыться." },
+      { q:"Какая цена и объём Амароне в меню?",
+        groups:[["19500","19 500","девятнадцать"],["750"]],
+        min:2, hint:"Цена + объём.",
+        answer:"19 500 руб за бутылку 750 мл." }
+    ]
+  },
+
+  cocktail_6: {
+    name: "Коктейль №6",
+    bank: [
+      { q:"Перечисли все ингредиенты Коктейля №6.",
+        groups:[["хатоз","hatozaki","виски"],["лепестк","роз","ликер роз","ликёр роз"],["персик","сироп персик"],["мараскин","maraschino"]],
+        min:3, hint:"4 ингредиента.",
+        answer:"Виски Хатозаки (японский), ликёр из лепестков розы, сироп персика, ликёр мараскино." },
+      { q:"Из какой страны виски в Коктейле №6 и в чём его уникальность для коктейля?",
+        groups:[["япон","japan"],["хатоз","hatozaki"]],
+        min:2, hint:"Страна + бренд.",
+        answer:"Япония, виски Хатозаки. Японский виски в авторском коктейле звучит как что-то особенное - это якорное слово при продаже." },
+      { q:"Какой главный образ нужно создать при продаже Коктейля №6?",
+        groups:[["роз"],["персик"],["образ","не просто вкус","ценит атмосфер","атмосфер"]],
+        min:2, hint:"Цитата из скрипта.",
+        answer:"Роза и персик на виски - это образ, а не просто вкус. Работает на тех, кто ценит атмосферу." },
+      { q:"Что такое мараскино - объясни гостю, который вникает в состав.",
+        groups:[["вишн","cherry"],["далмац","dalmatia"],["сух","ликёр","ликер"]],
+        min:2, hint:"Откуда + какой.",
+        answer:"Сухой вишнёвый ликёр из Далмации. Связывает все ингредиенты в одну композицию. Это язык сомелье - впечатляет." },
+      { q:"Какая цена и объём Коктейля №6?",
+        groups:[["1300","1 300","тысяч триста"],["100"]],
+        min:2, hint:"Цена + объём.",
+        answer:"1 300 руб за 100 мл." },
+      { q:"Что НЕЛЬЗЯ говорить про Коктейль №6? Минимум два запрета.",
+        groups:[["дамск"],["слаб"],["мараскин","объясн"],["цена первой","сначала цена"]],
+        min:2, hint:"Запретные формулировки.",
+        answer:"Нельзя: дамский (надо изящный); слабый (надо деликатный); подробно объяснять мараскино без запроса гостя; называть цену первой." },
+      { q:"Кому идеально предлагать Коктейль №6 как финальный?",
+        groups:[["финал","заверш","последн","финальн","конец"],["после","ярк"]],
+        min:1, hint:"Когда подавать.",
+        answer:"Как финальный коктейль вечера, особенно после яркого, фруктового коктейля. Деликатный финал, который запомнится." }
+    ]
+  }
+
+};
+
+const POSITIONS_ORDER = [
+  "dom_perignon", "zacapa", "dalmore_15", "brunello",
+  "cocktail_1", "cocktail_2", "golden_kiss", "rieslingmalina",
+  "da_hong_pao", "tesseron", "hana_awaka", "cocktail_17",
+  "porto_tawny", "negroni", "dalmore_12", "laphroaig", "macallan_12",
+  "pitahaya", "mango_passion", "smoothie",
+  "pinot_rose", "viognier", "moscato",
+  "malbec_tamari", "shiraz",
+  "madeira",
+  "clase_azul", "hendricks_amazonia",
+  "cocktail_la_tomato", "cocktail_daiginjo",
+  "chablis", "sancerre", "barolo", "gavi", "amarone",
+  "cocktail_6"
+];
+</script>
+
+<script id="logic-script">
+// ============================================================
+// ДЕДЛАЙН — суббота 20:00
+// ============================================================
+function isTestBlocked(){
+  const now = new Date();
+  return now.getDay() === 6 && now.getHours() >= 20;
+}
+
+function getDeadlineInfo(){
+  const now = new Date();
+  const day = now.getDay();
+  if (day === 6 && now.getHours() >= 20){ return { blocked: true }; }
+  const deadline = new Date(now);
+  let daysUntilSat = (day === 6) ? 0 : (6 - day);
+  deadline.setDate(now.getDate() + daysUntilSat);
+  deadline.setHours(20, 0, 0, 0);
+  const diff = deadline.getTime() - now.getTime();
+  const totalMin = Math.floor(diff / 60000);
+  const days = Math.floor(totalMin / (60*24));
+  const hours = Math.floor((totalMin % (60*24)) / 60);
+  const minutes = totalMin % 60;
+  return { blocked: false, days, hours, minutes, deadline };
+}
+
+function fmtDeadline(d){
+  const dayNames = ["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"];
+  return dayNames[d.getDay()] + ", " + String(d.getDate()).padStart(2,'0') + "." + String(d.getMonth()+1).padStart(2,'0') + " в 20:00";
+}
+
+function renderDeadlineInfo(){
+  const info = getDeadlineInfo();
+  const textEl = document.getElementById("deadline-text");
+  const subEl = document.getElementById("deadline-sub");
+  if (!textEl) return;
+  if (info.blocked){
+    textEl.textContent = "Дедлайн пропущен";
+    subEl.textContent = "тест закрыт до воскресенья 00:00";
+    textEl.style.color = "var(--red)";
+    subEl.style.color = "var(--red)";
+  } else {
+    let txt = "";
+    if (info.days > 0)        txt = info.days + " дн " + info.hours + " ч";
+    else if (info.hours > 0)  txt = info.hours + " ч " + info.minutes + " мин";
+    else                       txt = info.minutes + " мин";
+    textEl.innerHTML = "Осталось <span class=\"gold-br\">" + txt + "</span>";
+    subEl.textContent = "до закрытия в " + fmtDeadline(info.deadline);
+    if (info.days === 0 && info.hours < 4){
+      textEl.style.color = "var(--red)";
+      subEl.style.color = "var(--red)";
+    } else if (info.days === 0){
+      textEl.style.color = "var(--cream)";
+      subEl.style.color = "var(--gold)";
+    } else {
+      textEl.style.color = "var(--cream)";
+      subEl.style.color = "var(--cream-2)";
+    }
+  }
+}
+
+// ============================================================
+// ПРОВЕРКА ОТВЕТА
+// ============================================================
+function normalize(s){
+  return (s||"").toLowerCase().replace(/\u0451/g,"\u0435").replace(/[\u00ab\u00bb\u201c\u201d\u2018\u2019`""]/g,"")
+    .replace(/[.,!?;:()\-\u2014\u2013_\/\\\u2116]/g," ").replace(/\s+/g," ").trim();
+}
+
+const RU_TO_LAT = {
+  'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ж':'zh','з':'z',
+  'и':'i','й':'i','к':'k','л':'l','м':'m','н':'n','о':'o','п':'p',
+  'р':'r','с':'s','т':'t','у':'u','ф':'f','х':'h','ц':'c','ч':'ch',
+  'ш':'sh','щ':'sh','ъ':'','ы':'y','ь':'','э':'e','ю':'yu','я':'ya'
+};
+function transliterate(s){
+  let r="";
+  for (const c of s) r += (RU_TO_LAT[c] !== undefined ? RU_TO_LAT[c] : c);
+  return r;
+}
+function unifyLat(s){
+  return s.replace(/c(?![h])/g,"k").replace(/q/g,"k").replace(/w/g,"v")
+    .replace(/x/g,"ks").replace(/ph/g,"f");
+}
+function flexVariants(s){
+  const n = normalize(s);
+  const t = transliterate(n);
+  return Array.from(new Set([n, t, unifyLat(n), unifyLat(t)]));
+}
+
+function levenshtein(a, b){
+  if (a === b) return 0;
+  const al = a.length, bl = b.length;
+  if (al === 0) return bl;
+  if (bl === 0) return al;
+  let prev = new Array(bl + 1);
+  let curr = new Array(bl + 1);
+  for (let j = 0; j <= bl; j++) prev[j] = j;
+  for (let i = 1; i <= al; i++){
+    curr[0] = i;
+    for (let j = 1; j <= bl; j++){
+      const cost = a[i-1] === b[j-1] ? 0 : 1;
+      curr[j] = Math.min(curr[j-1] + 1, prev[j] + 1, prev[j-1] + cost);
+    }
+    [prev, curr] = [curr, prev];
+  }
+  return prev[bl];
+}
+
+function maxTypos(len){
+  if (len <= 4) return 0;
+  if (len <= 6) return 1;
+  if (len <= 10) return 2;
+  return 2;
+}
+
+function fuzzyContains(text, needle){
+  if (!text || !needle) return false;
+  if (text.includes(needle)) return true;
+  const nl = needle.length;
+  const tol = maxTypos(nl);
+  if (tol === 0) return false;
+  if (needle.includes(" ")) return false;
+  const words = text.split(" ");
+  for (let i = 0; i < words.length; i++){
+    const w = words[i];
+    if (!w) continue;
+    if (Math.abs(w.length - nl) <= tol){
+      if (levenshtein(w, needle) <= tol) return true;
+    }
+    if (i+1 < words.length){
+      const w2 = w + words[i+1];
+      if (Math.abs(w2.length - nl) <= tol && levenshtein(w2, needle) <= tol) return true;
+    }
+  }
+  return false;
+}
+
+function shuffle(arr){
+  const a=arr.slice();
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+function pickRandom(bank,n){return shuffle(bank).slice(0,n);}
+
+function checkAnswer(q,answer){
+  const norm=normalize(answer);
+  if(!norm) return {passed:false,hits:0,total:q.min||1,missed:q.groups||[],score:0};
+  const userForms = flexVariants(answer);
+  const groups=q.groups||[];
+  let hits=0; const missed=[];
+  for(const group of groups){
+    const ok = group.some(syn => {
+      const synForms = flexVariants(syn);
+      return synForms.some(sf => userForms.some(uf => fuzzyContains(uf, sf)));
+    });
+    if(ok) hits++;
+    else missed.push(group);
+  }
+  const score=Math.round((hits/Math.max(groups.length,1))*100);
+  const passed=hits>=(q.min||groups.length);
+  return {passed,hits,total:groups.length,missed,score};
+}
+
+function escapeHtml(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function fmtDate(iso){
+  const d=new Date(iso);
+  return d.toLocaleDateString("ru-RU",{day:"2-digit",month:"2-digit"})+" "+d.toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"});
+}
+
+// ============================================================
+// STORAGE
+// ============================================================
+// ============================================================
+// LOCAL STORAGE (на устройстве, где открыт файл)
+// ============================================================
+const STORE = (function(){
+  const PFX = "nomo_att_v3_";
+  return {
+    async get(key){
+      try { return localStorage.getItem(PFX + key); } catch(e) { return null; }
+    },
+    async set(key, value){
+      try { localStorage.setItem(PFX + key, value); return true; } catch(e) { return false; }
+    },
+    async delete(key){
+      try { localStorage.removeItem(PFX + key); return true; } catch(e) { return false; }
+    },
+    async list(prefix){
+      try {
+        const out = [];
+        for (let i = 0; i < localStorage.length; i++){
+          const k = localStorage.key(i);
+          if (k && k.startsWith(PFX + prefix)) out.push(k.slice(PFX.length));
+        }
+        return out;
+      } catch(e) { return []; }
+    }
+  };
+})();
+
+
+const STORAGE = {
+  async getMasterPin(){
+    try{const v=await STORE.get("master_pin");if(v) return JSON.parse(v);}catch(e){}
+    return DEFAULT_MASTER_PIN;
+  },
+  async setMasterPin(pin){await STORE.set("master_pin",JSON.stringify(pin));},
+  async getAllUsers(){
+    try{
+      const keys=await STORE.list("users:");
+      const out=[];
+      for(const k of keys){
+        try{const v=await STORE.get(k); if(v) out.push(JSON.parse(v));}catch(_){}
+      }
+      return out;
+    }catch(e){return [];}
+  },
+  async getUserByPin(pin){
+    try{const v=await STORE.get("users:"+pin);if(v) return JSON.parse(v);}catch(e){}
+    return null;
+  },
+  async addUser(name,pin,isTest){
+    const u={name:name||"",pin:pin,isTest:!!isTest,created:new Date().toISOString()};
+    await STORE.set("users:"+pin,JSON.stringify(u));
+    return u;
+  },
+  async updateUser(pin,patch){
+    const u=await this.getUserByPin(pin);
+    if(!u) return null;
+    Object.assign(u,patch);
+    await STORE.set("users:"+pin,JSON.stringify(u));
+    return u;
+  },
+  async deleteUser(pin){
+    await STORE.delete("users:"+pin);
+    const keys=await STORE.list("attempts:");
+    for(const k of keys){
+      if(k.endsWith(":"+pin)){try{await STORE.delete(k);}catch(_){}}
+    }
+    await STORE.delete("progress:"+pin);
+  },
+  async addAttempt(rec){
+    const ts=Date.now();
+    const key="attempts:"+ts+":"+rec.pin;
+    rec.id=key; rec.ts=ts;
+    await STORE.set(key,JSON.stringify(rec));
+    return rec;
+  },
+  async getAllAttempts(){
+    try{
+      const keys=await STORE.list("attempts:");
+      const out=[];
+      for(const k of keys){
+        try{const v=await STORE.get(k); if(v){const o=JSON.parse(v); o.id=k; out.push(o);}}catch(_){}
+      }
+      return out.sort((a,b)=>b.ts-a.ts);
+    }catch(e){return [];}
+  },
+  async getUserAttempts(pin){
+    const all=await this.getAllAttempts();
+    return all.filter(a=>a.pin===pin);
+  },
+  async deleteAttempt(id){await STORE.delete(id);},
+  async clearAllAttempts(){
+    const all=await this.getAllAttempts();
+    for(const a of all){try{await STORE.delete(a.id);}catch(_){}}
+  },
+  async getProgress(pin){
+    try{const v=await STORE.get("progress:"+pin);if(v) return JSON.parse(v);}catch(e){}
+    return null;
+  },
+  async saveProgress(data){
+    if(!data || !data.pin) return;
+    try{await STORE.set("progress:"+data.pin,JSON.stringify(data));}catch(e){console.warn("saveProgress failed",e);}
+  },
+  async deleteProgress(pin){try{await STORE.delete("progress:"+pin);}catch(_){}},
+  async getAllProgress(){
+    try{
+      const keys=await STORE.list("progress:");
+      const out=[];
+      for(const k of keys){
+        try{const v=await STORE.get(k); if(v) out.push(JSON.parse(v));}catch(_){}
+      }
+      return out;
+    }catch(e){return [];}
+  }
+};
+
+// ============================================================
+// ЗАЩИТА ОТ СКРИНОВ
+// ============================================================
+function showShield(){document.getElementById("shield").classList.add("on");}
+function hideShield(){document.getElementById("shield").classList.remove("on");}
+
+function showViolationAlert(count){
+  const el = document.getElementById("violation-alert");
+  if (!el) return;
+  const cntEl = el.querySelector(".vio-count");
+  if (cntEl) cntEl.textContent = count;
+  const nameEl = document.getElementById("vio-name");
+  if (nameEl && state.user && state.user.name){
+    nameEl.textContent = state.user.name + " \u00b7 " + new Date().toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"});
+  }
+  el.classList.add("on");
+  setTimeout(function(){ el.classList.remove("on"); }, 6000);
+}
+
+let shieldArmed = false;
+setTimeout(function(){ shieldArmed = true; }, 1500);
+
+let pauseStart = null;
+
+function recordViolation(durSec, type){
+  if (!state.inTest) return;
+  state.pauses = state.pauses || [];
+  state.pauses.push({
+    leftAt: Date.now() - (durSec * 1000),
+    returnedAt: Date.now(),
+    durationSec: durSec,
+    type: type || "leave"
+  });
+  saveProgressAsync();
+  showViolationAlert(state.pauses.length);
+}
+
+document.addEventListener("visibilitychange",function(){
+  if(!shieldArmed) return;
+  if(document.hidden){
+    showShield();
+    if (state.inTest && !pauseStart){ pauseStart = Date.now(); }
+  } else {
+    hideShield();
+    if (state.inTest && pauseStart){
+      const durSec = Math.max(1, Math.round((Date.now() - pauseStart) / 1000));
+      recordViolation(durSec, "leave");
+      pauseStart = null;
+    }
+  }
+});
+
+let _lastBlurTs = 0;
+window.addEventListener("blur", function(){
+  if (!shieldArmed || !state.inTest) return;
+  if (document.hidden) return;
+  _lastBlurTs = Date.now();
+});
+window.addEventListener("focus", function(){
+  if (!shieldArmed || !state.inTest) return;
+  if (_lastBlurTs && (Date.now() - _lastBlurTs) > 200 && !pauseStart){
+    const durSec = Math.max(1, Math.round((Date.now() - _lastBlurTs) / 1000));
+    recordViolation(durSec, "blur");
+  }
+  _lastBlurTs = 0;
+});
+
+window.addEventListener("beforeunload",function(){
+  if (state.inTest){
+    if (pauseStart){
+      state.pauses = state.pauses || [];
+      state.pauses.push({leftAt: pauseStart, returnedAt: Date.now(), durationSec: Math.round((Date.now() - pauseStart) / 1000)});
+    }
+    try { saveProgressAsync(); } catch(_){}
+  }
+});
+
+document.addEventListener("contextmenu",function(e){e.preventDefault();});
+
+document.addEventListener("keydown",function(e){
+  if(!shieldArmed) return;
+  if(e.key==="PrintScreen"){
+    showShield();setTimeout(hideShield,3000);
+    if (state.inTest) recordViolation(1, "printscreen");
+  }
+  if((e.ctrlKey||e.metaKey) && (e.key==="p"||e.key==="P")){
+    e.preventDefault();showShield();setTimeout(hideShield,2000);
+    if (state.inTest) recordViolation(1, "print");
+  }
+  if(e.key==="F12" || ((e.ctrlKey||e.metaKey) && e.shiftKey && (e.key==="I"||e.key==="i"||e.key==="J"||e.key==="j"))){
+    e.preventDefault();showShield();setTimeout(hideShield,2000);
+    if (state.inTest) recordViolation(1, "devtools");
+  }
+  if((e.ctrlKey||e.metaKey) && e.shiftKey && (e.key==="S"||e.key==="s")){
+    showShield();setTimeout(hideShield,2000);
+    if (state.inTest) recordViolation(1, "screenshot_combo");
+  }
+});
+
+function setWatermark(name){
+  const wm=document.getElementById("watermark");
+  const wm2=document.getElementById("watermark2");
+  if(!name){wm.innerHTML="";if(wm2) wm2.innerHTML="";return;}
+  const stamp=name.toUpperCase()+" \u00b7 NOMO \u00b7 "+new Date().toLocaleDateString("ru-RU");
+  let html="";
+  for(let i=0;i<22;i++){
+    html+="<div class=\"wm-row\">"+escapeHtml(stamp)+" &nbsp;\u00b7&nbsp; "+escapeHtml(stamp)+" &nbsp;\u00b7&nbsp; "+escapeHtml(stamp)+" &nbsp;\u00b7&nbsp; "+escapeHtml(stamp)+"</div>";
+  }
+  wm.innerHTML=html;
+  if(wm2){
+    let html2="";
+    for(let i=0;i<18;i++){
+      html2+="<div class=\"wm-row\">"+escapeHtml(stamp)+" &nbsp;\u00b7&nbsp; "+escapeHtml(stamp)+" &nbsp;\u00b7&nbsp; "+escapeHtml(stamp)+"</div>";
+    }
+    wm2.innerHTML=html2;
+  }
+}
+
+// ============================================================
+// СОСТОЯНИЕ
+// ============================================================
+const state={
+  user:null, isAdmin:false,
+  questions:[], answers:{}, reviewResults:{},
+  currentIdx:0, results:null,
+  inTest:false, sessionId:null, startedAt:null,
+  pauses:[], resumeCount:0,
+  checkMode:"answer"
+};
+
+let _progressSaveTimer = null;
+function saveProgressAsync(){
+  if (_progressSaveTimer) clearTimeout(_progressSaveTimer);
+  _progressSaveTimer = setTimeout(async function(){
+    if (!state.user || !state.sessionId || !state.inTest) return;
+    const data = {
+      pin: state.user.pin, name: state.user.name, isTest: !!state.user.isTest,
+      sessionId: state.sessionId, startedAt: state.startedAt,
+      currentIdx: state.currentIdx, answers: state.answers, reviewResults: state.reviewResults,
+      questions: state.questions, pauses: state.pauses, resumeCount: state.resumeCount,
+      lastUpdate: Date.now()
+    };
+    await STORAGE.saveProgress(data);
+  }, 200);
+}
+
+async function saveProgressNow(){
+  if (!state.user || !state.sessionId) return;
+  const data = {
+    pin: state.user.pin, name: state.user.name, isTest: !!state.user.isTest,
+    sessionId: state.sessionId, startedAt: state.startedAt,
+    currentIdx: state.currentIdx, answers: state.answers, reviewResults: state.reviewResults,
+    questions: state.questions, pauses: state.pauses, resumeCount: state.resumeCount,
+    lastUpdate: Date.now()
+  };
+  await STORAGE.saveProgress(data);
+}
+
+// ============================================================
+// LOGIN
+// ============================================================
+document.getElementById("login-btn").addEventListener("click",async function(){
+  const pin=document.getElementById("pin-input").value.trim();
+  const err=document.getElementById("pin-error");
+  err.textContent="";
+
+  if(!/^\d{4,6}$/.test(pin)){err.textContent="Код — 4–6 цифр.";return;}
+
+  const masterPin=await STORAGE.getMasterPin();
+  if(pin===masterPin){
+    state.user={name:"Менеджер",pin:"***",isAdmin:true};
+    state.isAdmin=true;
+    setWatermark("");
+    showStage("admin");
+    await renderAdmin();
+    return;
+  }
+
+  if (pin === TEST_PIN){
+    let testUser = await STORAGE.getUserByPin(pin);
+    if (!testUser || !testUser.isTest){
+      try {
+        await STORAGE.addUser("ТЕСТ-РЕЖИМ (менеджер)", pin, true);
+        testUser = await STORAGE.getUserByPin(pin);
+      } catch(e) {
+        testUser = { name: "ТЕСТ-РЕЖИМ (менеджер)", pin: TEST_PIN, isTest: true };
+      }
+    }
+    state.user = testUser || { name: "ТЕСТ-РЕЖИМ (менеджер)", pin: TEST_PIN, isTest: true };
+    state.isAdmin = false;
+    setWatermark(state.user.name);
+    document.getElementById("home-name").textContent = state.user.name;
+    document.getElementById("test-name").textContent = state.user.name;
+    document.getElementById("result-name").textContent = state.user.name;
+    document.getElementById("blocked-name").textContent = state.user.name;
+    document.getElementById("resume-name").textContent = state.user.name;
+    const progress = await STORAGE.getProgress(state.user.pin);
+    if (progress && progress.questions && progress.questions.length){
+      showResumeStage(progress);
+      return;
+    }
+    await renderHome();
+    showStage("home");
+    return;
+  }
+
+  const user=await STORAGE.getUserByPin(pin);
+  if(!user){err.textContent="Код не найден. Обратись к менеджеру.";return;}
+  state.user=user;
+  state.isAdmin=false;
+
+  setWatermark(user.name || "—");
+  document.getElementById("home-name").textContent=user.name || "—";
+  document.getElementById("test-name").textContent=user.name || "—";
+  document.getElementById("result-name").textContent=user.name || "—";
+  document.getElementById("blocked-name").textContent=user.name || "—";
+  document.getElementById("resume-name").textContent=user.name || "—";
+
+  const progress = await STORAGE.getProgress(user.pin);
+  if (progress && progress.questions && progress.questions.length){
+    showResumeStage(progress);
+    return;
+  }
+
+  if (user.isTest){
+    await renderHome();
+    showStage("home");
+    return;
+  }
+
+  if(!user.name || user.name.trim()===""){
+    document.getElementById("enter-name-input").value="";
+    document.getElementById("name-error").textContent="";
+    showStage("name");
+    setTimeout(function(){document.getElementById("enter-name-input").focus();},100);
+    return;
+  }
+
+  await renderHome();
+  showStage("home");
+});
+
+document.getElementById("save-name-btn").addEventListener("click",async function(){
+  const name=document.getElementById("enter-name-input").value.trim();
+  const err=document.getElementById("name-error");
+  err.textContent="";
+  if(name.length<3){ err.textContent="Введи имя и фамилию полностью."; return; }
+  if(!/[А-Яа-яЁёA-Za-z]/.test(name)){ err.textContent="Имя должно содержать буквы."; return; }
+  await STORAGE.addUser(name, state.user.pin);
+  state.user.name = name;
+  setWatermark(name);
+  document.getElementById("home-name").textContent=name;
+  document.getElementById("test-name").textContent=name;
+  document.getElementById("result-name").textContent=name;
+  await renderHome();
+  showStage("home");
+});
+
+document.getElementById("enter-name-input").addEventListener("keydown",function(e){
+  if(e.key==="Enter") document.getElementById("save-name-btn").click();
+});
+document.getElementById("pin-input").addEventListener("keydown",function(e){
+  if(e.key==="Enter") document.getElementById("login-btn").click();
+});
+
+function doLogout(){
+  state.user=null; state.isAdmin=false;
+  state.questions=[]; state.answers={}; state.currentIdx=0; state.results=null;
+  setWatermark("");
+  document.getElementById("pin-input").value="";
+  document.getElementById("pin-error").textContent="";
+  showStage("login");
+}
+["logout-1","logout-2","logout-3","logout-admin","logout-blocked","logout-resume"].forEach(function(id){
+  const el = document.getElementById(id);
+  if(el) el.addEventListener("click",doLogout);
+});
+
+// ============================================================
+// STAGE
+// ============================================================
+function showStage(stage){
+  ["loading","setup","share","login","name","home","test","result","admin","blocked","resume"].forEach(function(s){
+    const el = document.getElementById("stage-"+s);
+    if(el) el.classList.toggle("hidden", s!==stage);
+  });
+  window.scrollTo(0,0);
+}
+
+function fmtMinSec(totalSec){
+  if (!totalSec) return "—";
+  const m = Math.floor(totalSec / 60);
+  const s = totalSec % 60;
+  if (m === 0) return s + " сек";
+  if (s === 0) return m + " мин";
+  return m + " мин " + s + " сек";
+}
+
+function showResumeStage(progress){
+  state.pendingProgress = progress;
+  document.getElementById("resume-progress").textContent = progress.currentIdx + "/" + progress.questions.length;
+  document.getElementById("resume-next-num").textContent = (progress.currentIdx + 1);
+  const startedDate = new Date(progress.startedAt);
+  document.getElementById("resume-started").textContent = startedDate.toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"});
+  const pauses = progress.pauses || [];
+  document.getElementById("resume-pauses").textContent = pauses.length;
+  const totalSec = pauses.reduce(function(s,p){return s + (p.durationSec||0);}, 0);
+  document.getElementById("resume-pause-time").textContent = fmtMinSec(totalSec);
+  showStage("resume");
+}
+
+document.getElementById("resume-continue-btn").addEventListener("click", async function(){
+  const p = state.pendingProgress;
+  if (!p) return;
+  state.sessionId = p.sessionId;
+  state.startedAt = p.startedAt;
+  state.questions = p.questions;
+  state.answers = p.answers || {};
+  state.reviewResults = p.reviewResults || {};
+  state.currentIdx = p.currentIdx;
+  state.pauses = p.pauses || [];
+  state.resumeCount = (p.resumeCount || 0) + 1;
+  state.inTest = true;
+  state.pauses.push({
+    leftAt: p.lastUpdate || p.startedAt, returnedAt: Date.now(),
+    durationSec: Math.round((Date.now() - (p.lastUpdate || p.startedAt)) / 1000), type: "resume"
+  });
+  await saveProgressNow();
+  showStage("test");
+  renderQuestion();
+});
+
+document.getElementById("resume-restart-btn").addEventListener("click", async function(){
+  if (!confirm("Сбросить незавершённую попытку и начать тест заново?")) return;
+  await STORAGE.deleteProgress(state.user.pin);
+  state.pendingProgress = null;
+  if (state.user.isTest){await renderHome(); showStage("home"); return;}
+  if (!state.user.name || state.user.name.trim()===""){
+    document.getElementById("enter-name-input").value="";
+    showStage("name");
+    setTimeout(function(){document.getElementById("enter-name-input").focus();},100);
+    return;
+  }
+  await renderHome();
+  showStage("home");
+});
+
+// ============================================================
+// HOME
+// ============================================================
+async function renderHome(){
+  const isTest = !!state.user.isTest;
+  document.getElementById("test-banner-home").classList.toggle("hidden", !isTest);
+  document.getElementById("deadline-info").style.display = isTest ? "none" : "";
+  if (!isTest) renderDeadlineInfo();
+
+  const attempts=await STORAGE.getUserAttempts(state.user.pin);
+  const myStats=document.getElementById("my-stats");
+  if(attempts.length===0){
+    myStats.classList.add("hidden");
+  } else {
+    myStats.classList.remove("hidden");
+    document.getElementById("stat-attempts").textContent=attempts.length;
+    const best=Math.max.apply(null, attempts.map(function(a){return a.score;}));
+    document.getElementById("stat-best").textContent=best+"%";
+    document.getElementById("stat-last").textContent=attempts[0].score+"%";
+  }
+
+  const startBtn = document.getElementById("start-btn");
+  if (!isTest && isTestBlocked()){
+    startBtn.disabled = true;
+    startBtn.textContent = "тест закрыт · дедлайн пропущен";
+  } else {
+    startBtn.disabled = false;
+    startBtn.textContent = isTest ? "запустить проверочный тест ▸" : "открыть партию ▸";
+  }
+}
+
+// ============================================================
+// TEST
+// ============================================================
+document.getElementById("start-btn").addEventListener("click", async function(){
+  if (!state.user.isTest && isTestBlocked()){
+    document.getElementById("blocked-name").textContent = state.user.name || "—";
+    showStage("blocked");
+    return;
+  }
+  const arr=[];
+  for(const key of POSITIONS_ORDER){
+    const section=BANKS[key];
+    const picked=pickRandom(section.bank,QUESTIONS_PER_POSITION);
+    picked.forEach(function(q,idx){ arr.push({sectionKey:key,sectionName:section.name,q:q,sectionIdx:idx+1}); });
+  }
+  state.questions=arr;
+  state.answers={};
+  state.reviewResults={};
+  state.currentIdx=0;
+  state.sessionId = "s_" + Date.now() + "_" + Math.random().toString(36).slice(2,8);
+  state.startedAt = Date.now();
+  state.pauses = [];
+  state.resumeCount = 0;
+  state.inTest = true;
+  await saveProgressNow();
+  showStage("test");
+  renderQuestion();
+});
+
+function renderQuestion(){
+  const idx=state.currentIdx;
+  const item=state.questions[idx];
+  const total=state.questions.length;
+  document.getElementById("pbar").style.width = ((idx/total)*100) + "%";
+  const positionsBefore=POSITIONS_ORDER.indexOf(item.sectionKey);
+  document.getElementById("pmeta-section").textContent = "позиция " + (positionsBefore+1) + " / " + POSITIONS_ORDER.length + " · " + item.sectionName;
+  document.getElementById("pmeta-q").textContent = "вопрос " + (idx+1) + " из " + total;
+  document.getElementById("q-section-name").textContent=item.sectionName;
+  document.getElementById("q-num").textContent="Вопрос " + item.sectionIdx + " в позиции";
+  document.getElementById("q-text").textContent=item.q.q;
+  document.getElementById("q-hint").textContent=item.q.hint||"";
+
+  const ta=document.getElementById("q-input");
+  ta.value=state.answers[idx]||"";
+  ta.disabled = false;
+  ta.focus();
+
+  document.getElementById("q-review").classList.add("hidden");
+  state.checkMode = "answer";
+  document.getElementById("prev-btn").style.visibility="hidden";
+  document.getElementById("next-btn").textContent="проверить ▸";
+  document.getElementById("next-btn").disabled = false;
+}
+
+function showReview(){
+  const idx=state.currentIdx;
+  const item=state.questions[idx];
+  const ans = state.answers[idx] || "";
+  const r = checkAnswer(item.q, ans);
+  state.reviewResults = state.reviewResults || {};
+  state.reviewResults[idx] = r;
+
+  const verdictBox = document.getElementById("q-verdict");
+  const icon = document.getElementById("q-verdict-icon");
+  const txt = document.getElementById("q-verdict-text");
+  if (r.passed){
+    verdictBox.style.borderColor = "var(--green)";
+    verdictBox.style.background = "rgba(122,164,124,0.08)";
+    icon.style.color = "var(--green)";
+    icon.textContent = "✓";
+    txt.style.color = "var(--green)";
+    txt.textContent = "Зачёт по этому вопросу";
+  } else {
+    verdictBox.style.borderColor = "var(--red)";
+    verdictBox.style.background = "rgba(200,100,90,0.08)";
+    icon.style.color = "var(--red)";
+    icon.textContent = "✕";
+    txt.style.color = "var(--red)";
+    txt.textContent = "Не зачтено";
+  }
+  document.getElementById("q-correct").textContent = item.q.answer || "—";
+
+  const missedBlock = document.getElementById("q-missed-block");
+  if (!r.passed && r.missed && r.missed.length){
+    const examples = r.missed.slice(0,5).map(function(g){return Array.isArray(g)?g[0]:g;}).join(" · ");
+    document.getElementById("q-missed").textContent = examples || "—";
+    missedBlock.classList.remove("hidden");
+  } else {
+    missedBlock.classList.add("hidden");
+  }
+
+  document.getElementById("q-review").classList.remove("hidden");
+  document.getElementById("q-input").disabled = true;
+  state.checkMode = "review";
+
+  const total = state.questions.length;
+  document.getElementById("next-btn").textContent =
+    idx === total-1 ? "сыграть партию ▸" : "следующий ход ▸";
+
+  setTimeout(function(){
+    document.getElementById("q-review").scrollIntoView({behavior:"smooth", block:"center"});
+  }, 100);
+}
+
+document.getElementById("next-btn").addEventListener("click",function(){
+  if (state.checkMode === "answer"){
+    state.answers[state.currentIdx] = document.getElementById("q-input").value;
+    saveProgressAsync();
+    showReview();
+    return;
+  }
+  if (state.currentIdx < state.questions.length - 1){
+    state.currentIdx++;
+    saveProgressAsync();
+    renderQuestion();
+  } else {
+    finishTest();
+  }
+});
+
+document.getElementById("prev-btn").addEventListener("click",function(){
+  if (state.checkMode === "review") return;
+  state.answers[state.currentIdx]=document.getElementById("q-input").value;
+  if(state.currentIdx>0){state.currentIdx--;renderQuestion();}
+});
+
+async function finishTest(){
+  state.inTest = false;
+  const reviews=state.questions.map(function(item,i){
+    const ans=state.answers[i]||"";
+    const r = (state.reviewResults && state.reviewResults[i]) || checkAnswer(item.q,ans);
+    return Object.assign({}, item, {answer:ans, review:r});
+  });
+  const byPosition={};
+  for(const k of POSITIONS_ORDER) byPosition[k]={name:BANKS[k].name,total:0,passed:0};
+  reviews.forEach(function(r){ byPosition[r.sectionKey].total++; if(r.review.passed) byPosition[r.sectionKey].passed++; });
+  const totalQ=reviews.length;
+  const totalPassed=reviews.filter(function(r){return r.review.passed;}).length;
+  const overallScore=Math.round((totalPassed/totalQ)*100);
+  const passed=overallScore>=PASS_THRESHOLD;
+
+  const pauses = state.pauses || [];
+  const pauseCount = pauses.length;
+  const totalPauseSec = pauses.reduce(function(s,p){return s+(p.durationSec||0);},0);
+  const durationSec = state.startedAt ? Math.round((Date.now() - state.startedAt) / 1000) : 0;
+
+  state.results={reviews:reviews,byPosition:byPosition,totalQ:totalQ,totalPassed:totalPassed,overallScore:overallScore,passed:passed,
+    pauseCount:pauseCount, totalPauseSec:totalPauseSec, resumeCount: state.resumeCount, durationSec:durationSec};
+
+  try{
+    await STORAGE.addAttempt({
+      name:state.user.name, pin:state.user.pin, score:overallScore, passed:passed,
+      isTest: !!state.user.isTest,
+      byPosition:Object.fromEntries(Object.entries(byPosition).map(function(e){return [e[0], e[1].passed+"/"+e[1].total];})),
+      pauseCount:pauseCount, totalPauseSec:totalPauseSec, resumeCount: state.resumeCount, durationSec:durationSec,
+      pauseDetails: pauses, sessionId: state.sessionId,
+      date:new Date().toISOString()
+    });
+  }catch(e){console.warn("save failed",e);}
+
+  try{ await STORAGE.deleteProgress(state.user.pin); }catch(_){}
+
+  // Уведомление в Telegram (не блокируем UI — отправляем фоном)
+  try{
+    const detailedAttempt = {
+      name: state.user.name, pin: state.user.pin,
+      score: overallScore, passed: passed,
+      isTest: !!state.user.isTest,
+      totalQuestions: totalQ, correctAnswers: totalPassed,
+      violations: pauseCount,
+      violationLog: pauses.map(function(p){
+        return { at: new Date(p.leftAt||Date.now()).toISOString(), reason: "tab-hidden" };
+      }),
+      byPosition: Object.fromEntries(Object.entries(byPosition).map(function(e){
+        return [e[0], { name: e[1].name, ok: e[1].passed, total: e[1].total }];
+      })),
+      questions: state.questions.map(function(q){
+        return { name: q.name||BANKS[q.sectionKey].name, q: q.q, answer: q.answer };
+      }),
+      answers: Object.fromEntries(reviews.map(function(r,i){
+        return [i, { text: r.answer||"", ok: r.review.passed, missed: r.review.missed||[] }];
+      })),
+      startedAt: state.startedAt ? new Date(state.startedAt).toISOString() : null,
+      finishedAt: new Date().toISOString()
+    };
+    if(typeof notifyAttemptComplete === "function"){
+      notifyAttemptComplete(detailedAttempt);
+    }
+  }catch(e){ console.warn("telegram notify failed:", e); }
+
+  await renderResult();
+}
+
+async function renderResult(){
+  showStage("result");
+  const overallScore = state.results.overallScore;
+  const passed = state.results.passed;
+  const byPosition = state.results.byPosition;
+  const totalQ = state.results.totalQ;
+  const totalPassed = state.results.totalPassed;
+
+  const scoreEl=document.getElementById("score-big");
+  scoreEl.textContent=overallScore+"%";
+  scoreEl.className="score-big "+(passed?"":"fail");
+  const v=document.getElementById("verdict");
+  if(passed){
+    v.textContent=overallScore>=95?"Партия сыграна безупречно":overallScore>=85?"Партия выиграна":"Зачёт принят";
+  } else { v.textContent="Шах. Партия не сыграна."; }
+  document.getElementById("verdict-sub").textContent = totalPassed + " из " + totalQ + " вопросов закрыты · порог " + PASS_THRESHOLD + "%";
+
+  const br=document.getElementById("breakdown");
+  br.innerHTML="";
+  for(const k of POSITIONS_ORDER){
+    const s=byPosition[k];
+    const pct=Math.round((s.passed/s.total)*100);
+    const ok=pct>=PASS_THRESHOLD;
+    br.innerHTML += '<div class="br-row">'
+      + '<div><div class="br-name">'+escapeHtml(s.name)+'</div><div class="br-meta">'+s.passed+' из '+s.total+'</div></div>'
+      + '<div class="br-score '+(ok?'pass':'fail')+'">'+pct+'%</div>'
+      + '</div>';
+  }
+
+  const attempts=await STORAGE.getUserAttempts(state.user.pin);
+  document.getElementById("r-attempt").textContent=attempts.length;
+  const best=Math.max.apply(null, attempts.map(function(a){return a.score;}));
+  document.getElementById("r-best").textContent=best+"%";
+  const passedCount=attempts.filter(function(a){return a.passed;}).length;
+  document.getElementById("r-passed").textContent=passedCount;
+
+  const hl=document.getElementById("history-list");
+  if(attempts.length===0){
+    hl.innerHTML='<div class="muted center" style="padding:14px 0;font-style:italic">—</div>';
+  } else {
+    hl.innerHTML=attempts.slice(0,10).map(function(a,i){
+      return '<div class="hist-row">'
+        + '<div class="hist-rank">'+(i+1)+'</div>'
+        + '<div class="hist-date">'+fmtDate(a.date)+'</div>'
+        + '<div class="hist-score '+(a.passed?"":"fail")+'">'+a.score+'%</div>'
+        + '<div class="hist-status '+(a.passed?"":"fail")+'">'+(a.passed?"зачёт":"провал")+'</div>'
+        + '</div>';
+    }).join("");
+  }
+
+  const list=document.getElementById("review-list");
+  list.innerHTML="";
+  state.results.reviews.forEach(function(r,i){
+    const correct=r.review.passed;
+    const examples=(r.review.missed||[]).slice(0,4).map(function(g){return Array.isArray(g)?g[0]:g;}).join(" · ");
+    list.innerHTML += '<div class="review-q '+(correct?"correct":"wrong")+'">'
+      + '<div class="qt">№'+(i+1)+' · '+escapeHtml(r.q.q)+'</div>'
+      + '<div class="ans"><span class="lbl">твой ответ:</span>'+escapeHtml(r.answer||"— не отвечено —")+'</div>'
+      + '<div class="correct-ans"><span class="lbl">правильный ответ</span>'+escapeHtml(r.q.answer||"")+'</div>'
+      + (correct?"":'<div class="miss"><span class="lbl">пропущено:</span> '+(examples||"—")+'</div>')
+      + '</div>';
+  });
+}
+
+document.getElementById("review-btn").addEventListener("click",function(){
+  const card=document.getElementById("review-card");
+  card.classList.toggle("hidden");
+  document.getElementById("review-btn").textContent=card.classList.contains("hidden")?"показать ошибки":"скрыть разбор";
+});
+
+document.getElementById("restart-btn").addEventListener("click",async function(){
+  state.questions=[]; state.answers={}; state.currentIdx=0; state.results=null;
+  document.getElementById("review-card").classList.add("hidden");
+  document.getElementById("review-btn").textContent="показать ошибки";
+  await renderHome();
+  showStage("home");
+});
+
+// ============================================================
+// ADMIN
+// ============================================================
+async function renderAdmin(){
+  await renderUsersList();
+  await renderAllAttempts("all");
+}
+
+document.getElementById("test-telegram-btn").addEventListener("click", async function(){
+  const result = document.getElementById("test-telegram-result");
+  this.disabled = true;
+  result.style.color = "var(--cream-2)";
+  result.textContent = "отправляем...";
+  try{
+    const ok = await sendTelegram("✅ <b>NOMO Аттестация</b>\n\nТестовое сообщение из админки. Уведомления настроены и работают.\n\n<i>" + new Date().toLocaleString("ru-RU") + "</i>");
+    if(ok){
+      result.style.color = "var(--green)";
+      result.textContent = "✓ Сообщение доставлено в Telegram";
+    } else {
+      result.style.color = "var(--red)";
+      result.textContent = "Не получилось. Зайди в @nomo_attestaciya_bot и нажми Start.";
+    }
+  }catch(e){
+    result.style.color = "var(--red)";
+    result.textContent = "Ошибка: " + e.message;
+  }
+  this.disabled = false;
+});
+
+document.querySelectorAll(".admin-tab[data-atab]").forEach(function(t){
+  t.addEventListener("click",function(){
+    document.querySelectorAll(".admin-tab[data-atab]").forEach(function(x){x.classList.remove("active");});
+    t.classList.add("active");
+    const id=t.dataset.atab;
+    document.getElementById("atab-users").classList.toggle("hidden",id!=="users");
+    document.getElementById("atab-results").classList.toggle("hidden",id!=="results");
+    document.getElementById("atab-settings").classList.toggle("hidden",id!=="settings");
+  });
+});
+
+async function renderUsersList(){
+  const users=await STORAGE.getAllUsers();
+  const el=document.getElementById("users-list");
+  if(users.length===0){
+    el.innerHTML='<div class="muted center" style="padding:14px 0;font-style:italic">Сотрудников ещё нет.</div>';
+    return;
+  }
+  users.sort(function(a,b){
+    const aHas = (a.name && a.name.trim()) ? 1 : 0;
+    const bHas = (b.name && b.name.trim()) ? 1 : 0;
+    if(aHas !== bHas) return bHas - aHas;
+    return (a.name||"").localeCompare(b.name||"","ru");
+  });
+  el.innerHTML=users.map(function(u){
+    const nameDisplay = (u.name && u.name.trim()) ? escapeHtml(u.name) : '<span style="color:var(--ink-dim);font-style:italic">— ещё не вошёл —</span>';
+    const tag = u.isTest ? '<span class="test-tag">тест</span>' : '';
+    return '<div class="user-row">'
+      + '<div class="user-name">'+nameDisplay+tag+'</div>'
+      + '<div class="user-pin">'+escapeHtml(u.pin)+'</div>'
+      + '<div class="user-act"><button class="btn danger" data-del-pin="'+escapeHtml(u.pin)+'">удалить</button></div>'
+      + '</div>';
+  }).join("");
+  el.querySelectorAll("[data-del-pin]").forEach(function(b){
+    b.addEventListener("click",async function(){
+      const pin=b.dataset.delPin;
+      if(!confirm("Удалить сотрудника?")) return;
+      await STORAGE.deleteUser(pin);
+      await renderUsersList();
+    });
+  });
+}
+
+document.getElementById("add-user-btn").addEventListener("click",async function(){
+  const name=document.getElementById("new-user-name").value.trim();
+  const pin=document.getElementById("new-user-pin").value.trim();
+  const err=document.getElementById("user-add-error");
+  err.textContent="";
+  if(!/^\d{4}$/.test(pin)){err.textContent="Код — ровно 4 цифры.";return;}
+  if(pin===await STORAGE.getMasterPin()){err.textContent="Этот код занят менеджерским.";return;}
+  const exists=await STORAGE.getUserByPin(pin);
+  if(exists){err.textContent="Этот код уже занят.";return;}
+  await STORAGE.addUser(name, pin);
+  document.getElementById("new-user-name").value="";
+  document.getElementById("new-user-pin").value="";
+  await renderUsersList();
+});
+
+let attemptsSubtab="all";
+document.querySelectorAll(".admin-tab[data-rsubtab]").forEach(function(t){
+  t.addEventListener("click",async function(){
+    document.querySelectorAll(".admin-tab[data-rsubtab]").forEach(function(x){x.classList.remove("active");});
+    t.classList.add("active");
+    attemptsSubtab=t.dataset.rsubtab;
+    await renderAllAttempts(attemptsSubtab);
+  });
+});
+
+async function renderAllAttempts(mode){
+  const active = await STORAGE.getAllProgress();
+  const activeBox = document.getElementById("active-sessions");
+  const activeList = document.getElementById("active-sessions-list");
+  if (active.length === 0){
+    activeBox.classList.add("hidden");
+  } else {
+    activeBox.classList.remove("hidden");
+    activeList.innerHTML = active.map(function(p){
+      const total = (p.questions || []).length || 108;
+      const pCount = (p.pauses || []).length;
+      const pSec = (p.pauses || []).reduce(function(s,x){return s+(x.durationSec||0);},0);
+      const startedTime = new Date(p.startedAt).toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"});
+      const name = (p.name && p.name.trim()) ? escapeHtml(p.name) : '<span class="muted" style="font-style:italic">PIN '+escapeHtml(p.pin)+'</span>';
+      let alerts = '';
+      if (p.resumeCount > 0) alerts += '<span class="test-tag" style="border-color:var(--red);color:var(--red);background:rgba(200,100,90,0.1)">возоб ×'+p.resumeCount+'</span>';
+      if (pCount > 0) alerts += '<span class="test-tag" style="border-color:var(--red);color:var(--red);background:rgba(200,100,90,0.1)">'+pCount+' наруш · '+fmtMinSec(pSec)+'</span>';
+      return '<div style="display:grid;grid-template-columns:1fr 80px 70px;gap:10px;padding:8px 0;border-bottom:1px solid rgba(90,74,48,0.2);align-items:center;font-size:12px">'
+        + '<div class="cream">'+name+alerts+'</div>'
+        + '<div style="color:var(--gold);text-align:right">'+p.currentIdx+'/'+total+'</div>'
+        + '<div class="muted" style="text-align:right">с '+startedTime+'</div>'
+        + '</div>';
+    }).join("");
+  }
+
+  let attempts=await STORAGE.getAllAttempts();
+  const el=document.getElementById("all-attempts");
+  if(attempts.length===0){
+    el.innerHTML='<div class="muted center" style="padding:14px 0;font-style:italic">Попыток ещё нет.</div>';
+    return;
+  }
+  if(mode==="best"){
+    const best={};
+    for(const a of attempts){
+      const k=a.pin+"::"+a.name;
+      if(!best[k] || a.score>best[k].score) best[k]=a;
+    }
+    attempts=Object.values(best);
+  }
+  attempts.sort(function(a,b){
+    if(b.score!==a.score) return b.score-a.score;
+    return new Date(b.date)-new Date(a.date);
+  });
+  el.innerHTML=attempts.slice(0,80).map(function(a,i){
+    const tag = a.isTest ? '<span class="test-tag">тест</span>' : '';
+    let alertTag = '';
+    if (a.resumeCount && a.resumeCount > 0){
+      alertTag += '<span class="test-tag" style="border-color:var(--red);color:var(--red);background:rgba(200,100,90,0.1)">возоб ×'+a.resumeCount+'</span>';
+    }
+    if (a.pauseCount && a.pauseCount > 0){
+      alertTag += '<span class="test-tag" style="border-color:var(--red);color:var(--red);background:rgba(200,100,90,0.15)">'+a.pauseCount+' наруш · '+fmtMinSec(a.totalPauseSec||0)+'</span>';
+    }
+    return '<div class="lb-row">'
+      + '<div class="lb-rank">'+(i+1)+'</div>'
+      + '<div class="lb-name">'+escapeHtml(a.name)+tag+alertTag+'</div>'
+      + '<div class="lb-score '+(a.passed?"":"fail")+'">'+a.score+'%</div>'
+      + '<div class="lb-date">'+fmtDate(a.date)+'</div>'
+      + '<div class="lb-action"><span class="x" data-del-attempt="'+escapeHtml(a.id)+'">×</span></div>'
+      + '</div>';
+  }).join("");
+  el.querySelectorAll("[data-del-attempt]").forEach(function(x){
+    x.addEventListener("click",async function(){
+      if(!confirm("Удалить эту попытку?")) return;
+      await STORAGE.deleteAttempt(x.dataset.delAttempt);
+      await renderAllAttempts(attemptsSubtab);
+    });
+  });
+}
+
+document.getElementById("save-master-btn").addEventListener("click",async function(){
+  const v=document.getElementById("new-master-pin").value.trim();
+  const err=document.getElementById("master-pin-error");
+  err.textContent="";
+  if(!/^\d{4,6}$/.test(v)){err.textContent="Код — 4–6 цифр.";return;}
+  const u=await STORAGE.getUserByPin(v);
+  if(u){err.textContent="Этот код занят сотрудником: "+u.name;return;}
+  await STORAGE.setMasterPin(v);
+  err.style.color="var(--green)";
+  err.textContent="Мастер-код обновлён.";
+  document.getElementById("new-master-pin").value="";
+  setTimeout(function(){err.style.color="";err.textContent="";},3500);
+});
+
+document.getElementById("clear-attempts-btn").addEventListener("click",async function(){
+  if(!confirm("Удалить ВСЕ попытки всех сотрудников?")) return;
+  await STORAGE.clearAllAttempts();
+  await renderAllAttempts(attemptsSubtab);
+});
+
+// ============================================================
+// СИДИНГ — добавляем PIN-коды, которых ещё нет в localStorage
+// ============================================================
+async function seedUsersIfNeeded(){
+  try{
+    for(const u of SEED_USERS){
+      try{
+        const exists = await STORAGE.getUserByPin(u.pin);
+        if(!exists){
+          await STORAGE.addUser(u.name||"", u.pin, !!u.isTest);
+        }
+      }catch(_){}
+    }
+  }catch(e){ console.warn("seed failed", e); }
+}
+
+// ============================================================
+// TELEGRAM УВЕДОМЛЕНИЯ
+// ============================================================
+async function sendTelegram(text, parseMode){
+  try{
+    const url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage";
+    const body = {
+      chat_id: TELEGRAM_CHAT_ID,
+      text: text,
+      parse_mode: parseMode || "HTML",
+      disable_web_page_preview: true
+    };
+    const r = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    if(!r.ok) return false;
+    const data = await r.json();
+    return !!(data && data.ok);
+  }catch(e){
+    console.warn("Telegram send failed:", e);
+    return false;
+  }
+}
+
+async function sendTelegramDocument(filename, content, caption){
+  try{
+    const url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendDocument";
+    const blob = new Blob([content], { type: "text/plain; charset=utf-8" });
+    const fd = new FormData();
+    fd.append("chat_id", TELEGRAM_CHAT_ID);
+    fd.append("document", blob, filename);
+    if(caption){
+      fd.append("caption", caption);
+      fd.append("parse_mode", "HTML");
+    }
+    const r = await fetch(url, { method: "POST", body: fd });
+    if(!r.ok) return false;
+    const data = await r.json();
+    return !!(data && data.ok);
+  }catch(e){
+    console.warn("Telegram document failed:", e);
+    return false;
+  }
+}
+
+function buildAttemptReport(attempt){
+  const escTg = (s) => String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const passEmoji = attempt.passed ? "\u2705" : "\u274C";
+  const passLabel = attempt.passed ? "ЗАЧЁТ" : "НЕЗАЧЁТ";
+  const isTest = attempt.isTest ? " 🧪" : "";
+
+  let durationStr = "—";
+  if(attempt.startedAt && attempt.finishedAt){
+    const sec = Math.floor((new Date(attempt.finishedAt) - new Date(attempt.startedAt))/1000);
+    const m = Math.floor(sec/60);
+    const s = sec%60;
+    durationStr = m + " мин " + s + " сек";
+  }
+
+  let txt = "";
+  txt += "🎯 <b>NOMO · Аттестация</b>" + isTest + "\n\n";
+  txt += "👤 <b>" + escTg(attempt.name || ("Код " + attempt.pin)) + "</b>";
+  txt += " <code>" + escTg(attempt.pin) + "</code>\n\n";
+  txt += passEmoji + " <b>" + attempt.score + "%</b> · " + passLabel + "\n";
+  txt += "📝 " + (attempt.correctAnswers||0) + " из " + (attempt.totalQuestions||0) + " правильно\n";
+  txt += "⏱ Время: " + durationStr + "\n";
+
+  if(attempt.violations && attempt.violations > 0){
+    txt += "⚠️ <b>Нарушений: " + attempt.violations + "</b>\n";
+    if(attempt.violationLog && attempt.violationLog.length){
+      const reasons = {};
+      attempt.violationLog.forEach(v => { reasons[v.reason] = (reasons[v.reason]||0)+1; });
+      const labels = { "tab-hidden":"переключение вкладки", "blur":"свернуто", "printscreen":"PrintScreen", "ctrl-p":"печать", "f12":"DevTools", "devtools-shortcut":"DevTools" };
+      const parts = [];
+      for(const r in reasons){ parts.push((labels[r]||r) + " ×" + reasons[r]); }
+      txt += "   <i>" + escTg(parts.join(", ")) + "</i>\n";
+    }
+  }
+
+  if(attempt.byPosition){
+    const failed = [];
+    for(const k in attempt.byPosition){
+      const p = attempt.byPosition[k];
+      const pct = p.total > 0 ? Math.round((p.ok/p.total)*100) : 0;
+      if(pct < PASS_THRESHOLD) failed.push({ name: p.name, ok: p.ok, total: p.total, pct: pct });
+    }
+    if(failed.length){
+      txt += "\n<b>Слабые позиции:</b>\n";
+      failed.slice(0, 12).forEach(f => {
+        txt += "× " + escTg(f.name) + " (" + f.ok + "/" + f.total + ")\n";
+      });
+      if(failed.length > 12) txt += "<i>...и ещё " + (failed.length-12) + "</i>\n";
+    }
+  }
+
+  txt += "\n🕐 " + new Date(attempt.finishedAt || Date.now()).toLocaleString("ru-RU");
+  return txt;
+}
+
+function buildAttemptDetailsText(attempt){
+  let txt = "NOMO · АТТЕСТАЦИЯ · ПОДРОБНЫЙ ОТЧЁТ\n";
+  txt += "=".repeat(60) + "\n\n";
+  txt += "Сотрудник: " + (attempt.name || "Код "+attempt.pin) + "\n";
+  txt += "PIN: " + attempt.pin + "\n";
+  if(attempt.isTest) txt += "ТЕСТ-РЕЖИМ МЕНЕДЖЕРА\n";
+  txt += "Дата: " + new Date(attempt.finishedAt || attempt.at).toLocaleString("ru-RU") + "\n";
+  txt += "Результат: " + attempt.score + "% (" + (attempt.passed ? "ЗАЧЁТ" : "НЕЗАЧЁТ") + ")\n";
+  txt += "Правильных ответов: " + (attempt.correctAnswers||0) + " из " + (attempt.totalQuestions||0) + "\n";
+  txt += "Нарушений: " + (attempt.violations||0) + "\n";
+  if(attempt.violationLog && attempt.violationLog.length){
+    txt += "\nЛог нарушений:\n";
+    attempt.violationLog.forEach(v => {
+      txt += "  - " + new Date(v.at).toLocaleTimeString("ru-RU") + " - " + v.reason + "\n";
+    });
+  }
+  txt += "\n" + "=".repeat(60) + "\n";
+  txt += "ОТВЕТЫ ПО ВОПРОСАМ\n";
+  txt += "=".repeat(60) + "\n\n";
+
+  if(attempt.questions && attempt.answers){
+    for(let i = 0; i < attempt.questions.length; i++){
+      const q = attempt.questions[i];
+      const a = attempt.answers[i] || {};
+      txt += "[" + (i+1) + "/" + attempt.questions.length + "] " + (q.name||"") + "\n";
+      txt += "Вопрос: " + q.q + "\n";
+      txt += "Ответ сотрудника: " + (a.text || "(пусто)") + "\n";
+      txt += "Правильный ответ: " + (q.answer || "—") + "\n";
+      txt += "Результат: " + (a.ok ? "ПРИНЯТО" : "НЕ ПРИНЯТО");
+      if(a.missed && a.missed.length) txt += " (пропущено: " + a.missed.join(", ") + ")";
+      txt += "\n\n";
+    }
+  }
+  return txt;
+}
+
+async function notifyAttemptComplete(attempt){
+  try{
+    const summary = buildAttemptReport(attempt);
+    const details = buildAttemptDetailsText(attempt);
+    const filename = "NOMO_" + attempt.pin + "_" + new Date().toISOString().slice(0,19).replace(/[:T]/g,"-") + ".txt";
+    const sentDoc = await sendTelegramDocument(filename, details, summary);
+    if(!sentDoc){
+      await sendTelegram(summary);
+    }
+  }catch(e){ console.warn("notify failed:", e); }
+}
+
+window.notifyAttemptComplete = notifyAttemptComplete;
+window.sendTelegram = sendTelegram;
+
+// ============================================================
+// BOOT
+// ============================================================
+(async function(){
+  await seedUsersIfNeeded();
+  showStage("login");
+})();
+</script>
+
+</body>
+</html>
