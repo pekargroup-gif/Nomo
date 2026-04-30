@@ -4,41 +4,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NOMO · Аттестация · Партия позиций</title>
+<title>NOMO · Аттестация</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    /* Светлая палитра как в PDF NOMO PIN-карты */
-    --bg:#F5EFE0;           /* кремовый фон */
-    --panel:#FAF5E8;        /* светлая карточка */
-    --panel-2:#EFE7D2;      /* акцент чуть темнее */
-    --gold:#A88A4E;         /* приглушённое золото для текста */
-    --gold-br:#8E6F38;      /* насыщенное золото для заголовков */
-    --gold-dk:#6E5528;      /* тёмное золото для акцентов */
-    --gold-ln:#D4C39A;      /* линии и рамки */
-    --cream:#3A2E1C;        /* основной тёмно-коричневый текст */
-    --cream-2:#5C4E37;      /* вторичный текст */
-    --white:#1F1812;        /* самый тёмный (для заголовков на светлом) */
-    --ink-dim:#9A8966;      /* приглушённый */
-    --green:#5C7A4C;        /* зелёный для зачёта */
-    --red:#A04A3F;          /* красный для незачёта */
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{
-    background:var(--bg);color:var(--cream);font-family:'Inter',sans-serif;
-    min-height:100vh;letter-spacing:.01em;
-    -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;
-    -webkit-touch-callout:none;
-  }
-  body{
-    background:
-      radial-gradient(ellipse at top,rgba(168,138,78,0.08),transparent 60%),
-      radial-gradient(ellipse at bottom,rgba(168,138,78,0.05),transparent 50%),
-      var(--bg);
-    padding:32px 18px 80px;position:relative;
-  }
-  textarea,input{user-select:text;-webkit-user-select:text}
-  .wrap{max-width:780px;margin:0 auto;position:relative;z-index:1}
+:root{
+  --bg:#F5EFE0;--panel:#FAF5E8;--panel-2:#EFE7D2;
+  --gold:#A88A4E;--gold-br:#8E6F38;--gold-dk:#6E5528;--gold-ln:#D4C39A;
+  --cream:#3A2E1C;--cream-2:#5C4E37;--white:#1F1812;--ink-dim:#9A8966;
+  --green:#5C7A4C;--red:#A04A3F;--rose:#9C5A6E;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--cream);font-family:'Inter',sans-serif;min-height:100vh;letter-spacing:.01em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-touch-callout:none}
+body{background:radial-gradient(ellipse at top,rgba(168,138,78,0.08),transparent 60%),radial-gradient(ellipse at bottom,rgba(168,138,78,0.05),transparent 50%),var(--bg);padding:32px 18px 80px;position:relative}
+textarea,input{user-select:text;-webkit-user-select:text}
+.wrap{max-width:780px;margin:0 auto;position:relative;z-index:1}
 
 #watermark{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden;opacity:1}
 .wm-row{white-space:nowrap;font-family:‘Inter’,sans-serif;font-size:18px;color:rgba(110,85,40,0.18);font-weight:700;letter-spacing:.45em;transform:rotate(-30deg);transform-origin:0 0;padding:60px 0;text-shadow:0 0 1px rgba(110,85,40,0.10)}
@@ -92,9 +71,9 @@ h1.title{font-family:‘Cormorant Garamond’,serif;font-size:34px;color:var(–
 
 label.fld{display:block;margin-top:18px}
 label.fld .lbl{display:block;font-size:10px;color:var(–gold);letter-spacing:.35em;text-transform:uppercase;margin-bottom:8px}
-input[type=text],input[type=tel],textarea{width:100%;background:rgba(255,250,235,0.6);border:1px solid var(–gold-ln);color:var(–cream);padding:14px 16px;font-family:‘Inter’,sans-serif;font-size:15px;line-height:1.55;border-radius:0;transition:border-color .2s,background .2s;resize:vertical}
+input[type=text],input[type=tel],textarea,select{width:100%;background:rgba(255,250,235,0.6);border:1px solid var(–gold-ln);color:var(–cream);padding:14px 16px;font-family:‘Inter’,sans-serif;font-size:15px;line-height:1.55;border-radius:0;transition:border-color .2s,background .2s;resize:vertical}
 textarea{min-height:120px;font-size:14.5px}
-input:focus,textarea:focus{outline:none;border-color:var(–gold);background:rgba(200,169,110,0.04)}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(–gold);background:rgba(200,169,110,0.04)}
 textarea::placeholder,input::placeholder{color:var(–cream-2);font-style:italic;opacity:0.7}
 
 .btn{display:inline-block;background:transparent;border:1.5px solid var(–gold-dk);color:var(–gold-dk);padding:14px 32px;font-family:‘Cormorant Garamond’,serif;font-weight:700;font-size:14px;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;transition:all .25s;margin-top:10px}
@@ -159,8 +138,11 @@ textarea::placeholder,input::placeholder{color:var(–cream-2);font-style:italic
 .admin-tab{flex:1;text-align:center;padding:12px 8px;cursor:pointer;font-size:11px;color:var(–cream-2);letter-spacing:.3em;text-transform:uppercase;border-bottom:2px solid transparent;transition:all .2s}
 .admin-tab.active{color:var(–gold);border-bottom-color:var(–gold)}
 
-.user-row{display:grid;grid-template-columns:1fr 90px 90px;gap:10px;padding:12px 0;border-bottom:1px solid rgba(90,74,48,0.3);align-items:center}
+.user-row{display:grid;grid-template-columns:1fr 80px 90px 90px;gap:10px;padding:12px 0;border-bottom:1px solid rgba(90,74,48,0.3);align-items:center}
 .user-name{color:var(–cream);font-size:14px}
+.user-role{font-size:9px;letter-spacing:.3em;text-transform:uppercase;text-align:center;font-weight:600}
+.user-role.waiter{color:var(–gold-br)}
+.user-role.hostess{color:var(–rose)}
 .user-pin{font-family:‘Cormorant Garamond’,serif;color:var(–gold-br);font-size:18px;letter-spacing:.2em;text-align:center;font-weight:600}
 .user-act{text-align:right}
 .user-act .btn{padding:6px 14px;font-size:10px;margin:0;letter-spacing:.15em}
@@ -179,6 +161,8 @@ textarea::placeholder,input::placeholder{color:var(–cream-2);font-style:italic
 
 .top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;font-size:11px;color:var(–cream-2);letter-spacing:.3em;text-transform:uppercase}
 .top-bar .who{color:var(–gold)}
+.top-bar .role-tag{display:inline-block;font-size:9px;letter-spacing:.25em;padding:2px 8px;margin-left:8px;border:1px solid var(–gold-dk);color:var(–gold-br);background:rgba(200,169,110,0.1)}
+.top-bar .role-tag.hostess{border-color:var(–rose);color:var(–rose);background:rgba(156,90,110,0.08)}
 .top-bar .logout{color:var(–cream-2);cursor:pointer;text-decoration:underline;text-decoration-color:var(–gold-dk)}
 
 .test-banner{background:repeating-linear-gradient(45deg,rgba(232,201,138,0.08),rgba(232,201,138,0.08) 10px,rgba(232,201,138,0.04) 10px,rgba(232,201,138,0.04) 20px);border:1px dashed var(–gold);padding:14px 18px;margin-bottom:18px;text-align:center}
@@ -189,13 +173,35 @@ textarea::placeholder,input::placeholder{color:var(–cream-2);font-style:italic
 
 .test-card{background:#FAF5E8;border:1.5px solid var(–gold-dk);padding:24px 22px;margin-bottom:18px;position:relative;transition:border-color .2s;z-index:60;box-shadow:0 2px 8px rgba(110,85,40,0.06)}
 .test-card:hover{border-color:var(–gold-br)}
+.test-card.hostess{border-color:var(–rose)}
+.test-card.hostess:hover{border-color:#7A4458}
 .test-card .tc-tag{font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(–gold-br);font-weight:700;margin-bottom:10px;position:relative;z-index:61}
+.test-card.hostess .tc-tag{color:var(–rose)}
 .test-card .tc-title{font-family:‘Cormorant Garamond’,serif;font-size:30px;color:var(–white);font-weight:600;line-height:1.05;letter-spacing:.02em;position:relative;z-index:61}
 .test-card .tc-sub{font-family:‘Cormorant Garamond’,serif;font-style:italic;font-size:16px;color:var(–gold);margin-top:4px;position:relative;z-index:61}
+.test-card.hostess .tc-sub{color:var(–rose)}
 .test-card .tc-desc{font-size:13px;color:var(–cream);line-height:1.5;margin-top:12px;position:relative;z-index:61}
 .test-card .tc-stats{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(–gold-dk);margin-top:14px;padding-top:10px;border-top:1px solid var(–gold-ln);position:relative;z-index:61}
 .test-card .btn{margin-top:14px;position:relative;z-index:61;background:#1F1812 !important;color:#F5EFE0 !important;border-color:#1F1812 !important;border-width:1.5px !important}
 .test-card .btn:hover{background:#000 !important;border-color:#000 !important}
+
+/* Карточка обучающего материала — отдельный синий-зелёный акцент */
+.test-card.materials{border-color:#5C7A4C}
+.test-card.materials:hover{border-color:#3F5734}
+.test-card.materials .tc-tag{color:#5C7A4C}
+.test-card.materials .tc-sub{color:#5C7A4C}
+
+/* Группы PDF в библиотеке */
+.materials-group{margin-bottom:26px}
+.materials-group h3{font-family:‘Cormorant Garamond’,serif;font-size:22px;color:var(–white);font-weight:600;letter-spacing:.02em;margin-bottom:4px;padding-bottom:6px;border-bottom:1px solid var(–gold-ln)}
+.materials-group .group-sub{font-size:11px;color:var(–cream-2);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
+.pdf-row{display:flex;align-items:center;gap:14px;background:#FAF5E8;border:1px solid var(–gold-ln);padding:14px 18px;margin-bottom:10px;text-decoration:none;color:var(–cream);transition:all .2s;cursor:pointer}
+.pdf-row:hover{border-color:var(–gold);background:#FFF8E8;transform:translateX(2px)}
+.pdf-row .pdf-icon{font-family:‘Cormorant Garamond’,serif;font-size:34px;color:var(–gold-br);line-height:1;flex-shrink:0}
+.pdf-row .pdf-info{flex:1;min-width:0}
+.pdf-row .pdf-title{font-family:‘Cormorant Garamond’,serif;font-size:17px;color:var(–white);font-weight:600;line-height:1.25;margin-bottom:3px}
+.pdf-row .pdf-desc{font-size:12px;color:var(–cream-2);line-height:1.4}
+.pdf-row .pdf-arrow{color:var(–gold);font-size:18px;flex-shrink:0}
 
 @media (max-width:600px){
 body{padding:18px 10px 60px}
@@ -205,6 +211,7 @@ h1.title{font-size:26px}
 .qtext{font-size:18px}
 .score-big{font-size:64px}
 .lb-row,.hist-row{font-size:11px}
+.user-row{grid-template-columns:1fr 60px 70px 70px;font-size:12px}
 }
 </style>
 
@@ -232,319 +239,431 @@ h1.title{font-size:26px}
 
 <div class="wrap">
 
-  <div class="head">
-    <div class="crown">N&nbsp;O&nbsp;M&nbsp;O&nbsp;&nbsp;&middot;&nbsp;&nbsp;H&nbsp;U&nbsp;Q&nbsp;Q&nbsp;A&nbsp;.&nbsp;R&nbsp;E&nbsp;S&nbsp;T</div>
-    <div class="brand">NOMO</div>
-    <div class="brand-rule"></div>
-    <div class="sub">аттестация &middot; партия позиций</div>
-  </div>
-
-  <div id="stage-login">
-    <h1 class="title">ВХОД</h1>
-    <div class="subtitle">введи свой персональный код</div>
-    <div class="card">
-      <p class="dim center" style="margin-bottom:16px;line-height:1.6">
-        Введи свой <span class="cream">персональный 4-значный код</span>.<br>
-        Сотрудники &mdash; личный код, менеджеры &mdash; менеджерский.
-      </p>
-      <input type="tel" maxlength="6" id="pin-input" class="pin-input" inputmode="numeric" pattern="[0-9]*" placeholder="••••" autocomplete="off">
-      <div class="pin-error" id="pin-error">&nbsp;</div>
-      <button class="btn primary full" id="login-btn">войти &#9656;</button>
-      <p class="muted center" style="margin-top:16px;font-size:11px;letter-spacing:.2em;text-transform:uppercase">
-        нет кода &mdash; обратись к управляющему
-      </p>
-    </div>
-  </div>
-
-  <div id="stage-name" class="hidden">
-    <h1 class="title">ДОБРО ПОЖАЛОВАТЬ</h1>
-    <div class="subtitle">введи своё имя &mdash; это первый вход</div>
-    <div class="card">
-      <p class="dim center" style="margin-bottom:20px;line-height:1.6">
-        Этот код видит тебя впервые. Введи своё <span class="cream">имя и фамилию</span> &mdash; они будут привязаны к коду навсегда.
-      </p>
-      <label class="fld" style="margin-top:0">
-        <span class="lbl">имя &middot; фамилия</span>
-        <input type="text" id="enter-name-input" placeholder="например, Иван Петров" autocomplete="off">
-      </label>
-      <div class="pin-error" id="name-error">&nbsp;</div>
-      <button class="btn primary full" id="save-name-btn">сохранить и продолжить &#9656;</button>
-    </div>
-  </div>
-
-  <div id="stage-resume" class="hidden">
-    <div class="top-bar">
-      <span>сотрудник: <span class="who" id="resume-name">&mdash;</span></span>
-      <span class="logout" id="logout-resume">выйти</span>
-    </div>
-    <div class="card" style="border-color:var(--gold)">
-      <div class="qsection center" style="color:var(--gold-br)">&#9888; незавершённая попытка</div>
-      <h1 class="title" style="font-size:26px;margin:18px 0 6px">У ТЕБЯ ЕСТЬ НЕЗАКОНЧЕННЫЙ ТЕСТ</h1>
-      <div class="subtitle">что хочешь сделать?</div>
-      <div class="stat-grid" style="grid-template-columns:repeat(2,1fr)">
-        <div class="stat-cell"><div class="stat-num" id="resume-progress">0/108</div><div class="stat-lbl">пройдено вопросов</div></div>
-        <div class="stat-cell"><div class="stat-num" id="resume-started">&mdash;</div><div class="stat-lbl">начат</div></div>
-        <div class="stat-cell"><div class="stat-num" id="resume-pauses">0</div><div class="stat-lbl">нарушений зафиксировано</div></div>
-        <div class="stat-cell"><div class="stat-num" id="resume-pause-time">&mdash;</div><div class="stat-lbl">общее отсутствие</div></div>
-      </div>
-      <div style="background:rgba(200,100,90,0.06);border-left:3px solid var(--red);padding:14px 18px;margin:18px 0">
-        <div class="qsection" style="color:var(--red);margin-bottom:6px">внимание</div>
-        <p class="dim" style="font-size:13px;line-height:1.6">
-          Каждый <span class="cream">выход из вкладки</span>, переключение приложения и возврат фиксируются и
-          <span class="cream">видны менеджеру</span> в админке.
-        </p>
-      </div>
-      <button class="btn primary full" id="resume-continue-btn">продолжить с вопроса <span id="resume-next-num">&mdash;</span> &#9656;</button>
-      <button class="btn ghost full" id="resume-restart-btn" style="margin-top:10px">начать заново &middot; сбросить прогресс</button>
-    </div>
-  </div>
-
-  <div id="stage-blocked" class="hidden">
-    <div class="top-bar">
-      <span>сотрудник: <span class="who" id="blocked-name">&mdash;</span></span>
-      <span class="logout" id="logout-blocked">выйти</span>
-    </div>
-    <div class="card" style="text-align:center;padding:50px 24px;border-color:var(--red)">
-      <div style="font-family:'Cormorant Garamond',serif;font-size:60px;color:var(--red);line-height:1;margin-bottom:8px">&#9888;</div>
-      <div class="qsection center" style="color:var(--red)">аттестация закрыта</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:72px;color:var(--red);line-height:1;margin:18px 0 10px;font-weight:600;letter-spacing:.05em">ПРОВАЛ</div>
-      <div class="verdict" style="color:var(--cream)">Дедлайн пропущен</div>
-      <div class="verdict-sub">Суббота, 20:00 &mdash; крайний срок сдачи аттестации за неделю.</div>
-      <div style="background:rgba(200,100,90,0.08);border-left:3px solid var(--red);padding:18px 20px;margin:24px auto;max-width:520px;text-align:left">
-        <div class="qsection" style="color:var(--red);margin-bottom:8px">что это значит</div>
-        <p class="dim" style="font-size:13.5px;line-height:1.6">
-          Ты опоздал со сдачей за эту неделю. Тест в субботу после 20:00 закрыт.
-          Следующая аттестация откроется <span class="gold-br">в воскресенье в 00:00</span>.
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div id="stage-select" class="hidden">
-    <div class="top-bar">
-      <span>сотрудник: <span class="who" id="select-name">&mdash;</span></span>
-      <span class="logout" id="logout-select">выйти</span>
-    </div>
-    <h1 class="title">ВЫБЕРИ АТТЕСТАЦИЮ</h1>
-    <div class="subtitle">какую партию открываем</div>
-
-```
-<div class="test-card" data-kind="main">
-  <div class="tc-tag">основная</div>
-  <div class="tc-title">Аттестация бара</div>
-  <div class="tc-desc">36 позиций · 108 вопросов · от Dom Perignon до Да Хун Пао</div>
-  <div class="tc-stats" id="tc-stats-main">&mdash;</div>
-  <button class="btn primary full" data-pick="main">открыть &#9656;</button>
+<div class="head">
+  <div class="crown">N&nbsp;O&nbsp;M&nbsp;O&nbsp;&nbsp;&middot;&nbsp;&nbsp;H&nbsp;U&nbsp;Q&nbsp;Q&nbsp;A&nbsp;.&nbsp;R&nbsp;E&nbsp;S&nbsp;T</div>
+  <div class="brand">NOMO</div>
+  <div class="brand-rule"></div>
+  <div class="sub">аттестация &middot; партия позиций</div>
 </div>
 
-<div class="test-card" data-kind="chess">
-  <div class="tc-tag">авторская партия</div>
-  <div class="tc-title">Шах и Мат</div>
-  <div class="tc-sub">Игра чёрных королев</div>
-  <div class="tc-desc">3 позиции · 24 вопроса · Чёрная Королева, Гамбит, Шах и Мат</div>
-  <div class="tc-stats" id="tc-stats-chess">&mdash;</div>
-  <button class="btn primary full" data-pick="chess">открыть &#9656;</button>
+<div id="stage-login">
+  <h1 class="title">ВХОД</h1>
+  <div class="subtitle">введи свой персональный код</div>
+  <div class="card">
+    <p class="dim center" style="margin-bottom:16px;line-height:1.6">
+      Введи свой <span class="cream">персональный 4-значный код</span>.<br>
+      Сотрудники &mdash; личный код, менеджеры &mdash; менеджерский.
+    </p>
+    <input type="tel" maxlength="6" id="pin-input" class="pin-input" inputmode="numeric" pattern="[0-9]*" placeholder="••••" autocomplete="off">
+    <div class="pin-error" id="pin-error">&nbsp;</div>
+    <button class="btn primary full" id="login-btn">войти &#9656;</button>
+    <p class="muted center" style="margin-top:16px;font-size:11px;letter-spacing:.2em;text-transform:uppercase">
+      нет кода &mdash; обратись к управляющему
+    </p>
+  </div>
 </div>
+
+<div id="stage-name" class="hidden">
+  <h1 class="title">ДОБРО ПОЖАЛОВАТЬ</h1>
+  <div class="subtitle">введи своё имя &mdash; это первый вход</div>
+  <div class="card">
+    <p class="dim center" style="margin-bottom:20px;line-height:1.6">
+      Этот код видит тебя впервые. Введи своё <span class="cream">имя и фамилию</span> &mdash; они будут привязаны к коду навсегда.
+    </p>
+    <label class="fld" style="margin-top:0">
+      <span class="lbl">имя &middot; фамилия</span>
+      <input type="text" id="enter-name-input" placeholder="например, Иван Петров" autocomplete="off">
+    </label>
+    <div class="pin-error" id="name-error">&nbsp;</div>
+    <button class="btn primary full" id="save-name-btn">сохранить и продолжить &#9656;</button>
+  </div>
+</div>
+
+<div id="stage-resume" class="hidden">
+  <div class="top-bar">
+    <span>сотрудник: <span class="who" id="resume-name">&mdash;</span></span>
+    <span class="logout" id="logout-resume">выйти</span>
+  </div>
+  <div class="card" style="border-color:var(--gold)">
+    <div class="qsection center" style="color:var(--gold-br)">&#9888; незавершённая попытка</div>
+    <h1 class="title" style="font-size:26px;margin:18px 0 6px">У ТЕБЯ ЕСТЬ НЕЗАКОНЧЕННЫЙ ТЕСТ</h1>
+    <div class="subtitle">что хочешь сделать?</div>
+    <div class="stat-grid" style="grid-template-columns:repeat(2,1fr)">
+      <div class="stat-cell"><div class="stat-num" id="resume-progress">0/108</div><div class="stat-lbl">пройдено вопросов</div></div>
+      <div class="stat-cell"><div class="stat-num" id="resume-started">&mdash;</div><div class="stat-lbl">начат</div></div>
+      <div class="stat-cell"><div class="stat-num" id="resume-pauses">0</div><div class="stat-lbl">нарушений зафиксировано</div></div>
+      <div class="stat-cell"><div class="stat-num" id="resume-pause-time">&mdash;</div><div class="stat-lbl">общее отсутствие</div></div>
+    </div>
+    <div style="background:rgba(200,100,90,0.06);border-left:3px solid var(--red);padding:14px 18px;margin:18px 0">
+      <div class="qsection" style="color:var(--red);margin-bottom:6px">внимание</div>
+      <p class="dim" style="font-size:13px;line-height:1.6">
+        Каждый <span class="cream">выход из вкладки</span>, переключение приложения и возврат фиксируются и
+        <span class="cream">видны менеджеру</span> в админке.
+      </p>
+    </div>
+    <button class="btn primary full" id="resume-continue-btn">продолжить с вопроса <span id="resume-next-num">&mdash;</span> &#9656;</button>
+    <button class="btn ghost full" id="resume-restart-btn" style="margin-top:10px">начать заново &middot; сбросить прогресс</button>
+  </div>
+</div>
+
+<div id="stage-blocked" class="hidden">
+  <div class="top-bar">
+    <span>сотрудник: <span class="who" id="blocked-name">&mdash;</span></span>
+    <span class="logout" id="logout-blocked">выйти</span>
+  </div>
+  <div class="card" style="text-align:center;padding:50px 24px;border-color:var(--red)">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:60px;color:var(--red);line-height:1;margin-bottom:8px">&#9888;</div>
+    <div class="qsection center" style="color:var(--red)">аттестация закрыта</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:72px;color:var(--red);line-height:1;margin:18px 0 10px;font-weight:600;letter-spacing:.05em">ПРОВАЛ</div>
+    <div class="verdict" style="color:var(--cream)">Дедлайн пропущен</div>
+    <div class="verdict-sub">Суббота, 20:00 &mdash; крайний срок сдачи аттестации за неделю.</div>
+    <div style="background:rgba(200,100,90,0.08);border-left:3px solid var(--red);padding:18px 20px;margin:24px auto;max-width:520px;text-align:left">
+      <div class="qsection" style="color:var(--red);margin-bottom:8px">что это значит</div>
+      <p class="dim" style="font-size:13.5px;line-height:1.6">
+        Ты опоздал со сдачей за эту неделю. Тест в субботу после 20:00 закрыт.
+        Следующая аттестация откроется <span class="gold-br">в воскресенье в 00:00</span>.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div id="stage-select" class="hidden">
+  <div class="top-bar">
+    <span>сотрудник: <span class="who" id="select-name">&mdash;</span><span id="select-role-tag"></span></span>
+    <span class="logout" id="logout-select">выйти</span>
+  </div>
+  <h1 class="title" id="select-title">ВЫБЕРИ АТТЕСТАЦИЮ</h1>
+  <div class="subtitle" id="select-subtitle">какую партию открываем</div>
+
+  <div class="test-card" data-kind="main" data-role="waiter">
+    <div class="tc-tag">основная</div>
+    <div class="tc-title">Аттестация бара</div>
+    <div class="tc-desc">36 позиций &middot; 108 вопросов &middot; от Dom Perignon до Да Хун Пао</div>
+    <div class="tc-stats" id="tc-stats-main">&mdash;</div>
+    <button class="btn primary full" data-pick="main">открыть &#9656;</button>
+  </div>
+
+  <div class="test-card" data-kind="chess" data-role="waiter">
+    <div class="tc-tag">авторская партия</div>
+    <div class="tc-title">Шах и Мат</div>
+    <div class="tc-sub">Игра чёрных королев</div>
+    <div class="tc-desc">3 позиции &middot; 24 вопроса &middot; Чёрная Королева, Гамбит, Шах и Мат</div>
+    <div class="tc-stats" id="tc-stats-chess">&mdash;</div>
+    <button class="btn primary full" data-pick="chess">открыть &#9656;</button>
+  </div>
+
+  <div class="test-card hostess" data-kind="hostess_reg" data-role="hostess">
+    <div class="tc-tag">хостес</div>
+    <div class="tc-title">Регламент хостес</div>
+    <div class="tc-sub">Звонки &middot; Встреча &middot; Иерархия &middot; Дресс-код</div>
+    <div class="tc-desc">16 позиций &middot; 20 вопросов &middot; полный регламент работы</div>
+    <div class="tc-stats" id="tc-stats-hostess_reg">&mdash;</div>
+    <button class="btn primary full" data-pick="hostess_reg">открыть &#9656;</button>
+  </div>
+
+  <div class="test-card hostess" data-kind="hostess_dep" data-role="hostess">
+    <div class="tc-tag">хостес</div>
+    <div class="tc-title">Депозитная система</div>
+    <div class="tc-sub">Столы &middot; Депозиты &middot; Банкеты</div>
+    <div class="tc-desc">8 позиций &middot; 20 вопросов &middot; тарифы, доплаты, ловушки банкета</div>
+    <div class="tc-stats" id="tc-stats-hostess_dep">&mdash;</div>
+    <button class="btn primary full" data-pick="hostess_dep">открыть &#9656;</button>
+  </div>
+
+  <div class="test-card materials" data-kind="hostess_materials" data-role="hostess">
+    <div class="tc-tag">📚 материалы</div>
+    <div class="tc-title">Обучающий материал</div>
+    <div class="tc-sub">Полное руководство &middot; Регламент &middot; Шаблоны</div>
+    <div class="tc-desc">5 PDF-документов в 4 группах &mdash; читай и обновляй знания между аттестациями</div>
+    <div class="tc-stats" style="color:#5C7A4C">библиотека хостес</div>
+    <button class="btn primary full" data-pick="hostess_materials" style="background:#5C7A4C !important;border-color:#5C7A4C !important">открыть &#9656;</button>
+  </div>
+
+<div id="stage-materials" class="hidden">
+  <div class="top-bar">
+    <span>сотрудник: <span class="who" id="materials-name">&mdash;</span><span id="materials-role-tag"></span></span>
+    <span class="logout" id="logout-materials">выйти</span>
+  </div>
+  <h1 class="title">📚 ОБУЧАЮЩИЙ МАТЕРИАЛ</h1>
+  <div class="subtitle">библиотека документов хостес</div>
+  <div class="card">
+    <p class="dim" style="line-height:1.6;margin-bottom:18px;font-size:13.5px">
+      Все документы открываются в браузере как PDF &mdash; можно читать, листать и сохранять у себя.
+      Используй их между аттестациями, чтобы освежать знания.
+    </p>
+
+```
+<div class="materials-group">
+  <h3>Стандарты и философия</h3>
+  <div class="group-sub">основа работы хостес</div>
+  <a class="pdf-row" href="materials/01_polnoe_rukovodstvo.pdf" target="_blank" rel="noopener">
+    <div class="pdf-icon">&#9776;</div>
+    <div class="pdf-info">
+      <div class="pdf-title">Полное руководство хостес</div>
+      <div class="pdf-desc">47 страниц &middot; ДНК NOMO, психология, конфиденциальность, иерархия</div>
+    </div>
+    <div class="pdf-arrow">&#9656;</div>
+  </a>
+</div>
+
+<div class="materials-group">
+  <h3>Регламент работы</h3>
+  <div class="group-sub">оперативные стандарты смены</div>
+  <a class="pdf-row" href="materials/02_reglament_v6.pdf" target="_blank" rel="noopener">
+    <div class="pdf-icon">&#9776;</div>
+    <div class="pdf-info">
+      <div class="pdf-title">Регламент хостес v6</div>
+      <div class="pdf-desc">Скрипты звонков, банкетный алгоритм, чек-листы смены</div>
+    </div>
+    <div class="pdf-arrow">&#9656;</div>
+  </a>
+</div>
+
+<div class="materials-group">
+  <h3>Скрипты и шаблоны</h3>
+  <div class="group-sub">для звонков и переписки</div>
+  <a class="pdf-row" href="materials/03_shablony_soobshenii.pdf" target="_blank" rel="noopener">
+    <div class="pdf-icon">&#9776;</div>
+    <div class="pdf-info">
+      <div class="pdf-title">Шаблоны сообщений хостес</div>
+      <div class="pdf-desc">Подтверждения брони, быстрые ответы, ответы на негатив</div>
+    </div>
+    <div class="pdf-arrow">&#9656;</div>
+  </a>
+  <a class="pdf-row" href="materials/04_bron_bez_depozita.pdf" target="_blank" rel="noopener">
+    <div class="pdf-icon">&#9776;</div>
+    <div class="pdf-info">
+      <div class="pdf-title">Бронь без депозита &middot; женские компании</div>
+      <div class="pdf-desc">Ответы на провокации и частые вопросы</div>
+    </div>
+    <div class="pdf-arrow">&#9656;</div>
+  </a>
+</div>
+
+<div class="materials-group">
+  <h3>Депозиты и банкеты</h3>
+  <div class="group-sub">тарифы по столам</div>
+  <a class="pdf-row" href="materials/05_depozitnye_usloviya.pdf" target="_blank" rel="noopener">
+    <div class="pdf-icon">&#9776;</div>
+    <div class="pdf-info">
+      <div class="pdf-title">Депозитные условия NOMO 2026</div>
+      <div class="pdf-desc">Таблица: какой стол &mdash; какой депозит &mdash; на сколько персон</div>
+    </div>
+    <div class="pdf-arrow">&#9656;</div>
+  </a>
+</div>
+
+<button class="btn ghost full" id="materials-back-btn" style="margin-top:24px">&#8592; к выбору теста</button>
 ```
 
   </div>
+</div>
 
-  <div id="stage-home" class="hidden">
-    <div class="top-bar">
-      <span>сотрудник: <span class="who" id="home-name">&mdash;</span></span>
-      <span class="logout" id="logout-1">выйти</span>
-    </div>
-    <div id="test-banner-home" class="test-banner hidden">
-      <div class="lbl">&#9670; ТЕСТ-РЕЖИМ МЕНЕДЖЕРА &#9670;</div>
-      <div class="desc">
-        Ты вошёл под <b>проверочным кодом</b>. Это симуляция сотрудника &mdash; пройди тест целиком,
-        попробуй сделать <b>скрин</b>, <b>переключить вкладку</b>, нажать <b>F12</b> или <b>PrintScreen</b>.
-        Дедлайн в субботу не блокирует. Все попытки в этом режиме помечены <span class="test-tag">ТЕСТ</span> в админке.
-      </div>
-    </div>
-    <h1 class="title" id="home-title">ПАРТИЯ ПОЗИЦИЙ</h1>
-    <div class="subtitle" id="home-subtitle">Аттестация по 36 ключевым позициям бара</div>
-    <div class="card">
-      <p class="dim" id="home-desc" style="line-height:1.7;margin-bottom:14px">
-        Аттестация состоит из <span class="cream">108 вопросов</span> &mdash; по 3 случайных вопроса на каждую из 36 позиций.
-      </p>
-      <div class="rules">
-        <h3>правила партии</h3>
-        <ul>
-          <li>Все ответы вводятся <span class="gold-br">вручную</span> &mdash; никаких вариантов на выбор.</li>
-          <li>Вопросы каждый раз <span class="gold-br">случайные</span> из общего банка &mdash; заучить и передать соседу не получится.</li>
-          <li>Минимум для зачёта &mdash; <span class="gold-br">80 %</span>. Меньше &mdash; пересдача.</li>
-          <li><span class="gold-br">Скриншоты, переключение приложений и сворачивание &mdash; нарушение.</span> Каждое такое действие фиксируется, считается и видно менеджеру в журнале.</li>
-          <li>На каждом экране &mdash; <span class="gold-br">водяной знак с твоим именем</span>. Любой скрин уйдёт с твоей подписью.</li>
-        </ul>
-      </div>
-      <div id="deadline-info" style="background:rgba(200,169,110,0.08);border:1px solid var(--gold-ln);padding:14px 18px;margin:18px 0 8px;text-align:center">
-        <div class="qsection" style="color:var(--gold);margin-bottom:6px">дедлайн недели</div>
-        <div id="deadline-text" style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--cream);line-height:1.3">&mdash;</div>
-        <div id="deadline-sub" class="muted" style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;margin-top:6px">&mdash;</div>
-      </div>
-      <div id="my-stats" class="hidden">
-        <h3 class="qsection center" style="margin-bottom:8px">твоя статистика</h3>
-        <div class="stat-grid">
-          <div class="stat-cell"><div class="stat-num" id="stat-attempts">0</div><div class="stat-lbl">попыток</div></div>
-          <div class="stat-cell"><div class="stat-num" id="stat-best">&mdash;</div><div class="stat-lbl">лучший</div></div>
-          <div class="stat-cell"><div class="stat-num" id="stat-last">&mdash;</div><div class="stat-lbl">последний</div></div>
-        </div>
-      </div>
-      <button class="btn primary full" id="start-btn" style="margin-top:24px">открыть партию &#9656;</button>
-      <button class="btn ghost full" id="back-to-select-btn" style="margin-top:10px">&#8592; к выбору теста</button>
+<div id="stage-home" class="hidden">
+  <div class="top-bar">
+    <span>сотрудник: <span class="who" id="home-name">&mdash;</span><span id="home-role-tag"></span></span>
+    <span class="logout" id="logout-1">выйти</span>
+  </div>
+  <div id="test-banner-home" class="test-banner hidden">
+    <div class="lbl">&#9670; ТЕСТ-РЕЖИМ МЕНЕДЖЕРА &#9670;</div>
+    <div class="desc">
+      Ты вошёл под <b>проверочным кодом</b>. Это симуляция сотрудника &mdash; пройди тест целиком,
+      попробуй сделать <b>скрин</b>, <b>переключить вкладку</b>, нажать <b>F12</b> или <b>PrintScreen</b>.
+      Дедлайн в субботу не блокирует. Все попытки в этом режиме помечены <span class="test-tag">ТЕСТ</span> в админке.
     </div>
   </div>
-
-  <div id="stage-test" class="hidden">
-    <div class="top-bar">
-      <span>сотрудник: <span class="who" id="test-name">&mdash;</span></span>
-      <span class="logout" id="logout-2">выйти</span>
+  <h1 class="title" id="home-title">ПАРТИЯ ПОЗИЦИЙ</h1>
+  <div class="subtitle" id="home-subtitle">Аттестация по 36 ключевым позициям бара</div>
+  <div class="card">
+    <p class="dim" id="home-desc" style="line-height:1.7;margin-bottom:14px">
+      Аттестация состоит из <span class="cream">108 вопросов</span> &mdash; по 3 случайных вопроса на каждую из 36 позиций.
+    </p>
+    <div class="rules">
+      <h3>правила партии</h3>
+      <ul>
+        <li>Все ответы вводятся <span class="gold-br">вручную</span> &mdash; никаких вариантов на выбор.</li>
+        <li>Вопросы каждый раз <span class="gold-br">случайные</span> из общего банка &mdash; заучить и передать соседу не получится.</li>
+        <li>Минимум для зачёта &mdash; <span class="gold-br">80 %</span>. Меньше &mdash; пересдача.</li>
+        <li><span class="gold-br">Скриншоты, переключение приложений и сворачивание &mdash; нарушение.</span> Каждое такое действие фиксируется, считается и видно менеджеру в журнале.</li>
+        <li>На каждом экране &mdash; <span class="gold-br">водяной знак с твоим именем</span>. Любой скрин уйдёт с твоей подписью.</li>
+      </ul>
     </div>
-    <div class="progress"><div class="progress-bar" id="pbar" style="width:0%"></div></div>
-    <div class="progress-meta">
-      <span id="pmeta-section">позиция 1 / 36</span>
-      <span id="pmeta-q">вопрос 1 из 108</span>
+    <div id="deadline-info" style="background:rgba(200,169,110,0.08);border:1px solid var(--gold-ln);padding:14px 18px;margin:18px 0 8px;text-align:center">
+      <div class="qsection" style="color:var(--gold);margin-bottom:6px">дедлайн недели</div>
+      <div id="deadline-text" style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--cream);line-height:1.3">&mdash;</div>
+      <div id="deadline-sub" class="muted" style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;margin-top:6px">&mdash;</div>
     </div>
-    <div class="card">
-      <div class="qsection" id="q-section-name">&mdash;</div>
-      <div class="qnum" id="q-num">Вопрос 1</div>
-      <div class="qtext" id="q-text">&mdash;</div>
-      <textarea id="q-input" placeholder="Введи ответ так, как ты сказал бы гостю"></textarea>
-      <div class="hint" id="q-hint"></div>
-      <div id="q-review" class="hidden" style="margin-top:18px">
-        <div id="q-verdict" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--gold-ln);margin-bottom:14px">
-          <span id="q-verdict-icon" style="font-family:'Cormorant Garamond',serif;font-size:24px">&#9679;</span>
-          <span id="q-verdict-text" class="serif" style="font-size:18px">&mdash;</span>
-        </div>
-        <div style="background:rgba(200,169,110,0.06);border-left:3px solid var(--gold);padding:14px 18px;margin-bottom:10px">
-          <div class="qsection" style="margin-bottom:6px">правильный ответ</div>
-          <div id="q-correct" class="cream" style="font-size:14px;line-height:1.6;font-family:'Cormorant Garamond',serif;font-weight:500">&mdash;</div>
-        </div>
-        <div id="q-missed-block" class="hidden" style="background:rgba(200,100,90,0.06);border-left:3px solid var(--red);padding:12px 16px;margin-bottom:10px">
-          <div class="qsection" style="color:var(--red);margin-bottom:6px">пропущено в твоём ответе</div>
-          <div id="q-missed" class="dim" style="font-size:13px;line-height:1.55">&mdash;</div>
-        </div>
-      </div>
-      <div class="nav">
-        <button class="btn ghost" id="prev-btn">&larr; назад</button>
-        <button class="btn primary" id="next-btn">проверить &#9656;</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="stage-result" class="hidden">
-    <div class="top-bar">
-      <span>сотрудник: <span class="who" id="result-name">&mdash;</span></span>
-      <span class="logout" id="logout-3">выйти</span>
-    </div>
-    <div class="card">
-      <div class="qsection center">итог аттестации</div>
-      <div class="score-big" id="score-big">0</div>
-      <div class="verdict" id="verdict">&mdash;</div>
-      <div class="verdict-sub" id="verdict-sub">&mdash;</div>
+    <div id="my-stats" class="hidden">
+      <h3 class="qsection center" style="margin-bottom:8px">твоя статистика</h3>
       <div class="stat-grid">
-        <div class="stat-cell"><div class="stat-num" id="r-attempt">1</div><div class="stat-lbl">эта попытка</div></div>
-        <div class="stat-cell"><div class="stat-num" id="r-best">0%</div><div class="stat-lbl">лучший</div></div>
-        <div class="stat-cell"><div class="stat-num" id="r-passed">0</div><div class="stat-lbl">зачётов</div></div>
-      </div>
-      <div class="breakdown" id="breakdown"></div>
-      <div class="nav" style="margin-top:30px">
-        <button class="btn ghost" id="review-btn">показать ошибки</button>
-        <button class="btn" id="restart-btn">ещё попытка</button>
+        <div class="stat-cell"><div class="stat-num" id="stat-attempts">0</div><div class="stat-lbl">попыток</div></div>
+        <div class="stat-cell"><div class="stat-num" id="stat-best">&mdash;</div><div class="stat-lbl">лучший</div></div>
+        <div class="stat-cell"><div class="stat-num" id="stat-last">&mdash;</div><div class="stat-lbl">последний</div></div>
       </div>
     </div>
-    <div class="card">
-      <h3 class="qsection center" style="margin-bottom:14px">твоя история</h3>
-      <div id="history-list">
-        <div class="muted center" style="padding:14px 0;font-style:italic">&mdash;</div>
+    <button class="btn primary full" id="start-btn" style="margin-top:24px">открыть партию &#9656;</button>
+    <button class="btn ghost full" id="back-to-select-btn" style="margin-top:10px">&#8592; к выбору теста</button>
+  </div>
+</div>
+
+<div id="stage-test" class="hidden">
+  <div class="top-bar">
+    <span>сотрудник: <span class="who" id="test-name">&mdash;</span></span>
+    <span class="logout" id="logout-2">выйти</span>
+  </div>
+  <div class="progress"><div class="progress-bar" id="pbar" style="width:0%"></div></div>
+  <div class="progress-meta">
+    <span id="pmeta-section">позиция 1 / 36</span>
+    <span id="pmeta-q">вопрос 1 из 108</span>
+  </div>
+  <div class="card">
+    <div class="qsection" id="q-section-name">&mdash;</div>
+    <div class="qnum" id="q-num">Вопрос 1</div>
+    <div class="qtext" id="q-text">&mdash;</div>
+    <textarea id="q-input" placeholder="Введи ответ так, как ты сказал бы гостю"></textarea>
+    <div class="hint" id="q-hint"></div>
+    <div id="q-review" class="hidden" style="margin-top:18px">
+      <div id="q-verdict" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--gold-ln);margin-bottom:14px">
+        <span id="q-verdict-icon" style="font-family:'Cormorant Garamond',serif;font-size:24px">&#9679;</span>
+        <span id="q-verdict-text" class="serif" style="font-size:18px">&mdash;</span>
+      </div>
+      <div style="background:rgba(200,169,110,0.06);border-left:3px solid var(--gold);padding:14px 18px;margin-bottom:10px">
+        <div class="qsection" style="margin-bottom:6px">правильный ответ</div>
+        <div id="q-correct" class="cream" style="font-size:14px;line-height:1.6;font-family:'Cormorant Garamond',serif;font-weight:500">&mdash;</div>
+      </div>
+      <div id="q-missed-block" class="hidden" style="background:rgba(200,100,90,0.06);border-left:3px solid var(--red);padding:12px 16px;margin-bottom:10px">
+        <div class="qsection" style="color:var(--red);margin-bottom:6px">пропущено в твоём ответе</div>
+        <div id="q-missed" class="dim" style="font-size:13px;line-height:1.55">&mdash;</div>
       </div>
     </div>
-    <div class="card hidden" id="review-card">
-      <h3 class="qsection center" style="margin-bottom:16px">разбор ответов</h3>
-      <div id="review-list"></div>
+    <div class="nav">
+      <button class="btn ghost" id="prev-btn">&larr; назад</button>
+      <button class="btn primary" id="next-btn">проверить &#9656;</button>
     </div>
   </div>
+</div>
 
-  <div id="stage-admin" class="hidden">
-    <div class="top-bar">
-      <span class="who">режим управляющего</span>
-      <span class="logout" id="logout-admin">выйти</span>
+<div id="stage-result" class="hidden">
+  <div class="top-bar">
+    <span>сотрудник: <span class="who" id="result-name">&mdash;</span></span>
+    <span class="logout" id="logout-3">выйти</span>
+  </div>
+  <div class="card">
+    <div class="qsection center">итог аттестации</div>
+    <div class="score-big" id="score-big">0</div>
+    <div class="verdict" id="verdict">&mdash;</div>
+    <div class="verdict-sub" id="verdict-sub">&mdash;</div>
+    <div class="stat-grid">
+      <div class="stat-cell"><div class="stat-num" id="r-attempt">1</div><div class="stat-lbl">эта попытка</div></div>
+      <div class="stat-cell"><div class="stat-num" id="r-best">0%</div><div class="stat-lbl">лучший</div></div>
+      <div class="stat-cell"><div class="stat-num" id="r-passed">0</div><div class="stat-lbl">зачётов</div></div>
     </div>
-    <h1 class="title">ПАНЕЛЬ УПРАВЛЯЮЩЕГО</h1>
-    <div class="subtitle">сотрудники &middot; попытки &middot; настройки</div>
-    <div class="admin-tabs">
-      <div class="admin-tab active" data-atab="users">Сотрудники</div>
-      <div class="admin-tab" data-atab="results">Все попытки</div>
-      <div class="admin-tab" data-atab="settings">Настройки</div>
+    <div class="breakdown" id="breakdown"></div>
+    <div class="nav" style="margin-top:30px">
+      <button class="btn ghost" id="review-btn">показать ошибки</button>
+      <button class="btn" id="restart-btn">ещё попытка</button>
     </div>
-    <div class="card" id="atab-users">
-      <h3 class="qsection center" style="margin-bottom:14px">список сотрудников</h3>
-      <div id="users-list">
-        <div class="muted center" style="padding:14px 0;font-style:italic">Сотрудников ещё нет.</div>
-      </div>
-      <div style="margin-top:24px;border-top:1px solid var(--gold-ln);padding-top:20px">
-        <h4 class="qsection" style="margin-bottom:10px">выпустить новый код</h4>
-        <p class="muted" style="font-size:11px;margin-bottom:14px;line-height:1.5">
-          Введи 4-значный PIN &mdash; сотрудник сам впишет имя при первом входе.
-        </p>
-        <label class="fld" style="margin-top:0">
-          <span class="lbl">персональный код &middot; 4 цифры</span>
-          <input type="tel" id="new-user-pin" maxlength="4" inputmode="numeric" pattern="[0-9]{4}" placeholder="0000">
-        </label>
-        <label class="fld">
-          <span class="lbl">имя &middot; необязательно</span>
-          <input type="text" id="new-user-name" placeholder="можно оставить пустым &mdash; введёт сам">
-        </label>
-        <div class="pin-error" id="user-add-error">&nbsp;</div>
-        <button class="btn primary" id="add-user-btn">выпустить &#9656;</button>
-      </div>
+  </div>
+  <div class="card">
+    <h3 class="qsection center" style="margin-bottom:14px">твоя история</h3>
+    <div id="history-list">
+      <div class="muted center" style="padding:14px 0;font-style:italic">&mdash;</div>
     </div>
-    <div class="card hidden" id="atab-results">
-      <h3 class="qsection center" style="margin-bottom:14px">все попытки</h3>
-      <div id="active-sessions" class="hidden" style="background:rgba(232,201,138,0.06);border:1px dashed var(--gold);padding:14px 18px;margin-bottom:18px">
-        <div class="qsection" style="color:var(--gold-br);margin-bottom:8px">&#9203; сейчас в тесте</div>
-        <div id="active-sessions-list"></div>
-      </div>
-      <div class="admin-tabs" style="margin-bottom:14px">
-        <div class="admin-tab active" data-rsubtab="all" style="font-size:10px">Все</div>
-        <div class="admin-tab" data-rsubtab="best" style="font-size:10px">Лучший на сотрудника</div>
-      </div>
-      <div id="all-attempts">
-        <div class="muted center" style="padding:14px 0;font-style:italic">Попыток ещё нет.</div>
-      </div>
+  </div>
+  <div class="card hidden" id="review-card">
+    <h3 class="qsection center" style="margin-bottom:16px">разбор ответов</h3>
+    <div id="review-list"></div>
+  </div>
+</div>
+
+<div id="stage-admin" class="hidden">
+  <div class="top-bar">
+    <span class="who">режим управляющего</span>
+    <span class="logout" id="logout-admin">выйти</span>
+  </div>
+  <h1 class="title">ПАНЕЛЬ УПРАВЛЯЮЩЕГО</h1>
+  <div class="subtitle">сотрудники &middot; попытки &middot; настройки</div>
+  <div class="admin-tabs">
+    <div class="admin-tab active" data-atab="users">Сотрудники</div>
+    <div class="admin-tab" data-atab="results">Все попытки</div>
+    <div class="admin-tab" data-atab="settings">Настройки</div>
+  </div>
+  <div class="card" id="atab-users">
+    <h3 class="qsection center" style="margin-bottom:14px">список сотрудников</h3>
+    <div id="users-list">
+      <div class="muted center" style="padding:14px 0;font-style:italic">Сотрудников ещё нет.</div>
     </div>
-    <div class="card hidden" id="atab-settings">
-      <h3 class="qsection center" style="margin-bottom:14px">настройки</h3>
-      <div style="background:rgba(122,164,124,0.06);border-left:3px solid var(--green);padding:14px 18px;margin-bottom:22px">
-        <div class="qsection" style="color:var(--green);margin-bottom:8px">&#10003; уведомления в Telegram</div>
-        <p class="dim" style="font-size:12.5px;line-height:1.6;margin-bottom:10px">
-          После каждой завершённой попытки сотрудника тебе в Telegram приходит подробный отчёт: имя, результат в %, какие позиции провалены, нарушения, время.
-        </p>
-        <p class="muted" style="font-size:11px;line-height:1.5">
-          Канал уведомлений: <span class="gold-br">@nomo_attestaciya_bot</span>. Если бот замолчал &mdash; зайди в него в Telegram и нажми Start.
-        </p>
-        <button class="btn" id="test-telegram-btn" style="font-size:11px;margin-top:12px">отправить тестовое сообщение</button>
-        <div id="test-telegram-result" style="font-size:11px;margin-top:8px"></div>
-      </div>
+    <div style="margin-top:24px;border-top:1px solid var(--gold-ln);padding-top:20px">
+      <h4 class="qsection" style="margin-bottom:10px">выпустить новый код</h4>
+      <p class="muted" style="font-size:11px;margin-bottom:14px;line-height:1.5">
+        Введи 4-значный PIN &mdash; сотрудник сам впишет имя при первом входе.
+      </p>
       <label class="fld" style="margin-top:0">
-        <span class="lbl">сменить мастер-код</span>
-        <input type="tel" id="new-master-pin" maxlength="6" inputmode="numeric" pattern="[0-9]*" placeholder="новый код 4-6 цифр">
+        <span class="lbl">персональный код &middot; 4 цифры</span>
+        <input type="tel" id="new-user-pin" maxlength="4" inputmode="numeric" pattern="[0-9]{4}" placeholder="0000">
       </label>
-      <div class="pin-error" id="master-pin-error">&nbsp;</div>
-      <button class="btn" id="save-master-btn">сохранить</button>
-      <div style="margin-top:24px;border-top:1px solid var(--gold-ln);padding-top:20px">
-        <h4 class="qsection" style="margin-bottom:10px;color:var(--red)">опасная зона</h4>
-        <p class="muted" style="font-size:12px;margin-bottom:14px">Удалить все попытки сотрудников на этом устройстве.</p>
-        <button class="btn danger" id="clear-attempts-btn">очистить все попытки</button>
-      </div>
+      <label class="fld">
+        <span class="lbl">роль</span>
+        <select id="new-user-role">
+          <option value="waiter">Официант</option>
+          <option value="hostess">Хостес</option>
+        </select>
+      </label>
+      <label class="fld">
+        <span class="lbl">имя &middot; необязательно</span>
+        <input type="text" id="new-user-name" placeholder="можно оставить пустым &mdash; введёт сам">
+      </label>
+      <div class="pin-error" id="user-add-error">&nbsp;</div>
+      <button class="btn primary" id="add-user-btn">выпустить &#9656;</button>
     </div>
   </div>
-
-  <div class="footer">
-    NOMO &middot; Земляной Вал 9А &middot; Москва<br>
-    <span style="color:var(--gold-dk);font-style:italic;letter-spacing:.1em;text-transform:none">primus inter pares</span>
+  <div class="card hidden" id="atab-results">
+    <h3 class="qsection center" style="margin-bottom:14px">все попытки</h3>
+    <div id="active-sessions" class="hidden" style="background:rgba(232,201,138,0.06);border:1px dashed var(--gold);padding:14px 18px;margin-bottom:18px">
+      <div class="qsection" style="color:var(--gold-br);margin-bottom:8px">&#9203; сейчас в тесте</div>
+      <div id="active-sessions-list"></div>
+    </div>
+    <div class="admin-tabs" style="margin-bottom:14px">
+      <div class="admin-tab active" data-rsubtab="all" style="font-size:10px">Все</div>
+      <div class="admin-tab" data-rsubtab="waiters" style="font-size:10px">🍷 Официанты</div>
+      <div class="admin-tab" data-rsubtab="hostesses" style="font-size:10px">🌹 Хостес</div>
+      <div class="admin-tab" data-rsubtab="best" style="font-size:10px">Лучший</div>
+    </div>
+    <div id="all-attempts">
+      <div class="muted center" style="padding:14px 0;font-style:italic">Попыток ещё нет.</div>
+    </div>
   </div>
+  <div class="card hidden" id="atab-settings">
+    <h3 class="qsection center" style="margin-bottom:14px">настройки</h3>
+    <div style="background:rgba(122,164,124,0.06);border-left:3px solid var(--green);padding:14px 18px;margin-bottom:22px">
+      <div class="qsection" style="color:var(--green);margin-bottom:8px">&#10003; уведомления в Telegram</div>
+      <p class="dim" style="font-size:12.5px;line-height:1.6;margin-bottom:10px">
+        После каждой завершённой попытки сотрудника тебе в Telegram приходит подробный отчёт: имя, результат в %, какие позиции провалены, нарушения, время.
+      </p>
+      <p class="muted" style="font-size:11px;line-height:1.5">
+        Канал уведомлений: <span class="gold-br">@nomo_attestaciya_bot</span>. Если бот замолчал &mdash; зайди в него в Telegram и нажми Start.
+      </p>
+      <button class="btn" id="test-telegram-btn" style="font-size:11px;margin-top:12px">отправить тестовое сообщение</button>
+      <div id="test-telegram-result" style="font-size:11px;margin-top:8px"></div>
+    </div>
+    <label class="fld" style="margin-top:0">
+      <span class="lbl">сменить мастер-код</span>
+      <input type="tel" id="new-master-pin" maxlength="6" inputmode="numeric" pattern="[0-9]*" placeholder="новый код 4-6 цифр">
+    </label>
+    <div class="pin-error" id="master-pin-error">&nbsp;</div>
+    <button class="btn" id="save-master-btn">сохранить</button>
+    <div style="margin-top:24px;border-top:1px solid var(--gold-ln);padding-top:20px">
+      <h4 class="qsection" style="margin-bottom:10px;color:var(--red)">опасная зона</h4>
+      <p class="muted" style="font-size:12px;margin-bottom:14px">Удалить все попытки сотрудников на этом устройстве.</p>
+      <button class="btn danger" id="clear-attempts-btn">очистить все попытки</button>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  NOMO &middot; Земляной Вал 9А &middot; Москва<br>
+  <span style="color:var(--gold-dk);font-style:italic;letter-spacing:.1em;text-transform:none">primus inter pares</span>
+</div>
 </div>
 
 <script id="bank-script">
@@ -554,19 +673,24 @@ h1.title{font-size:26px}
 const DEFAULT_MASTER_PIN = "7777";
 const TEST_PIN = "0101";
 const PASS_THRESHOLD = 80;
-const QUESTIONS_PER_POSITION = 3;
 
-// Telegram бот для уведомлений о результатах
 const TELEGRAM_BOT_TOKEN = "8441895467:AAFS1OsuIK7EvMs2ofuXdcYe7Z04JzgYQUU";
 const TELEGRAM_CHAT_ID = "-5018199781";
 
+// 20 официантов + 10 хостес + 1 тест
 const SEED_USERS = [
-  { pin: "0101", name: "ТЕСТ-РЕЖИМ (менеджер)", isTest: true },
-  { pin: "1024" }, { pin: "1357" }, { pin: "1492" }, { pin: "2580" },
-  { pin: "3691" }, { pin: "4729" }, { pin: "5814" }, { pin: "6325" },
-  { pin: "7148" }, { pin: "8276" }, { pin: "9135" }, { pin: "1846" },
-  { pin: "2937" }, { pin: "5061" }, { pin: "7402" }, { pin: "3805" },
-  { pin: "6217" }, { pin: "4953" }, { pin: "8194" }, { pin: "5742" }
+  { pin: "0101", name: "ТЕСТ-РЕЖИМ (менеджер)", isTest: true, role: "waiter" },
+  // официанты (20)
+  { pin: "1024", role: "waiter" }, { pin: "1357", role: "waiter" }, { pin: "1492", role: "waiter" }, { pin: "2580", role: "waiter" },
+  { pin: "3691", role: "waiter" }, { pin: "4729", role: "waiter" }, { pin: "5814", role: "waiter" }, { pin: "6325", role: "waiter" },
+  { pin: "7148", role: "waiter" }, { pin: "8276", role: "waiter" }, { pin: "9135", role: "waiter" }, { pin: "1846", role: "waiter" },
+  { pin: "2937", role: "waiter" }, { pin: "5061", role: "waiter" }, { pin: "7402", role: "waiter" }, { pin: "3805", role: "waiter" },
+  { pin: "6217", role: "waiter" }, { pin: "4953", role: "waiter" }, { pin: "8194", role: "waiter" }, { pin: "5742", role: "waiter" },
+  // хостес (10) — отдельная нумерация
+  { pin: "5901", role: "hostess" }, { pin: "6034", role: "hostess" }, { pin: "7283", role: "hostess" },
+  { pin: "8456", role: "hostess" }, { pin: "9617", role: "hostess" }, { pin: "1078", role: "hostess" },
+  { pin: "2390", role: "hostess" }, { pin: "3164", role: "hostess" }, { pin: "4825", role: "hostess" },
+  { pin: "5536", role: "hostess" }
 ];
 
 // ============================================================
@@ -618,7 +742,6 @@ const BANKS = {
         answer:"Тогда Dom Perignon. Это шампанское делают не каждый год - только когда урожай признан выдающимся. Идеально для того, что вы отмечаете." }
     ]
   },
-
   zacapa: {
     name: "Zacapa Centenario 23",
     bank: [
@@ -660,7 +783,6 @@ const BANKS = {
         answer:"Zacapa с её нотами шоколада, ванили и сухофруктов идеально подходит к шоколадному десерту - вкусы перекликаются." }
     ]
   },
-
   dalmore_15: {
     name: "Dalmore 15",
     bank: [
@@ -698,7 +820,6 @@ const BANKS = {
         answer:"В Dalmore 15 добавляется выдержка в бочках Matusalem Oloroso - это меняет всё: тёмный шоколад, кофе, апельсиновая цедра. Это не просто старше - это другой виски." }
     ]
   },
-
   brunello: {
     name: "Brunello di Montalcino",
     bank: [
@@ -736,7 +857,6 @@ const BANKS = {
         answer:"Chianti - отличное вино. Brunello - это другой класс: один виноград, один регион, минимум пять лет." }
     ]
   },
-
   cocktail_1: {
     name: "Коктейль №1",
     bank: [
@@ -774,7 +894,6 @@ const BANKS = {
         answer:"Лопается на языке - это образ, который работает мгновенно." }
     ]
   },
-
   cocktail_2: {
     name: "Коктейль №2",
     bank: [
@@ -812,7 +931,6 @@ const BANKS = {
         answer:"Живая маракуйя / настоящая маракуйя, не сироп - подчёркиваем свежесть." }
     ]
   },
-
   golden_kiss: {
     name: "Golden Kiss",
     bank: [
@@ -846,7 +964,6 @@ const BANKS = {
         answer:"Не продавайте коктейль. Продавайте золото на губах и фото в телефоне." }
     ]
   },
-
   rieslingmalina: {
     name: "Лимонад Рислинг-малина",
     bank: [
@@ -880,7 +997,6 @@ const BANKS = {
         answer:"Самый необычный лимонад в меню - рислинг даёт виноградную кислотность, жасмин - цветочность. Не приторный, кислотный, лёгкий." }
     ]
   },
-
   da_hong_pao: {
     name: "Да Хун Пао",
     bank: [
@@ -918,7 +1034,6 @@ const BANKS = {
         answer:"Первые кусты росли в трещинах скал и были укрыты красными халатами монахов - отсюда название Большой красный халат." }
     ]
   },
-
   tesseron: {
     name: "Tesseron Lot 29 XO",
     bank: [
@@ -956,7 +1071,6 @@ const BANKS = {
         answer:"Hennessy XO - безупречный купаж большого дома. Tesseron - семейный дом, Grande Champagne, коньяки 1929 года в купаже." }
     ]
   },
-
   hana_awaka: {
     name: "Hana-Awaka",
     bank: [
@@ -990,7 +1104,6 @@ const BANKS = {
         answer:"Как аперитив; как альтернативу Просекко; гостю, который хочет необычное; гостю, который не любит обычное сакэ." }
     ]
   },
-
   cocktail_17: {
     name: "Коктейль №17",
     bank: [
@@ -1028,7 +1141,6 @@ const BANKS = {
         answer:"Новичку - это не первый коктейль. Слишком насыщенный, тёмный, почти десертный." }
     ]
   },
-
   porto_tawny: {
     name: "Porto Tawny 10",
     bank: [
@@ -1066,7 +1178,6 @@ const BANKS = {
         answer:"Tawny - это не тот портвейн. Это янтарь, орехи и 10 лет терпения." }
     ]
   },
-
   negroni: {
     name: "Негрони",
     bank: [
@@ -1104,7 +1215,6 @@ const BANKS = {
         answer:"Апероль Спритц - мягкий и фруктовый. Или Беллини - просекко с персиком." }
     ]
   },
-
   dalmore_12: {
     name: "Dalmore 12",
     bank: [
@@ -1138,7 +1248,6 @@ const BANKS = {
         answer:"Macallan - ваниль и карамель, очень мягко. Dalmore - фруктовее, с хересом, апельсином и специями." }
     ]
   },
-
   laphroaig: {
     name: "Laphroaig 10",
     bank: [
@@ -1176,7 +1285,6 @@ const BANKS = {
         answer:"Йодные ноты - да, это Айлей. Их дают торф и морской воздух прямо у дистиллерии." }
     ]
   },
-
   macallan_12: {
     name: "Macallan Double Cask 12",
     bank: [
@@ -1214,7 +1322,6 @@ const BANKS = {
         answer:"Macallan 12 - это совсем другой опыт. Никакой резкости. Ваниль, карамель, мягкое тепло." }
     ]
   },
-
   pitahaya: {
     name: "Лимонад Питахайя",
     bank: [
@@ -1232,7 +1339,6 @@ const BANKS = {
         answer:"Нельзя: называть обычный лимонад, занудно перечислять состав, называть цену первой. Нужно: показывать цвет и говорить авторский." }
     ]
   },
-
   mango_passion: {
     name: "Лимонад Манго-Маракуйя",
     bank: [
@@ -1250,7 +1356,6 @@ const BANKS = {
         answer:"Лимонад манго-маракуйя - пюре свежих фруктов, сытно по ощущениям, никаких вопросов по дороге домой. Порция 600 мл - 720 руб." }
     ]
   },
-
   smoothie: {
     name: "Смузи Киви-Яблоко",
     bank: [
@@ -1268,7 +1373,6 @@ const BANKS = {
         answer:"Утром, на бранч, после тренировки. Тем, кто следит за питанием, не пьёт алкоголь, хочет лёгкое и натуральное." }
     ]
   },
-
   pinot_rose: {
     name: "Pinot Noir Rose Extra Brut",
     bank: [
@@ -1286,7 +1390,6 @@ const BANKS = {
         answer:"1 440 руб за 125 мл." }
     ]
   },
-
   viognier: {
     name: "Viognier Famille Descombe",
     bank: [
@@ -1304,7 +1407,6 @@ const BANKS = {
         answer:"К рыбе, белому мясу, твёрдым сырам. Не к красному мясу и не к острой кухне." }
     ]
   },
-
   moscato: {
     name: "Moscato (ЮАР)",
     bank: [
@@ -1322,7 +1424,6 @@ const BANKS = {
         answer:"Персик, личи, белые цветы - конкретные образы работают лучше абстракций." }
     ]
   },
-
   malbec_tamari: {
     name: "Malbec Tamari Special Selection",
     bank: [
@@ -1340,7 +1441,6 @@ const BANKS = {
         answer:"Слива, ежевика, тёмный шоколад, нотки табака. Мягкие танины, бархатистое тело - не грубое." }
     ]
   },
-
   shiraz: {
     name: "Shiraz (ЮАР)",
     bank: [
@@ -1358,7 +1458,6 @@ const BANKS = {
         answer:"К мясу - насыщенное, с пряностями и характером." }
     ]
   },
-
   madeira: {
     name: "Madeira Full Rich",
     bank: [
@@ -1376,7 +1475,6 @@ const BANKS = {
         answer:"Это дижестив - финал вечера. К десерту, сыру с плесенью, кофе, сигаре. Подаётся 75 мл, пьётся медленно." }
     ]
   },
-
   clase_azul: {
     name: "Clase Azul Reposado",
     bank: [
@@ -1394,7 +1492,6 @@ const BANKS = {
         answer:"Пьётся медленно, как хороший виски - neat или со льдом. НЕ в коктейль (это трата продукта). Сравнивать с виски/коньяком." }
     ]
   },
-
   hendricks_amazonia: {
     name: "Hendrick's Amazonia",
     bank: [
@@ -1412,7 +1509,6 @@ const BANKS = {
         answer:"1 500 руб за 50 мл." }
     ]
   },
-
   cocktail_la_tomato: {
     name: "Коктейль №4",
     bank: [
@@ -1430,7 +1526,6 @@ const BANKS = {
         answer:"Текила бланко, ликёр Ля Томато, Совиньон Блан, сироп агавы, гималайская соль на борту бокала, вяленый томат как съедобный декор." }
     ]
   },
-
   cocktail_daiginjo: {
     name: "Коктейль №5",
     bank: [
@@ -1448,7 +1543,6 @@ const BANKS = {
         answer:"Сакэ Дайгиндзё, йогуртовый ликёр, лимонный ликёр. Минимализм - три ингредиента, ничего лишнего, каждый слышен." }
     ]
   },
-
   chablis: {
     name: "Chablis Domaine Mosnier",
     bank: [
@@ -1482,7 +1576,6 @@ const BANKS = {
         answer:"Устричные почвы и никакой бочки - только чистота. Это слышат все, даже те, кто не разбирается в вине." }
     ]
   },
-
   sancerre: {
     name: "Sancerre La Clef du Recit",
     bank: [
@@ -1516,7 +1609,6 @@ const BANKS = {
         answer:"Вино с характером - оно ведёт. После этой фразы пауза - гость хочет понять, что это значит, и попробовать." }
     ]
   },
-
   barolo: {
     name: "Barolo Ceretto",
     bank: [
@@ -1554,7 +1646,6 @@ const BANKS = {
         answer:"Нельзя: терпкое, структурное (надо роза и дёготь); тяжёлое; пугать танинами (после декантации они бархатные); называть цену первой." }
     ]
   },
-
   gavi: {
     name: "Gavi di Gavi Fontanafredda",
     bank: [
@@ -1588,7 +1679,6 @@ const BANKS = {
         answer:"Начнём с бокала. Бокал снижает барьер - это почти всегда путь к бутылке." }
     ]
   },
-
   amarone: {
     name: "Amarone Speri",
     bank: [
@@ -1626,7 +1716,6 @@ const BANKS = {
         answer:"19 500 руб за бутылку 750 мл." }
     ]
   },
-
   cocktail_6: {
     name: "Коктейль №6",
     bank: [
@@ -1660,9 +1749,8 @@ const BANKS = {
         answer:"Как финальный коктейль вечера, особенно после яркого, фруктового коктейля. Деликатный финал, который запомнится." }
     ]
   },
-
   // ============================================================
-  // ШАХ И МАТ · Игра чёрных королев · 3 позиции по 8 вопросов
+  // ШАХ И МАТ - Игра чёрных королев
   // ============================================================
   chess_queen: {
     name: "Чёрная Королева",
@@ -1695,13 +1783,12 @@ const BANKS = {
         groups:[["купе","nick","нора"],["охлажд"],["шокол","стружк","70"],["вишн","шпажк"]],
         min:3, hint:"Бокал + температура + два элемента декора.",
         answer:"Бокал купе или Nick & Nora 180 мл, охлаждённый. Декор - стружка тёмного шоколада 70% и вишня на шпажке." },
-      { q:"Назови минимум три запретные формулировки про Чёрную Королеву.",
+      { q:"Какие 4 формулировки НЕЛЬЗЯ говорить про Чёрную Королеву? Назови минимум 2.",
         groups:[["сладк"],["дамск","женск"],["наливк","профан"],["самый дешёв","самый дешев","дешёв","дешев"]],
-        min:3, hint:"Что нельзя говорить - 4 варианта.",
+        min:2, hint:"Минимум 2 запретных слова из 4: сладкая / дамская / наливка / дешёвая.",
         answer:"Нельзя: называть сладким (он плотный); называть дамским (мужской характер); сравнивать с вишнёвой наливкой (профанация); называть самым дешёвым (все три по одной цене)." }
     ]
   },
-
   chess_gambit: {
     name: "Гамбит",
     bank: [
@@ -1709,9 +1796,9 @@ const BANKS = {
         groups:[["коктейл"],["120"],["1800","1 800","тысяч"]],
         min:2, hint:"Категория + объём + цена.",
         answer:"Авторский коктейль партии Игра чёрных королев, 120 мл, 1800 рублей." },
-      { q:"Какой главный спирт в Гамбите и какие четыре других ингредиента?",
+      { q:"Какой главный спирт в Гамбите и какие четыре других ингредиента? Назови минимум три.",
         groups:[["джин","gin","house"],["nonino","нонино","аперитив"],["роз"],["онегин","яблок"],["белок","яичн"]],
-        min:4, hint:"База + четыре компонента.",
+        min:3, hint:"База + минимум 2 из 4 компонентов.",
         answer:"База - джин House. Плюс: Nonino Aperitivo, сироп розы, настойка Онегин Gourmet Яблоко, яичный белок." },
       { q:"Опиши вкусовой профиль Гамбита. Что особенно отличает его от других коктейлей партии?",
         groups:[["цветочн"],["яблочн","яблок"],["лёгк","легк"],["пенн","пена","шапк"],["шипуч","фин","финал","послевкус"]],
@@ -1733,13 +1820,12 @@ const BANKS = {
         groups:[["купе","180","200"],["охлажд"],["стрелк","биттер"],["лепест","роз"]],
         min:3, hint:"Бокал + два элемента декора.",
         answer:"Бокал купе 180-200 мл, охлаждённый. Декор - стрелка из биттера на пене (символ хода коня) плюс лепесток розы." },
-      { q:"Назови минимум три запретные формулировки про Гамбит.",
+      { q:"Какие 5 формулировок НЕЛЬЗЯ говорить про Гамбит? Назови минимум 2.",
         groups:[["слаб"],["дамск","женск"],["простой","прост"],["белок","начин","смутит"],["дешёв","дешев"]],
-        min:3, hint:"Что нельзя говорить - 5 вариантов.",
+        min:2, hint:"Минимум 2 из 5: слабый / дамский / простой / начинать с белка / дешёвый.",
         answer:"Нельзя: называть слабым (он лёгкий по ощущению, не слабый); называть дамским коктейлем; называть простым (там пять сбалансированных ингредиентов); начинать с яичного белка (гость смутится); говорить дешевле других (все по одной цене)." }
     ]
   },
-
   chess_mate: {
     name: "Шах и Мат",
     bank: [
@@ -1747,9 +1833,9 @@ const BANKS = {
         groups:[["коктейл"],["120"],["30","пенк","пен"],["1800","1 800","тысяч"]],
         min:3, hint:"Категория + объём напитка + объём пенки + цена.",
         answer:"Авторский коктейль партии Игра чёрных королев, 120 мл напитка плюс 30 мл пенной шапки, 1800 рублей." },
-      { q:"Какой главный спирт в Шах и Мат и какие пять других компонентов?",
+      { q:"Какой главный спирт в Шах и Мат и какие пять других компонентов? Назови минимум три.",
         groups:[["водк","cavalli","кавалли","черник"],["mozart","моцарт","шокол","кокос","white"],["bols","болс","йогурт"],["лаванд"],["сливк"],["пенк","сифон"]],
-        min:5, hint:"База + 5 компонентов.",
+        min:3, hint:"База + минимум 2 из 5 компонентов.",
         answer:"База - водка Roberto Cavalli Черника. Плюс: Mozart White Chocolate Coconut, Bols Yogurt, сироп лаванды, сливки 11%, кокосово-белошоколадная пенка из сифона." },
       { q:"Опиши вкусовой профиль Шах и Мат и его роль в партии.",
         groups:[["кремов"],["кокос","шокол"],["лаванд"],["десерт","финал"]],
@@ -1771,13 +1857,650 @@ const BANKS = {
         groups:[["купе","old fashioned","олд фешн","220","250"],["шахматн","фигурк","шокол"],["лаванд","цветок","микро"],["пять минут","5 мин","живёт","живет","срочн"]],
         min:3, hint:"Бокал + декор + срочность.",
         answer:"Бокал купе 220 мл или Old Fashioned 250 мл с одним крупным кубом. Сверху - плотная пенка из сифона 2-2.5 см, на пенке - шахматная фигурка из тёмного шоколада и микро-цветок лаванды. Подача срочная - пенка живёт пять минут." },
-      { q:"Назови минимум три запретные формулировки про Шах и Мат.",
+      { q:"Какие 5 формулировок НЕЛЬЗЯ говорить про Шах и Мат? Назови минимум 2.",
         groups:[["сладк","варен"],["слаб"],["молочн","профан"],["баллончик","аэрозол"],["начал","старт"]],
-        min:3, hint:"Что нельзя говорить - 5 вариантов.",
+        min:2, hint:"Минимум 2 из 5: сладкий-варенье / слабый / молочный / баллончик / в начале вечера.",
         answer:"Нельзя: называть сладким как варенье (он не приторный); называть слабым (там 60 мл крепкого алкоголя); называть просто молочным коктейлем (профанация); говорить пена из баллончика (это сифонная пенка, не аэрозоль); предлагать в начале вечера (только финал)." }
     ]
+  },
+  // ============================================================
+  // ХОСТЕС - ДЕПОЗИТНАЯ СИСТЕМА
+  // ============================================================
+  dep_when: {
+    name: "Когда работает депозит",
+    bank: [
+      { q:"В будний день у нас действует депозит?",
+        groups:[["нет","будни без","без депозит","не действ","не работает"]],
+        min:1, hint:"Один ответ.",
+        answer:"Нет. В будние дни (Пн-Чт) депозита нет, дресс-кода нет." },
+      { q:"В пятницу гость хочет прийти в 19:00. Депозит нужен?",
+        groups:[["нет","до 21","без депозит"]],
+        min:1, hint:"Время + правило.",
+        answer:"Нет. До 21:00 в пятницу/субботу размещение без депозита, но стол освободить к 21:00." },
+      { q:"В субботу гость хочет в 22:00. Депозит нужен?",
+        groups:[["да","депозит","нужен"]],
+        min:1, hint:"Один ответ.",
+        answer:"Да. После 21:00 в пятницу/субботу действует депозитная система." },
+      { q:"До какого времени в выходные работает бездепозитное размещение?",
+        groups:[["21","до 21","21:00","9 вечер"]],
+        min:1, hint:"Время.",
+        answer:"До 21:00 в пятницу и субботу - размещение без депозита, стол нужно освободить к 21:00." },
+      { q:"Когда у нас действует дресс-код смарт-кэжуал и фейс-контроль?",
+        groups:[["пятниц","суббот","выходн"],["после 21","21","ночь","ночн"]],
+        min:1, hint:"День недели + время.",
+        answer:"В пятницу и субботу после 21:00 - дресс-код смарт-кэжуал без спортивных элементов и фейс-контроль." }
+    ]
+  },
+  dep_tables: {
+    name: "Депозиты по столам",
+    bank: [
+      { q:"Какой депозит на стол №29 (3 персоны)?",
+        groups:[["30000","30 000","тридцать тысяч","30к"]],
+        min:1, hint:"Сумма.",
+        answer:"30 000 рублей за минимум 3 персоны." },
+      { q:"Какой депозит на столы 1, 6, 7, 8, 9, 10?",
+        groups:[["35000","35 000","тридцать пять","35к"]],
+        min:1, hint:"Сумма для 4 персон.",
+        answer:"35 000 рублей за минимум 4 персоны." },
+      { q:"Какой депозит на круглые столы 15-19, 22, 23?",
+        groups:[["40000","40 000","сорок тысяч","40к"]],
+        min:1, hint:"Сумма для 4 персон.",
+        answer:"40 000 рублей за минимум 4 персоны (круглые столы)." },
+      { q:"Какой депозит на столы 12, 13, 14, 24, 25, 26?",
+        groups:[["50000","50 000","пятьдесят тысяч","50к"]],
+        min:1, hint:"Сумма для 5 персон.",
+        answer:"50 000 рублей за минимум 5 персон." },
+      { q:"Какой депозит на столы 2, 4, 30, 31?",
+        groups:[["30000","30 000","тридцать тысяч","30к"]],
+        min:1, hint:"Сумма для 6 персон.",
+        answer:"30 000 рублей за минимум 6 персон." },
+      { q:"Какой депозит на столы 5, 11, 27?",
+        groups:[["40000","40 000","сорок тысяч","40к"]],
+        min:1, hint:"Сумма для 6 персон.",
+        answer:"40 000 рублей за минимум 6 персон." },
+      { q:"Какой депозит на стол №3?",
+        groups:[["80000","80 000","восемьдесят","80к"]],
+        min:1, hint:"Сумма для 8 персон.",
+        answer:"80 000 рублей за минимум 8 персон." },
+      { q:"Какой депозит на столы 32, 35, 41, 42, 51, 52?",
+        groups:[["60000","60 000","шестьдесят","60к"]],
+        min:1, hint:"Сумма для 8 персон.",
+        answer:"60 000 рублей за минимум 8 персон." },
+      { q:"Какой депозит на столы 20 и 21?",
+        groups:[["90000","90 000","девяносто","90к"]],
+        min:1, hint:"Сумма для 8 персон.",
+        answer:"90 000 рублей за минимум 8 персон." },
+      { q:"Какой депозит на столы 33 и 34?",
+        groups:[["40000","40 000","сорок тысяч","40к"]],
+        min:1, hint:"Сумма.",
+        answer:"40 000 рублей за минимум 4 персоны." }
+    ]
+  },
+  dep_surcharge: {
+    name: "Доплаты за персон",
+    bank: [
+      { q:"Стол №35 - депозит на 8 персон 60 000. Сколько за 9 персон?",
+        groups:[["65000","65 000","шестьдесят пять","65к"]],
+        min:1, hint:"Доплата +5к.",
+        answer:"65 000 рублей. За каждую персону сверх минимума доплата 5 000 рублей." },
+      { q:"Стол №35 на 10 персон. Сколько депозит?",
+        groups:[["70000","70 000","семьдесят","70к"]],
+        min:1, hint:"Считай: база + 2 доплаты.",
+        answer:"70 000 рублей (60 000 + 5 000 × 2 персоны сверх 8)." },
+      { q:"Стол №3 на 10 персон. Сколько депозит?",
+        groups:[["90000","90 000","девяносто","90к"]],
+        min:1, hint:"База 80к + доплаты.",
+        answer:"90 000 рублей (80 000 + 5 000 × 2 персоны сверх 8)." },
+      { q:"Стол №20 на 10 персон. Сколько депозит?",
+        groups:[["100000","100 000","сто тысяч","100к"]],
+        min:1, hint:"База 90к + доплаты.",
+        answer:"100 000 рублей (90 000 + 5 000 × 2 персоны сверх 8)." },
+      { q:"Стол №1 (база 35к на 4 персоны) на 5 персон. Сколько?",
+        groups:[["40000","40 000","сорок","40к"]],
+        min:1, hint:"35к + 5к.",
+        answer:"40 000 рублей (35 000 + 5 000 × 1 персона сверх 4)." }
+    ]
+  },
+  dep_capacity: {
+    name: "Вместимость столов",
+    bank: [
+      { q:"Сколько персон максимум на стол №1?",
+        groups:[["5","пять"]],
+        min:1, hint:"Цифра.",
+        answer:"Максимум 5 персон." },
+      { q:"Сколько персон максимум на стол №35?",
+        groups:[["10","десять"]],
+        min:1, hint:"Цифра. Это большой стол.",
+        answer:"Максимум 10 персон. Минимум брони - 8." },
+      { q:"Сколько персон максимум на круглый стол №15 с креслами (как стандарт)?",
+        groups:[["5","пять"]],
+        min:1, hint:"С креслами.",
+        answer:"5 персон с креслами. До 6 - если кресла заменить на стулья." },
+      { q:"Минимум брони на стол №29?",
+        groups:[["3","три"]],
+        min:1, hint:"Цифра.",
+        answer:"3 персоны - это минимальная бронь стола №29." },
+      { q:"Сколько персон максимум на стол №27?",
+        groups:[["8","восем"]],
+        min:1, hint:"Цифра.",
+        answer:"Максимум 8 персон. Минимум брони - 6." },
+      { q:"Сколько персон максимум на стол №20?",
+        groups:[["10","десять"]],
+        min:1, hint:"Цифра. Это большой стол.",
+        answer:"Максимум 10 персон. Минимум брони - 8." },
+      { q:"Сколько круглых столов с тарифом 40 000 рублей?",
+        groups:[["7","сем"]],
+        min:1, hint:"Считай круглые с депозитом 40к.",
+        answer:"7 столов: 15, 16, 17, 18, 19, 22, 23." },
+      { q:"Сколько столов с депозитом 60 000 на 8 персон?",
+        groups:[["6","шесть"]],
+        min:1, hint:"Считай 60к-столы.",
+        answer:"6 столов: 32, 35, 41, 42, 51, 52." }
+    ]
+  },
+  dep_banquet: {
+    name: "Банкет - ловушки",
+    bank: [
+      { q:"11 персон хотят сесть на стол №35 в субботу 22:00. Что делает хостес?",
+        groups:[["менеджер","перевод"],["банкет","чат"]],
+        min:2, hint:"Цепочка действий.",
+        answer:"Переводит на менеджера. Сразу пишет в чат «Банкеты»: дата, время, количество, имя+тел, повод, озвученная сумма." },
+      { q:"Гости говорят: дайте два стола рядом по депозитам, нас 12. Что отвечаем?",
+        groups:[["не практик","не разрешен","не делаем","нельзя"],["банкет"]],
+        min:2, hint:"Прямая цитата из регламента.",
+        answer:"Размещение банкета по депозитным условиям не практикуется. Банкет со сдвижкой - только через банкетные условия." },
+      { q:"13 гостей хотят 35+41 «по 60 тысяч каждый стол». Это законно?",
+        groups:[["банкет","нет"],["менеджер"]],
+        min:1, hint:"Это та же ловушка.",
+        answer:"Нет. Любая сдвижка с 11+ персон в выходной - это банкет. Перевод на менеджера, а не два депозита." },
+      { q:"С какого числа гостей в выходной идёт перевод на менеджера?",
+        groups:[["11","одиннадц"]],
+        min:1, hint:"Цифра.",
+        answer:"С 11 персон. В выходной всё, что 11+, - это банкет." },
+      { q:"Что хостес обязательно пишет в чат «Банкеты» при переводе на менеджера? Минимум три пункта.",
+        groups:[["дата","время"],["количеств","персон","кол-во"],["имя","телефон","номер","контакт"],["повод","событ","меропр"]],
+        min:3, hint:"Минимум три из четырёх обязательных пунктов.",
+        answer:"Дата, время, количество персон, имя+контактный номер, повод/мероприятие, какую сумму на персону озвучили (если озвучивали)." },
+      { q:"От скольких персон ВСЕГДА перевод на менеджера, любой день?",
+        groups:[["40","сорок"]],
+        min:1, hint:"Цифра.",
+        answer:"От 40 персон - всегда менеджер, вне зависимости от дня недели." },
+      { q:"Будний день, 12 гостей, без повода и без предзаказа. Что предлагаем?",
+        groups:[["без депозит","свободн","разместим"]],
+        min:1, hint:"Один ответ.",
+        answer:"Размещение без депозита - простое бронирование. В будни 11+ без повода/предзаказа = без депозита." },
+      { q:"Будний день, 12 гостей, есть повод (день рождения) или нужен предзаказ. Что делаем?",
+        groups:[["менеджер","перевод"]],
+        min:1, hint:"Один ответ.",
+        answer:"Перевод на менеджера. Менеджер принимает решение по условиям." }
+    ]
+  },
+  dep_movements: {
+    name: "Сдвижки столов",
+    bank: [
+      { q:"Какие столы соединяются в группу до 15 персон в центре зала? Назови один из вариантов.",
+        groups:[["12","13","14"],["24","25","26"]],
+        min:2, hint:"Три цифры подряд.",
+        answer:"12+13+14 или 24+25+26 - до 15 персон, до 20 со стульями вместо кресел." },
+      { q:"Сколько максимум персон на сдвижке 12+13+14, если кресла заменить на стулья?",
+        groups:[["20","двадцат"]],
+        min:1, hint:"Цифра.",
+        answer:"20 персон со стульями вместо кресел." },
+      { q:"Какие столы на подиуме 40-х соединяются?",
+        groups:[["43"],["44"],["45"],["46"]],
+        min:3, hint:"Минимум 3 из 4 номеров.",
+        answer:"43, 44, 45, 46 - все четыре стола подиума 40-х соединяются. Аналогично подиум 50-х (53, 54, 55, 56)." },
+      { q:"Сдвижка 27+28 - на сколько персон?",
+        groups:[["15","пятнадцат"]],
+        min:1, hint:"Цифра.",
+        answer:"До 15 персон. Помни: 11+ в выходной = банкет, не два депозита." }
+    ]
+  },
+  dep_no_dep: {
+    name: "Бронь без депозита",
+    bank: [
+      { q:"Кому действует бронь без депозита?",
+        groups:[["женск","девуш","только"]],
+        min:1, hint:"Один тип компании.",
+        answer:"Только женским компаниям." },
+      { q:"В забронированной без депозита компании появился мужчина. Что со столом?",
+        groups:[["депозит","автомат"]],
+        min:1, hint:"Один ответ.",
+        answer:"Стол автоматически становится депозитным с момента появления мужчины." },
+      { q:"Гостья говорит: Брат просто довезёт и уйдёт. Как ответить?",
+        groups:[["не дела","не делаем","нельзя"],["исключ"],["мужчин","депозит"]],
+        min:2, hint:"Прямая цитата из стандарта.",
+        answer:"Не делаем исключений на основании времени присутствия. Пока мужчина в компании - стол депозитный. Это стандартное условие для всех." },
+      { q:"Гостья говорит: Это дискриминация. Как ответить?",
+        groups:[["маркет","политик","бонус"]],
+        min:1, hint:"Главный аргумент.",
+        answer:"Это не дискриминация - это маркетинговая политика, бонус для определённой аудитории. Принимаем компанию в любом составе на стандартных условиях." },
+      { q:"Депозит возвращается, если гость не пришёл?",
+        groups:[["нет","невозврат"]],
+        min:1, hint:"Один ответ.",
+        answer:"Нет, депозит невозвратный. Можно направить на заказ с собой на вынос." },
+      { q:"Возможен ли перенос депозита на другую дату?",
+        groups:[["да","возможн","можн"],["3","три"],["час"]],
+        min:2, hint:"Условие переноса.",
+        answer:"Да, при отмене не позже чем за 3 часа до начала визита." }
+    ]
+  },
+  dep_service: {
+    name: "Сервисный сбор и общие условия",
+    bank: [
+      { q:"От скольких персон действует сервисный сбор?",
+        groups:[["6","шест"]],
+        min:1, hint:"Цифра.",
+        answer:"От 6 персон - действует сервисный сбор." },
+      { q:"Сколько составляет сервисный сбор?",
+        groups:[["10","десять"],["%","процент"]],
+        min:1, hint:"Процент.",
+        answer:"10% от суммы чека." },
+      { q:"Что включает в себя сервисный сбор?",
+        groups:[["зал"],["кухн"],["бар"]],
+        min:2, hint:"Минимум два из трёх.",
+        answer:"Вознаграждение персонала зала, кухни и бара." },
+      { q:"Сколько минут резерв держится без подтверждения?",
+        groups:[["15","пятнадцат"]],
+        min:1, hint:"Цифра.",
+        answer:"15 минут. После - резерв снимается автоматически." },
+      { q:"Через сколько минут после времени брони хостес делает прозвон опаздывающего гостя?",
+        groups:[["15","пятнадцат"]],
+        min:1, hint:"Цифра.",
+        answer:"Через 15 минут после времени брони - прозвон, если гость не пришёл." }
+    ]
+  },
+  // ============================================================
+  // ХОСТЕС - РЕГЛАМЕНТ
+  // ============================================================
+  reg_call: {
+    name: "Телефонный звонок",
+    bank: [
+      { q:"Не позднее какого гудка хостес снимает телефон?",
+        groups:[["3","трет","три"]],
+        min:1, hint:"Цифра.",
+        answer:"Не позднее третьего гудка." },
+      { q:"Как мы называем заведение по телефону?",
+        groups:[["nomo","номо"],["huqqa","хукка"]],
+        min:1, hint:"Полное название. Слово ресторан НЕ используем.",
+        answer:"NOMO huqqa.rest. Слово ресторан не используем." },
+      { q:"Как звучит приветствие до 17:00?",
+        groups:[["добрый день"],["nomo","номо"],["имя зов","зовут","зват"]],
+        min:2, hint:"Время суток + название + представление.",
+        answer:"Добрый день, NOMO huqqa.rest, меня зовут [Имя], как могу к вам обращаться?" },
+      { q:"Можно ли использовать столик, менюшка и подобные уменьшительно-ласкательные?",
+        groups:[["нет","нельзя","запрещ","не использ"]],
+        min:1, hint:"Один ответ.",
+        answer:"Нет. Уменьшительно-ласкательные формы запрещены - говорим стол, меню." },
+      { q:"Какие 5 обязательных вопросов хостес задаёт при бронировании?",
+        groups:[["имя"],["дата","время"],["количеств","персон","гост"],["контакт","телефон","номер"],["повод","событ","знаков"]],
+        min:4, hint:"Минимум 4 из 5: имя, дата+время, количество, контакт, повод.",
+        answer:"Имя, дата и время, количество гостей, контактный номер, повод/знаковое событие." },
+      { q:"Что хостес обязательно говорит в конце звонка про возраст?",
+        groups:[["18","восемнадц"],["паспорт","водит"]],
+        min:2, hint:"Возрастной формат + документ.",
+        answer:"Заведение работает в формате 18+. При входе нужен оригинал паспорта или водительского удостоверения." }
+    ]
+  },
+  reg_messenger: {
+    name: "Подтверждение в мессенджер",
+    bank: [
+      { q:"Кому отправляется подтверждение брони в мессенджер?",
+        groups:[["вс","всем"],["исключ"]],
+        min:1, hint:"Один ответ.",
+        answer:"Всем гостям без исключения - и в будни, и в выходные." },
+      { q:"Какой шаблон сообщения используем для пятницы 22:00?",
+        groups:[["выходн","депозит"]],
+        min:2, hint:"Тип шаблона.",
+        answer:"Выходной с депозитом - со всеми правилами: депозит, дресс-код, фейс-контроль." },
+      { q:"Какой шаблон сообщения используем для пятницы 19:00?",
+        groups:[["выходн","без депозит"]],
+        min:2, hint:"Тип шаблона.",
+        answer:"Выходной без депозита - со включением, что стол освободить к 21:00." },
+      { q:"В каком формате гость присылает подтверждение оплаты депозита?",
+        groups:[["pdf","пдф","файл"]],
+        min:1, hint:"Один формат.",
+        answer:"PDF-файл (не скриншот)." },
+      { q:"Когда стол фиксируется после оплаты?",
+        groups:[["pdf","пдф","оплат","подтвержд","получен"]],
+        min:1, hint:"После какого события.",
+        answer:"После получения PDF-подтверждения оплаты. До этого стол не фиксируется." }
+    ]
+  },
+  reg_meet: {
+    name: "Встреча гостя",
+    bank: [
+      { q:"За сколько секунд хостес устанавливает зрительный контакт с гостем?",
+        groups:[["5","пят"]],
+        min:1, hint:"Цифра.",
+        answer:"Не позднее 5 секунд после появления гостя." },
+      { q:"Можно ли отойти от ресепшен при уточнении информации?",
+        groups:[["нет","нельзя","запрещ","не отход"]],
+        min:1, hint:"Один ответ.",
+        answer:"Нет. От ресепшен не отходим - уточняем стоя у стойки." },
+      { q:"Как идёт хостес при проводке гостя к столу?",
+        groups:[["впереди"],["рук","расстоян","вытянут"]],
+        min:1, hint:"Где + на каком расстоянии.",
+        answer:"Впереди гостя на расстоянии вытянутой руки." },
+      { q:"Если гостя встречают друзья за столом, провожает ли хостес?",
+        groups:[["да","всегда","всё равно","провожа"]],
+        min:1, hint:"Один ответ.",
+        answer:"Да, всегда провожаем лично - даже если друзья встречают." },
+      { q:"Что должно быть на готовом к посадке столе? Минимум два пункта.",
+        groups:[["сервиров","серви"],["подушк"],["пол","чист"]],
+        min:2, hint:"Чек-лист готовности стола.",
+        answer:"Сервировочная позиция готова, подушки поправлены, пол под столом чистый - без мусора и пятен." }
+    ]
+  },
+  reg_menu: {
+    name: "Подача меню",
+    bank: [
+      { q:"Когда меню кладётся на стол?",
+        groups:[["после","расположил","сел","сядет","разместил"]],
+        min:1, hint:"После какого момента.",
+        answer:"После того как гость расположился. Не до и не одновременно с посадкой." },
+      { q:"Состав - 2 женщины и 2 мужчины. Кому меню первой?",
+        groups:[["старш"],["женщин","женщ","дам"]],
+        min:1, hint:"По возрасту и полу.",
+        answer:"Сначала старшей женщине, потом младшей женщине, потом мужчинам." },
+      { q:"За столом именинник. Кому меню первому?",
+        groups:[["именин","повод","перв","первым"]],
+        min:1, hint:"Один ответ.",
+        answer:"Имениннику или гостю повода - первому, независимо от пола и возраста." },
+      { q:"Только мужчины за столом. Какой порядок подачи меню?",
+        groups:[["прав","расположен","порядк","начин"]],
+        min:1, hint:"По чему порядок.",
+        answer:"По порядку расположения за столом, начиная с правой стороны." }
+    ]
+  },
+  reg_farewell: {
+    name: "Прощание и обратная связь",
+    bank: [
+      { q:"При уходе гостя хостес сидит или встаёт?",
+        groups:[["встат","встаём","встаем","поднимаемс","встан"]],
+        min:1, hint:"Один ответ.",
+        answer:"Встаёт с рабочего места. Сидячая хостес, провожающая взглядом - это безразличие." },
+      { q:"Какую фразу для обратной связи запрещено использовать?",
+        groups:[["понравил","всё понрав","все понрав"]],
+        min:1, hint:"Устаревшая фраза.",
+        answer:"Всё понравилось? - запрещено. Слишком банальная и не даёт обратной связи." },
+      { q:"Назови одну хорошую фразу для обратной связи при уходе гостя.",
+        groups:[["запомн","улучш","лучш","что-то","сделать"]],
+        min:1, hint:"Живые фразы из стандарта.",
+        answer:"Что запомнилось больше всего? или Есть что-то, что могли бы сделать лучше?" },
+      { q:"Гость уходит и говорит: Был ужасный вечер, всё не так. Что делает хостес?",
+        groups:[["менеджер"],["сразу","немедленн","пригла"]],
+        min:1, hint:"Один шаг.",
+        answer:"Немедленно приглашает менеджера. Не резюмирует, не обещает, не оправдывается." }
+    ]
+  },
+  reg_conflict: {
+    name: "Конфликты",
+    bank: [
+      { q:"Гость агрессивен и повышает голос. Какую фразу говорит хостес?",
+        groups:[["слыш","понима"],["менеджер"]],
+        min:2, hint:"Признание + действие.",
+        answer:"Я вас слышу. Сейчас приглашу менеджера, чтобы решить вопрос быстро и комфортно." },
+      { q:"Принимает ли хостес самостоятельно решения по компенсациям и скидкам?",
+        groups:[["нет","менеджер"]],
+        min:1, hint:"Один ответ.",
+        answer:"Нет. Это зона ответственности менеджера. Хостес не делает скидки и не утверждает компенсации." },
+      { q:"Гость пришёл нетрезвым. Что говорит хостес?",
+        groups:[["не можем","не пуск","не примем"],["безопасн","стандарт"]],
+        min:1, hint:"Тихо, без объяснений.",
+        answer:"К сожалению, не можем вас принять - это стандарт безопасности для всех гостей. Тихо, без сцены." },
+      { q:"Гость требует конкретный занятый стол. Что делает хостес?",
+        groups:[["альтернатив","друг стол","предложу","комфортн"]],
+        min:1, hint:"Через альтернативу.",
+        answer:"Этот стол сейчас занят. Предлагает альтернативу с акцентом на её достоинства." },
+      { q:"Что нельзя говорить гостю, если мест нет?",
+        groups:[["мест нет"],["просто","сразу","без альтернат"]],
+        min:1, hint:"Запретная формулировка.",
+        answer:"Просто Мест нет - нельзя. Всегда нужна альтернатива - другое время или лист ожидания." },
+      { q:"Что предлагаем гостю, когда мест нет? Минимум один вариант.",
+        groups:[["лист","ожидан"],["время","альтернатив","бижайш","свободн"]],
+        min:1, hint:"Один из двух инструментов.",
+        answer:"Лист ожидания (взять контакт - напишем когда освободится) или альтернативное время." }
+    ]
+  },
+  reg_special: {
+    name: "Гости повышенного внимания",
+    bank: [
+      { q:"Какой термин мы используем для постоянных особых гостей?",
+        groups:[["экстра","повышенн","внимани"]],
+        min:1, hint:"Не VIP. Какой термин.",
+        answer:"Гость экстра сервиса или гость повышенного внимания. Термин VIP не используется." },
+      { q:"Где хостес узнаёт о гостях повышенного внимания на сегодняшнюю смену?",
+        groups:[["restoplace","ресто"],["менеджер","тз","брифин"]],
+        min:1, hint:"Два источника.",
+        answer:"В Restoplace и от менеджера на брифинге перед сменой." },
+      { q:"Когда хостес сообщает менеджеру о приходе гостя повышенного внимания?",
+        groups:[["сразу","момент","появлен","до посадк","немедленн"]],
+        min:1, hint:"Когда именно.",
+        answer:"Сразу при появлении - не после посадки и не через 5 минут." },
+      { q:"Можно ли обмениваться телефонами и Instagram с постоянными гостями?",
+        groups:[["нет","нельзя","запрещ"]],
+        min:1, hint:"Один ответ.",
+        answer:"Нет. Запрещено независимо от частоты визитов." }
+    ]
+  },
+  reg_hierarchy: {
+    name: "Иерархия и упоминание руководства",
+    bank: [
+      { q:"Кто высшее звено оперативного управления NOMO?",
+        groups:[["кристин","андреевн","ген директор","генеральн"]],
+        min:1, hint:"Имя и должность.",
+        answer:"Кристина Андреевна - управляющая, генеральный директор." },
+      { q:"Кто заместитель управляющего?",
+        groups:[["кристин","александровн","заместит"]],
+        min:1, hint:"Имя.",
+        answer:"Кристина Александровна - заместитель управляющего." },
+      { q:"Кто основатели NOMO?",
+        groups:[["эльнур","нур","витальевич"],["томер","том"]],
+        min:1, hint:"Минимум одно имя.",
+        answer:"Эльнур Витальевич и Томер Витальевич - основатели и собственники проекта." },
+      { q:"Кому хостес адресует все рабочие вопросы по смене?",
+        groups:[["менеджер","смен"]],
+        min:1, hint:"Точка входа.",
+        answer:"Менеджеру смены. Это единственная точка входа для всех вопросов." },
+      { q:"Можно ли идти выше менеджера самостоятельно?",
+        groups:[["нет","нельзя","запрещ","нарушен","субордин"]],
+        min:1, hint:"Один ответ.",
+        answer:"Нет. Это нарушение субординации." },
+      { q:"Гость говорит: Я знаю Эльнура, сделайте мне скидку. Что отвечаем?",
+        groups:[["услов","одинаков","всех","равн","стандарт"]],
+        min:1, hint:"Главный аргумент.",
+        answer:"Условия для всех гостей одинаковы. Если есть особая договорённость - руководство свяжется с нами напрямую." },
+      { q:"Гость спрашивает: А это Эльнур только что прошёл? Что отвечаем?",
+        groups:[["не могу","не скаж","не подтверж","секрет","нельзя","менеджер"]],
+        min:1, hint:"Не подтверждаем и не отрицаем.",
+        answer:"Не могу сказать, могу позвать менеджера, если нужно." },
+      { q:"Хостес увидела Эльнура Витальевича на входе. Первое действие?",
+        groups:[["менеджер"],["сразу","немедленн","до приветств","сначала"]],
+        min:1, hint:"Что делается ПЕРЕД приветствием.",
+        answer:"Сразу сообщить менеджеру - до приветствия, до посадки. Это первое действие." }
+    ]
+  },
+  reg_confidential: {
+    name: "Конфиденциальность",
+    bank: [
+      { q:"Гость спрашивает: Кто собственник ресторана? Что отвечаем?",
+        groups:[["менеджер","позов","позову"]],
+        min:1, hint:"Не называем имена.",
+        answer:"По этому вопросу могу позвать менеджера. Имена не называем." },
+      { q:"Гость говорит: Я родственник Томера, дайте скидку. Что делаем?",
+        groups:[["менеджер","позов","примем"]],
+        min:1, hint:"Не делаем привилегий сами.",
+        answer:"Принял, позову менеджера. Никаких скидок и привилегий самостоятельно." },
+      { q:"Кто решает, кому какие привилегии действуют у нас в заведении?",
+        groups:[["руковод"],["менеджер","посадк"]],
+        min:1, hint:"Откуда поступает информация.",
+        answer:"Руководство. Информация поступает к хостес через менеджера ДО посадки гостя." },
+      { q:"Можно ли подходить к собственникам с операционными вопросами?",
+        groups:[["нет","нельзя","менеджер","запрещ"]],
+        min:1, hint:"Один ответ.",
+        answer:"Нет. Все операционные вопросы - только через менеджера." }
+    ]
+  },
+  reg_appearance: {
+    name: "Внешний вид",
+    bank: [
+      { q:"Где публикуются подборы образа для смены?",
+        groups:[["чат","хостес"],["недел","еженедельн"]],
+        min:1, hint:"Канал + регулярность.",
+        answer:"В чате хостес, еженедельно." },
+      { q:"Можно ли донадевать макияж и причёски в течение смены?",
+        groups:[["нет","нельзя","запрещ","до начала","утр"]],
+        min:1, hint:"Один ответ.",
+        answer:"Нет. Образ надевается полностью с утра, до начала смены." },
+      { q:"Какие оттенки маникюра допустимы?",
+        groups:[["нюд","сдержан","спокойн"]],
+        min:1, hint:"Тип палитры.",
+        answer:"Нюдовые оттенки, опрятный маникюр." },
+      { q:"Какое требование к волосам у хостес?",
+        groups:[["собран","хвост","пучок","кос"]],
+        min:1, hint:"Состояние.",
+        answer:"Волосы собраны - хвост, пучок или коса." },
+      { q:"Кто проверяет внешний вид хостес и когда?",
+        groups:[["менеджер"],["начал","смен"]],
+        min:1, hint:"Кто + когда.",
+        answer:"Менеджер - в начале каждой смены. При несоответствии сотрудник не допускается до устранения замечаний." }
+    ]
+  },
+  reg_internal: {
+    name: "Внутренние правила",
+    bank: [
+      { q:"Опоздание свыше скольки минут считается нарушением?",
+        groups:[["5","пят"]],
+        min:1, hint:"Цифра.",
+        answer:"5 минут без уважительной причины." },
+      { q:"Можно ли посещать NOMO в нерабочее время как гость?",
+        groups:[["нет","нельзя","запрещ"]],
+        min:1, hint:"Один ответ.",
+        answer:"Нет. Запрещено - это смешение ролей." },
+      { q:"Тактильный контакт с гостями - можно?",
+        groups:[["нет","нельзя","запрещ"]],
+        min:1, hint:"Один ответ.",
+        answer:"Запрещён. Даже дружеский - это нарушение личного пространства." },
+      { q:"Можно ли оставлять ресепшен пустым - даже на минуту?",
+        groups:[["нет","нельзя","никогд"]],
+        min:1, hint:"Один ответ.",
+        answer:"Нет, никогда. На ресепшен всегда должен находиться сотрудник." },
+      { q:"Что значит правило последней спины в зале?",
+        groups:[["зал"],["сотрудник","минимум","один"]],
+        min:1, hint:"Цитата из стандартов.",
+        answer:"В зале всегда должен оставаться хотя бы один сотрудник. Никогда не бывает момента, когда весь персонал одновременно покинул зал." }
+    ]
+  },
+  reg_info: {
+    name: "Информация о заведении",
+    bank: [
+      { q:"Какой адрес у NOMO?",
+        groups:[["земляной","земля"],["9","9а"]],
+        min:2, hint:"Улица + дом.",
+        answer:"Земляной Вал, 9А, Москва." },
+      { q:"Какой телефон заведения?",
+        groups:[["925"],["088"]],
+        min:1, hint:"Код или последние цифры.",
+        answer:"+7 (925) 088-80-08." },
+      { q:"Какие станции метро рядом с NOMO?",
+        groups:[["курск"],["чкалов"]],
+        min:1, hint:"Минимум одна станция.",
+        answer:"Курская и Чкаловская - 5 минут пешком." },
+      { q:"Какая стоимость парковки рядом с заведением?",
+        groups:[["300","триста"]],
+        min:1, hint:"Цифра.",
+        answer:"300 рублей в час, оплата по карте. Подземный или наземный паркинг бизнес-центра." },
+      { q:"Какие часы работы NOMO в пятницу и субботу?",
+        groups:[["12"],["5","05","04","04:00","05:00"]],
+        min:2, hint:"С какого до какого времени.",
+        answer:"С 12:00 до 05:00 (программа до 04:00, DJ до закрытия)." }
+    ]
+  },
+  reg_resto: {
+    name: "Restoplace",
+    bank: [
+      { q:"Что хостес обязательно отмечает в Restoplace при приходе гостя?",
+        groups:[["стол","зан"],["количеств","персон","гост","факт","брон"]],
+        min:1, hint:"Минимум один параметр.",
+        answer:"Стол занят, количество гостей, бронь или по факту, время посадки." },
+      { q:"Что фиксируется при уходе гостя?",
+        groups:[["освобод","свободн","ушёл"]],
+        min:1, hint:"Один статус.",
+        answer:"Стол освободился - статус меняется немедленно." },
+      { q:"Где хранится информация о гостях и резервах - в голове или в системе?",
+        groups:[["restoplace","ресто","систем"]],
+        min:1, hint:"Один источник правды.",
+        answer:"Только в Restoplace. Память ненадёжна, в чате - дублирование. В системе - правда." },
+      { q:"Что значит статус стола готов к посадке?",
+        groups:[["убр","чист"],["сервир","подушк","пол"]],
+        min:1, hint:"Чек-лист готовности.",
+        answer:"Стол полностью убран, сервирован по стандарту, подушки поправлены, пол чист." }
+    ]
+  },
+  reg_inspection: {
+    name: "Проверяющие органы",
+    bank: [
+      { q:"Что хостес говорит первым проверяющим органам?",
+        groups:[["орган","представл"],["цел","визит"]],
+        min:1, hint:"Уточнение информации.",
+        answer:"Подскажите, какой орган вы представляете и цель визита? Одну минуту - я приглашу ответственного сотрудника." },
+      { q:"Может ли хостес отвечать на вопросы проверяющих самостоятельно?",
+        groups:[["нет","нельзя","менеджер"]],
+        min:1, hint:"Один ответ.",
+        answer:"Нет. Только менеджер. Также не давать доступ к документам." },
+      { q:"Кому хостес пишет в чат после звонка менеджеру по поводу проверки?",
+        groups:[["общ","рабоч","чат"]],
+        min:1, hint:"В какой чат.",
+        answer:"В общий рабочий чат всем сотрудникам - название органа, цель проверки, местонахождение." }
+    ]
+  },
+  reg_checklist: {
+    name: "Чек-листы и режим работы",
+    bank: [
+      { q:"Со скольки начинается смена хостес 1 (хостес кол-центра)?",
+        groups:[["11","11:00","одиннадцат"]],
+        min:1, hint:"Время.",
+        answer:"С 11:00." },
+      { q:"С 12:00 до 13:00 - что делает хостес 1?",
+        groups:[["обзвон","звон","подтверд"]],
+        min:1, hint:"Один тип задачи.",
+        answer:"Обзвон броней для подтверждения." },
+      { q:"Каждые сколько часов хостес проверяет входную зону по чек-листу?",
+        groups:[["2","два"]],
+        min:1, hint:"Цифра.",
+        answer:"Каждые 2 часа." },
+      { q:"Уход со смены возможен только после чего?",
+        groups:[["менеджер","одобрен"]],
+        min:1, hint:"Условие.",
+        answer:"После одобрения менеджера. Без подтверждения уход запрещён." },
+      { q:"В выходные хостес кол-центра меняется ролями с хостес рассадки?",
+        groups:[["нет","остаёт","остается","не мен","не уход"]],
+        min:1, hint:"Один ответ.",
+        answer:"Нет. Хостес кол-центра остаётся на своей позиции от начала до конца смены - чтобы не терять контекст по броням." }
+    ]
+  },
+  reg_kids: {
+    name: "Дети и ограничения",
+    bank: [
+      { q:"В пятницу и субботу с ребёнком до скольки можно?",
+        groups:[["23","до 23","11 вечер"]],
+        min:1, hint:"Время.",
+        answer:"До 23:00." },
+      { q:"После 23:00 в пятницу и субботу заведение работает для кого?",
+        groups:[["взросл","18+","совершен"]],
+        min:1, hint:"Тип гостей.",
+        answer:"Только для взрослых - алкоголь и кальяны, повышенная ответственность." },
+      { q:"У детей при входе хостес запрашивает паспорт?",
+        groups:[["нет","не запраш","только у взр"]],
+        min:1, hint:"Один ответ.",
+        answer:"Нет. Только у взрослых гостей. Родители несут личную ответственность за детей." },
+      { q:"В будни (Пн-Чт) есть ограничение по времени для детей?",
+        groups:[["нет","будн","без огран"],["пятниц","суббот","выходн","только"]],
+        min:1, hint:"Когда действует ограничение 23:00.",
+        answer:"Нет, в будни без ограничения. Правило 23:00 действует только в пятницу и субботу - тусовочные дни." }
+    ]
   }
-
 };
 
 const POSITIONS_ORDER = [
@@ -1787,28 +2510,40 @@ const POSITIONS_ORDER = [
   "porto_tawny", "negroni", "dalmore_12", "laphroaig", "macallan_12",
   "pitahaya", "mango_passion", "smoothie",
   "pinot_rose", "viognier", "moscato",
-  "malbec_tamari", "shiraz",
-  "madeira",
+  "malbec_tamari", "shiraz", "madeira",
   "clase_azul", "hendricks_amazonia",
   "cocktail_la_tomato", "cocktail_daiginjo",
   "chablis", "sancerre", "barolo", "gavi", "amarone",
   "cocktail_6"
 ];
 
-// Тест Шах и Мат - 3 позиции по 8 вопросов = 24 вопроса
 const POSITIONS_ORDER_CHESS = [
   "chess_queen", "chess_gambit", "chess_mate"
 ];
 
+const POSITIONS_ORDER_HOSTESS_REG = [
+  "reg_call", "reg_messenger", "reg_meet", "reg_menu", "reg_farewell",
+  "reg_conflict", "reg_special", "reg_hierarchy", "reg_confidential",
+  "reg_appearance", "reg_internal", "reg_info", "reg_resto",
+  "reg_inspection", "reg_checklist", "reg_kids"
+];
+
+const POSITIONS_ORDER_HOSTESS_DEP = [
+  "dep_when", "dep_tables", "dep_surcharge", "dep_capacity",
+  "dep_banquet", "dep_movements", "dep_no_dep", "dep_service"
+];
+
 const TEST_KINDS = {
-  main:  { name: "Основная аттестация бара",  positions: POSITIONS_ORDER,       qPerPosition: 3, label: "Основная" },
-  chess: { name: "Шах и Мат · Игра чёрных королев", positions: POSITIONS_ORDER_CHESS, qPerPosition: 8, label: "Шах и Мат" }
+  main:        { name: "Основная аттестация бара",          positions: POSITIONS_ORDER,             qPerPosition: 3, label: "Основная",  role: "waiter"  },
+  chess:       { name: "Шах и Мат - Игра чёрных королев",   positions: POSITIONS_ORDER_CHESS,       qPerPosition: 8, label: "Шах и Мат", role: "waiter"  },
+  hostess_reg: { name: "Регламент хостес",                  positions: POSITIONS_ORDER_HOSTESS_REG, qPerPosition: 1, totalQ: 20, label: "Регламент", role: "hostess" },
+  hostess_dep: { name: "Депозитная система",                positions: POSITIONS_ORDER_HOSTESS_DEP, qPerPosition: 2, totalQ: 20, label: "Депозит",   role: "hostess" }
 };
 </script>
 
 <script id="logic-script">
 // ============================================================
-// ДЕДЛАЙН — суббота 20:00
+// ДЕДЛАЙН - суббота 20:00
 // ============================================================
 function isTestBlocked(){
   const now = new Date();
@@ -1922,27 +2657,16 @@ function maxTypos(len){
   return 4;
 }
 
-// Фонетическая нормализация: похоже звучащие буквы приводятся к одному виду.
-// Это ловит типичные ошибки: о/а, е/и в безударных позициях, удвоение согласных.
 function phoneticNorm(s){
-  return (s||"")
-    .toLowerCase()
-    // удвоенные согласные → одинарные (макаллан = макалан, тессерон = тесерон)
+  return (s||"").toLowerCase()
     .replace(/([бвгджзклмнпрстфхцчшщ])\1+/gi, "$1")
-    // о/а — частая ошибка (уражай = урожай, перенон = периньон)
     .replace(/о/g, "а").replace(/o/g, "a")
-    // е/и/й/э — частые путаницы безударных
     .replace(/е/g, "и").replace(/э/g, "и").replace(/й/g, "и").replace(/ё/g, "и")
     .replace(/e/g, "i").replace(/y/g, "i")
-    // ъ/ь — игнорируем
     .replace(/[ъь]/g, "")
-    // ц/тс — одинаково звучат
     .replace(/тс/g, "ц")
-    // щ/ш — путают
     .replace(/щ/g, "ш")
-    // х/h
     .replace(/h/g, "х")
-    // несколько пробелов в один
     .replace(/\s+/g, " ").trim();
 }
 
@@ -1951,13 +2675,11 @@ function fuzzyContains(text, needle){
   if (text.includes(needle)) return true;
   const nl = needle.length;
   const tol = maxTypos(nl);
-  // фонетическая проверка — менее строгая
   const textPh = phoneticNorm(text);
   const needlePh = phoneticNorm(needle);
   if (textPh.includes(needlePh)) return true;
   if (tol === 0) return false;
   if (needle.includes(" ")) {
-    // для фраз — проверяем фонетический Левенштейн
     const tolPh = Math.max(2, Math.floor(needlePh.length / 5));
     const wordsPh = textPh.split(" ");
     for (let i = 0; i < wordsPh.length; i++){
@@ -1983,7 +2705,6 @@ function fuzzyContains(text, needle){
       if (Math.abs(w2.length - nl) <= tol && levenshtein(w2, needle) <= tol) return true;
     }
   }
-  // фонетическая проверка для отдельных слов
   const wordsPh2 = textPh.split(" ");
   const tolPh2 = Math.max(1, Math.floor(needlePh.length / 4));
   for (let i = 0; i < wordsPh2.length; i++){
@@ -2007,10 +2728,7 @@ function shuffle(arr){
 }
 function pickRandom(bank,n){return shuffle(bank).slice(0,n);}
 
-// Словарь синонимов: для каждого ключевого слова автоматически проверяются эквиваленты.
-// Если в группе есть слово из ключа — проверяется и любое слово из значений.
 const SYNONYM_DICT = {
-  // Сорта винограда и термины виноделия
   "pinot": ["пино","pino","пино нуар","пино-нуар"],
   "пино": ["pinot","pino","pinot noir","пино нуар"],
   "chardonnay": ["шардоне","шардонне","шардон"],
@@ -2020,12 +2738,11 @@ const SYNONYM_DICT = {
   "nebbiolo": ["неббиоло","небиоло"],
   "неббиоло": ["nebbiolo","небиоло"],
   "vintage": ["винтаж","миллезим","миллезимный"],
-  "винтаж": ["vintage","миллезим","миллезимный","миллезима"],
+  "винтаж": ["vintage","миллезим"],
   "prestige": ["престиж","престижный"],
-  "престиж": ["prestige","prestige cuvee","престижный"],
+  "престиж": ["prestige","prestige cuvee"],
   "cuvee": ["кюве","кюви"],
   "кюве": ["cuvee","кюви"],
-  "docg": ["докг"],
   "amarone": ["амароне","амарон"],
   "амароне": ["amarone","амарон"],
   "barolo": ["бароло"],
@@ -2048,8 +2765,6 @@ const SYNONYM_DICT = {
   "мальбек": ["malbec"],
   "riesling": ["рислинг"],
   "рислинг": ["riesling"],
-
-  // Регионы и страны
   "france": ["франция","францский","франц"],
   "франция": ["france","франц"],
   "italy": ["италия","итальянск"],
@@ -2062,76 +2777,60 @@ const SYNONYM_DICT = {
   "тоскана": ["tuscany","тосканск"],
   "highland": ["хайленд","хайлэнд","хайланд","шотландск"],
   "хайленд": ["highland","хайлэнд","хайланд"],
-  "speyside": ["спейсайд","спейсайт","спейсайд"],
+  "speyside": ["спейсайд","спейсаид"],
   "спейсайд": ["speyside"],
   "islay": ["айла","айлей","айлэй"],
   "айла": ["islay","айлей"],
-  "douro": ["дору","доуру"],
-  "дору": ["douro","доуру"],
-  "portugal": ["португалия","португальск"],
-  "португалия": ["portugal","португальск"],
   "japan": ["япония","японск"],
   "япония": ["japan","японск"],
   "guatemala": ["гватемала","гватемальск"],
-  "гватемала": ["guatemala","гватемальск"],
+  "гватемала": ["guatemala"],
   "mexico": ["мексика","мексиканск"],
-  "мексика": ["mexico","мексиканск"],
-
-  // Бренды и марки
-  "dom perignon": ["дом периньон","дом периньён","перинь"],
-  "перинь": ["dom perignon","дом периньон","periньон"],
+  "мексика": ["mexico"],
+  "perignon": ["периньон","периньён","перинь","переньон"],
+  "периньон": ["perignon","перинь"],
   "macallan": ["макаллан","макалан","макалл"],
-  "макаллан": ["macallan","макалан","макалл"],
+  "макаллан": ["macallan","макалан"],
   "макалан": ["macallan","макаллан"],
   "dalmore": ["далмор","далмо"],
-  "далмор": ["dalmore","далмо"],
-  "laphroaig": ["лафроэг","лафройг","лафроиг","лафроэйг"],
-  "лафроэг": ["laphroaig","лафройг","лафроиг"],
-  "tesseron": ["тессерон","тесерон"],
+  "далмор": ["dalmore"],
+  "laphroaig": ["лафроэг","лафройг","лафроиг"],
+  "лафроэг": ["laphroaig","лафройг"],
+  "tesseron": ["тессерон","тесерон","тэссерон"],
   "тессерон": ["tesseron","тесерон"],
   "zacapa": ["закапа","сакапа"],
-  "закапа": ["zacapa","сакапа"],
-  "sherry": ["херес","шерри","sherry"],
+  "закапа": ["zacapa"],
+  "sherry": ["херес","шерри"],
   "херес": ["sherry","шерри"],
-  "pedro ximenez": ["педро хименес","педро хименез","педро химинез"],
+  "pedro ximenez": ["педро хименес","педро хименез"],
   "педро хименес": ["pedro ximenez","педро хименез"],
   "matusalem": ["матусалем","матузалем"],
-  "матусалем": ["matusalem","матузалем"],
+  "матусалем": ["matusalem"],
   "negroni": ["негрони"],
   "негрони": ["negroni"],
-  "cherry brandy": ["черри бренди","вишнёвый бренди","вишневый бренди","черри-бренди"],
-  "черри": ["cherry","cherry brandy","черри бренди"],
-  "mozart": ["моцарт","mozart chocolate"],
-  "моцарт": ["mozart","mozart chocolate"],
-  "cavalli": ["кавалли","cavalli","роберто кавалли"],
-  "кавалли": ["cavalli","роберто кавалли"],
+  "cherry": ["вишн","черри"],
+  "вишн": ["cherry","черри"],
+  "mozart": ["моцарт"],
+  "моцарт": ["mozart"],
+  "cavalli": ["кавалли","ковали","ковалли","кавали"],
+  "кавалли": ["cavalli","ковали","ковалли"],
+  "ковали": ["cavalli","кавалли"],
   "bols": ["болс"],
   "болс": ["bols"],
   "nonino": ["нонино"],
   "нонино": ["nonino"],
-  "beluga": ["белуга","белуджа"],
-  "белуга": ["beluga"],
   "hendricks": ["хендрикс","хендрик"],
-  "хендрикс": ["hendricks","hendrick"],
-  "amazonia": ["амазония","амазонский"],
-  "clase azul": ["клазе азул","класе азул","клас азул"],
-  "клазе азул": ["clase azul","класе азул"],
-  "jagermeister": ["егермайстер","егермейстер","ягермайстер"],
-  "егермайстер": ["jagermeister","егермейстер","ягермайстер"],
-  "branca menta": ["бранка мента","бранкаменто"],
-  "бранка": ["branca","branca menta"],
+  "хендрикс": ["hendricks"],
+  "clase azul": ["клазе азул","класе азул"],
+  "клазе азул": ["clase azul"],
   "ben lomond": ["бен ломонд","бен-ломонд"],
-  "бен ломонд": ["ben lomond","бен-ломонд"],
-  "carlo alberto": ["карло альберто","карло альбертто"],
-  "карло альберто": ["carlo alberto"],
+  "бен ломонд": ["ben lomond"],
   "sake": ["сакэ","саке"],
   "сакэ": ["sake","саке"],
   "hana awaka": ["хана авака","хана-авака"],
-  "хана": ["hana","hana awaka","хана авака"],
+  "хана": ["hana awaka","хана авака"],
   "daiginjo": ["дайгиндзё","дайгинджо","дайгинджё"],
   "дайгиндзё": ["daiginjo","дайгинджо"],
-  "ozeki": ["озэки","озеки"],
-  "озэки": ["ozeki","озеки"],
   "porto": ["порто","портвейн"],
   "порто": ["porto","портвейн"],
   "tawny": ["тони","тауни"],
@@ -2140,324 +2839,99 @@ const SYNONYM_DICT = {
   "доу": ["dow","доус"],
   "madeira": ["мадейра","мадейр"],
   "мадейра": ["madeira"],
-  "blandys": ["блендис","блэндис"],
-  "блендис": ["blandys","блэндис"],
   "da hong pao": ["да хун пао","дахунпао"],
   "да хун пао": ["da hong pao","дахунпао"],
   "wuyi": ["уишань","уи","уй"],
   "уишань": ["wuyi","уи","уй"],
-  "fujian": ["фуцзянь","фудзянь","фу цзянь"],
-  "фуцзянь": ["fujian","фудзянь"],
-
-  // Термины подачи и вкуса
   "neat": ["нит","нэт","чистый"],
   "solera": ["солера"],
   "солера": ["solera"],
-  "double cask": ["дабл каск","дабл-каск","две бочки"],
-  "single malt": ["сингл молт","сингл-молт","односолодовый","односолод"],
-  "сингл молт": ["single malt","односолодовый"],
-  "односолодовый": ["single malt","сингл молт"],
-  "peated": ["торфяной","пит","торф"],
-  "торфяной": ["peated","торф"],
-  "торф": ["peated","торфяной"],
-  "smoke": ["дым","дымный","смок"],
-  "дым": ["smoke","дымный"],
-  "iodine": ["йод","йодный"],
-  "йод": ["iodine","йодный"],
   "vanilla": ["ваниль","ванильный"],
-  "ваниль": ["vanilla","ванильный"],
+  "ваниль": ["vanilla"],
   "caramel": ["карамель","карамельный"],
-  "карамель": ["caramel","карамельный"],
+  "карамель": ["caramel"],
   "chocolate": ["шоколад","шоколадный"],
-  "шоколад": ["chocolate","шоколадный"],
-  "orange": ["апельсин","апельсиновый","оранж"],
-  "апельсин": ["orange","оранж"],
-  "spice": ["специи","пряност","пряный"],
-  "специи": ["spice","пряност"],
-  "пряност": ["spice","специи","пряный"],
-  "fruits": ["фрукт","фруктовый"],
-  "фрукт": ["fruits","fruit","фруктовый"],
-  "dry fruits": ["сухофрукт","сухофрукты"],
-  "сухофрукт": ["dry fruits","сухофрукты"],
+  "шоколад": ["chocolate"],
+  "orange": ["апельсин","апельсиновый"],
+  "апельсин": ["orange"],
   "rose": ["роза","розовый"],
-  "роза": ["rose","розовый"],
+  "роза": ["rose"],
   "lavender": ["лаванда","лавандовый"],
-  "лаванда": ["lavender","лавандовый"],
+  "лаванда": ["lavender"],
   "coconut": ["кокос","кокосовый"],
-  "кокос": ["coconut","кокосовый"],
+  "кокос": ["coconut"],
   "yogurt": ["йогурт","йогуртовый"],
-  "йогурт": ["yogurt","йогуртовый"],
-  "blueberry": ["черника","черничный"],
-  "черника": ["blueberry","черничный"],
-  "cherry": ["вишня","вишн","вишнёвый","вишневый","черри"],
-  "вишня": ["cherry","вишн","черри"],
-  "passion": ["маракуйя","маракуйи","пэшн"],
-  "маракуйя": ["passion","passion fruit","пэшн"],
-  "mango": ["манго","мангов"],
-  "манго": ["mango"],
-  "papaya": ["папайя","папая"],
-  "папайя": ["papaya","папая"],
-  "lychee": ["личи"],
-  "личи": ["lychee"],
-  "lemon": ["лимон","лимонный"],
-  "лимон": ["lemon","лимонный"],
-  "lime": ["лайм","лаймовый"],
-  "лайм": ["lime","лаймовый"],
-  "berries": ["ягод","ягоды","ягодный"],
-  "ягод": ["berries","ягоды","ягодный"],
-  "raspberry": ["малин","малина"],
-  "малин": ["raspberry","малина"],
-  "currant": ["смородин","смородина"],
-  "смородин": ["currant","смородина"],
-
-  // Аперитив / дижестив / десерт
-  "aperitif": ["аперитив"],
-  "аперитив": ["aperitif"],
-  "digestif": ["дижестив"],
-  "дижестив": ["digestif"],
-  "dessert": ["десерт","десертный"],
-  "десерт": ["dessert","десертный"],
-
-  // Мясо / еда
-  "meat": ["мясо","мясной","мяс"],
-  "мясо": ["meat","мясной"],
-  "steak": ["стейк","стейкам"],
-  "стейк": ["steak"],
-
-  // Прочее
-  "watermark": ["водяной знак","ватермарка"],
-  "tester": ["тестировщик","проверяющий"],
-  "white oak": ["белый дуб","американский дуб"],
-  "белый дуб": ["white oak","американский дуб"],
-  "european oak": ["европейский дуб","евро дуб"],
-  "европейский дуб": ["european oak"],
-
-  // === РАСШИРЕННЫЕ ТРАНСКРИПЦИИ — все возможные варианты как сотрудники могут написать ===
-
-  // Шампанское и вина
-  "prosecco": ["prosecco","просекко","просеко","просеккo","просеку","prossecko"],
-  "просекко": ["prosecco","просеко","просеккo","просеку"],
-  "просеко": ["prosecco","просекко","просеккo","просеку"],
-  "dom": ["дом","дон"],
-  "perignon": ["периньон","периньён","перинь","периньон","переньон","переньён"],
-  "периньон": ["perignon","периньён","перинь","переньон","переньён"],
-
-  // Хересы и крепкие
-  "ximenez": ["хименес","хименез","химинес","химинез","ксименес","ксименез"],
-  "хименес": ["ximenez","хименез","химинес","химинез","ксименес","ксименез"],
-  "хименез": ["ximenez","хименес","химинес","химинез"],
-  "barbadillo": ["барбадильо","барбадило","барбадилло"],
-  "барбадильо": ["barbadillo","барбадило","барбадилло"],
-  "amontillado": ["амонтильядо","амонтиладо","амонтильяду"],
-  "амонтильядо": ["amontillado","амонтиладо","амонтильяду"],
-  "oloroso": ["олоросо","олорозо"],
-  "олоросо": ["oloroso","олорозо"],
-
-  // Виски — все способы написания
-  "lomond": ["ломонд","ломанд","ломонда"],
-  "ломонд": ["lomond","ломанд"],
-  "highlands": ["хайленд","хайлэнд","хайланд","хайлэндс","хайлендс"],
-  "хайлэнд": ["highland","highlands","хайленд","хайланд"],
-  "сансер": ["sancerre","сансерр","сансэр","сансэрр"],
-  "сансерр": ["sancerre","сансер","сансэр","сансэрр"],
-  "sancerre": ["sancerre","сансер","сансерр","сансэр","сансэрр"],
-
-  // Вина итальянские
-  "siro": ["сиро","сирро"],
-  "pacenti": ["паченти","пасенти","паченчи"],
-  "паченти": ["pacenti","пасенти"],
-  "speri": ["спери"],
-  "спери": ["speri"],
-  "ceretto": ["черетто","серетто","черретто"],
-  "черетто": ["ceretto","серетто","черретто"],
-  "монтальчино": ["montalcino","монтальчину","монтальчина"],
-  "montalcino": ["монтальчино","монтальчину"],
-
-  // Коньяк
-  "tesseron": ["тессерон","тесерон","тессерон","тэссерон","тэсерон"],
-  "тесерон": ["tesseron","тессерон","тэссерон"],
-  "grande champagne": ["гранд шампань","гранд-шампань","гранде шампань","гран шампань"],
-  "гранд шампань": ["grande champagne","гранд-шампань","гранде шампань"],
-  "hennessy": ["хеннесси","хенесси","хеннеси","хэннесси"],
-  "хеннесси": ["hennessy","хенесси","хеннеси","хэннесси"],
-
-  // Сакэ и японское
-  "ozeki": ["озэки","озеки","осэки","осеки"],
-  "озеки": ["ozeki","озэки","осэки"],
-  "daiginjo": ["дайгиндзё","дайгинджо","дайгинджё","дайгиньдзё","дайгинзё"],
-  "дайгинджо": ["daiginjo","дайгиндзё","дайгинджё","дайгинзё"],
-  "хана-авака": ["hana-awaka","hana awaka","хана авака","ханаавака"],
-  "ханаавака": ["hana awaka","хана авака","хана-авака"],
-
-  // Чай
-  "уи": ["wuyi","уй","уишань","уишан"],
-  "уишан": ["wuyi","уишань","уи","уй"],
-  "тегуанинь": ["те гуань инь","те-гуань-инь","tieguanyin","tie guan yin"],
-  "те гуань инь": ["tieguanyin","тегуанинь","те-гуань-инь"],
-
-  // Текила
-  "anejo": ["аньехо","аньехо","анехо","аньёхо"],
-  "аньехо": ["anejo","анехо","аньёхо"],
-  "reposado": ["репосадо","репозадо"],
-  "репосадо": ["reposado","репозадо"],
-  "blanco": ["бланко","блэнко"],
-  "бланко": ["blanco","блэнко"],
-  "agave": ["агава","агавэ"],
-  "агава": ["agave","агавэ"],
-  "jose cuervo": ["хосе куэрво","хосэ куэрво","хосе куерво"],
-  "хосе куэрво": ["jose cuervo","хосэ куэрво","хосе куерво"],
-
-  // Ром
-  "centenario": ["сентенарио","центенарио","сентенарьо"],
-  "сентенарио": ["centenario","центенарио"],
-  "gran reserva": ["гран резерва","гран-резерва","гранд резерва"],
-  "гран резерва": ["gran reserva","гран-резерва"],
-
-  // Коктейльные термины
-  "cordial": ["кордиал","кордьял","кордиял"],
-  "кордиал": ["cordial","кордьял","кордиял"],
-  "syrup": ["сироп","сирап"],
-  "сироп": ["syrup","сирап"],
-  "muddled": ["мадлд","мадлёный","раздавлен"],
-  "shaken": ["шейк","шейкованный","взбит"],
-  "stirred": ["стир","перемешан"],
-  "double strain": ["дабл стрейн","дабл-стрейн","двойной стрейн"],
-  "dry shake": ["драй шейк","сухой шейк","драй-шейк"],
-  "sour": ["сауэр","сэуэр","соур"],
-  "сауэр": ["sour","сэуэр"],
-  "spritz": ["спритц","спритц","спрайс"],
-  "спритц": ["spritz","спрайс"],
-
-  // Декор и подача
-  "garnish": ["декор","украшение","гарниш"],
-  "декор": ["garnish","украшение","гарниш"],
-  "twist": ["твист","цедра"],
-  "твист": ["twist","цедра"],
-  "rim": ["обод","римка","обкатка"],
-  "coupe": ["купе","купэ"],
-  "купе": ["coupe","купэ"],
-  "rocks": ["рокс","рокс гласс"],
-  "рокс": ["rocks","рокс гласс"],
-  "old fashioned": ["олд фешн","олд-фешн","старомодный","олд фэшн","олдфешн"],
-  "олд фешн": ["old fashioned","олд-фешн","олд фэшн","олдфешн"],
-  "highball": ["хайбол","хайболл"],
-  "хайбол": ["highball","хайболл"],
-  "nick and nora": ["ник энд нора","ник и нора","ник-энд-нора","ник нора"],
-  "ник энд нора": ["nick and nora","ник и нора","ник нора"],
-
-  // Числа в коктейлях
-  "20 ml": ["20 мл","20мл","двадцать мл"],
-  "30 ml": ["30 мл","30мл","тридцать мл"],
-  "45 ml": ["45 мл","45мл","сорок пять мл"],
-  "50 ml": ["50 мл","50мл","пятьдесят мл"],
-
-  // Игра шахмат
-  "scacchi": ["скакки","скаккьери"],
-  "scacchiera": ["скакьера","скакиера","скаккьера"],
-  "скакьера": ["scacchiera","скакиера","скаккьера"],
-  "regina nera": ["реджина нера","регина нера","реджина неро"],
-  "реджина нера": ["regina nera","регина нера","реджина неро"],
-  "gambetto": ["гамбетто","гамбет"],
-  "гамбетто": ["gambetto","гамбет"],
-  "scacco matto": ["скакко матто","скаккоматто","скакоматто"],
-  "скакко матто": ["scacco matto","скаккоматто"],
-
-  // Вкусовые термины — расширение
-  "creamy": ["кремовый","сливочный"],
-  "кремовый": ["creamy","сливочный"],
-  "smooth": ["мягкий","гладкий","округлый"],
-  "soft": ["мягкий","нежный"],
-  "intense": ["интенсивный","насыщенный","плотный"],
-  "интенсивный": ["intense","насыщенный","плотный"],
-  "dry": ["сухой","сухое"],
-  "сухой": ["dry"],
-  "sweet": ["сладкий","сладкое"],
-  "сладкий": ["sweet","сладкое"],
-  "bitter": ["горький","горьковатый","биттер"],
-  "горький": ["bitter","горьковатый","биттер"],
-  "fresh": ["свежий","свежесть"],
-  "свежий": ["fresh","свежесть"],
-  "floral": ["цветочный","флоральный"],
-  "цветочный": ["floral","флоральный"],
-  "spicy": ["пряный","острый","спайси"],
-  "пряный": ["spicy","спайси"],
-  "earthy": ["землистый","земляной"],
-  "smoky": ["дымный","смоки","задымлённый"],
-  "дымный": ["smoky","смоки","задымлённый"],
-  "mineral": ["минеральный","минеральность"],
-  "минеральный": ["mineral","минеральность"],
-  "honey": ["мёд","медовый","мед"],
-  "мёд": ["honey","медовый","мед"],
-  "mint": ["мята","мятный"],
-  "мята": ["mint","мятный"],
-  "ginger": ["имбирь","имбирный"],
-  "имбирь": ["ginger","имбирный"],
-  "cinnamon": ["корица","коричный"],
-  "корица": ["cinnamon","коричный"],
-  "nutmeg": ["мускат","мускатный"],
-  "мускат": ["nutmeg","мускатный"],
-  "tobacco": ["табак","табачный"],
-  "табак": ["tobacco","табачный"],
-  "leather": ["кожа","кожаный","кожистый"],
-  "кожа": ["leather","кожаный","кожистый"],
-  "coffee": ["кофе","кофейный"],
-  "кофе": ["coffee","кофейный"],
-  "almond": ["миндаль","миндальный"],
-  "миндаль": ["almond","миндальный"],
-  "hazelnut": ["фундук","лесной орех"],
-  "фундук": ["hazelnut","лесной орех"],
-  "walnut": ["грецкий орех","грецкий"],
-  "apricot": ["абрикос","абрикосовый"],
-  "абрикос": ["apricot","абрикосовый"],
-  "peach": ["персик","персиковый"],
-  "персик": ["peach","персиковый"],
-  "apple": ["яблоко","яблочный"],
-  "яблоко": ["apple","яблочный"],
-  "pear": ["груша","грушевый"],
-  "груша": ["pear","грушевый"],
-
-  // Технические термины
-  "barrel": ["бочка","бочковой"],
-  "бочка": ["barrel","бочковой"],
-  "cask": ["каск","бочка"],
-  "каск": ["cask","бочка"],
-  "aging": ["выдержка","состаривание"],
-  "выдержка": ["aging","состаривание","возраст"],
-  "blend": ["купаж","смесь","блэнд"],
-  "купаж": ["blend","смесь","блэнд"],
-  "fermentation": ["ферментация","брожение"],
-  "ферментация": ["fermentation","брожение"],
-  "distillation": ["дистилляция","перегонка"],
-  "дистилляция": ["distillation","перегонка"],
-
-  // Сорта винограда (углубление)
-  "merlot": ["мерло"],
-  "мерло": ["merlot"],
-  "cabernet": ["каберне","cabernet sauvignon"],
-  "каберне": ["cabernet","cabernet sauvignon"],
-  "syrah": ["сира","шираз","syra"],
-  "сира": ["syrah","шираз"],
-  "tempranillo": ["темпранильо","темпранийо"],
-  "темпранильо": ["tempranillo"],
-  "grenache": ["гренаш","гарнача"],
-  "гренаш": ["grenache","гарнача"],
-  "sauvignon blanc": ["совиньон блан","совиньон-блан","совиньон","совблан"],
-  "совиньон блан": ["sauvignon blanc","совиньон-блан"],
-
-  // Классические коктейли
-  "campari": ["кампари","капари"],
-  "кампари": ["campari","капари"],
-  "aperol": ["апероль","эпероль"],
-  "апероль": ["aperol","эпероль"],
-  "martini": ["мартини"],
-  "мартини": ["martini"],
+  "йогурт": ["yogurt"],
+  "campari": ["кампари"],
+  "кампари": ["campari"],
+  "aperol": ["апероль"],
+  "апероль": ["aperol"],
+  "select": ["селект"],
+  "селект": ["select"],
   "vermouth": ["вермут"],
   "вермут": ["vermouth"],
-  "select": ["селект"],
-  "селект": ["select"]
+  "ceretto": ["черетто","серетто"],
+  "черетто": ["ceretto"],
+  "speri": ["спери"],
+  "спери": ["speri"],
+  "fontanafredda": ["фонтанафредда","фонтана"],
+  "фонтанафредда": ["fontanafredda"],
+  "siro": ["сиро"],
+  "pacenti": ["паченти","пасенти"],
+  "паченти": ["pacenti"],
+  "barbadillo": ["барбадильо","барбадило"],
+  "барбадильо": ["barbadillo"],
+  "oloroso": ["олоросо","олорозо"],
+  "олоросо": ["oloroso"],
+  "hennessy": ["хеннесси","хенесси","хеннеси"],
+  "хеннесси": ["hennessy","хенесси"],
+  "grande champagne": ["гранд шампань","гранде шампань","гран шампань"],
+  "гранд шампань": ["grande champagne"],
+  "ozeki": ["озэки","озеки"],
+  "озэки": ["ozeki","озеки"],
+  "anejo": ["аньехо","анехо"],
+  "аньехо": ["anejo"],
+  "reposado": ["репосадо","репозадо"],
+  "репосадо": ["reposado"],
+  "blanco": ["бланко"],
+  "бланко": ["blanco"],
+  "cordial": ["кордиал","кордьял"],
+  "кордиал": ["cordial"],
+  "syrup": ["сироп"],
+  "сироп": ["syrup"],
+  "sour": ["сауэр","соур"],
+  "сауэр": ["sour"],
+  "spritz": ["спритц"],
+  "спритц": ["spritz"],
+  "garnish": ["декор","украшение"],
+  "декор": ["garnish","украшение"],
+  "twist": ["твист","цедра"],
+  "твист": ["twist","цедра"],
+  "coupe": ["купе","купэ"],
+  "купе": ["coupe","купэ"],
+  "old fashioned": ["олд фешн","олд-фешн","олдфешн"],
+  "олд фешн": ["old fashioned","олдфешн"],
+  "single malt": ["сингл молт","односолодовый","односолод"],
+  "сингл молт": ["single malt","односолодовый"],
+  "double cask": ["дабл каск","двойн","двух бочк"],
+  "дабл каск": ["double cask","двойн"],
+  "smoke": ["дым","дымный"],
+  "дым": ["smoke","дымный"],
+  "iodine": ["йод","йодный"],
+  "йод": ["iodine"],
+  "peat": ["торф","торфяной"],
+  "торф": ["peat"],
+  "merlot": ["мерло"],
+  "мерло": ["merlot"],
+  "cabernet": ["каберне"],
+  "каберне": ["cabernet"],
+  "sauvignon": ["совиньон","совин"],
+  "совиньон": ["sauvignon","совин"],
+  "scacchi": ["скакки"],
+  "regina nera": ["реджина нера"],
+  "scacchiera": ["скакьера","скаккьера"]
 };
 
-// Разворачивает группу: для каждого слова добавляет его синонимы из словаря
 function expandGroupWithSynonyms(group){
   const result = new Set(group.map(w => w.toLowerCase()));
   for(const word of group){
@@ -2498,36 +2972,26 @@ function fmtDate(iso){
 }
 
 // ============================================================
-// STORAGE
-// ============================================================
-// ============================================================
-// LOCAL STORAGE (на устройстве, где открыт файл)
+// LOCAL STORAGE
 // ============================================================
 const STORE = (function(){
   const PFX = "nomo_att_v3_";
   return {
-    async get(key){
-      try { return localStorage.getItem(PFX + key); } catch(e) { return null; }
-    },
-    async set(key, value){
-      try { localStorage.setItem(PFX + key, value); return true; } catch(e) { return false; }
-    },
-    async delete(key){
-      try { localStorage.removeItem(PFX + key); return true; } catch(e) { return false; }
-    },
+    async get(key){ try{ return localStorage.getItem(PFX+key); }catch(e){ return null; } },
+    async set(key,value){ try{ localStorage.setItem(PFX+key,value); return true; }catch(e){ return false; } },
+    async delete(key){ try{ localStorage.removeItem(PFX+key); return true; }catch(e){ return false; } },
     async list(prefix){
-      try {
-        const out = [];
-        for (let i = 0; i < localStorage.length; i++){
-          const k = localStorage.key(i);
-          if (k && k.startsWith(PFX + prefix)) out.push(k.slice(PFX.length));
+      try{
+        const out=[];
+        for(let i=0;i<localStorage.length;i++){
+          const k=localStorage.key(i);
+          if(k && k.startsWith(PFX+prefix)) out.push(k.slice(PFX.length));
         }
         return out;
-      } catch(e) { return []; }
+      }catch(e){ return []; }
     }
   };
 })();
-
 
 const STORAGE = {
   async getMasterPin(){
@@ -2549,8 +3013,8 @@ const STORAGE = {
     try{const v=await STORE.get("users:"+pin);if(v) return JSON.parse(v);}catch(e){}
     return null;
   },
-  async addUser(name,pin,isTest){
-    const u={name:name||"",pin:pin,isTest:!!isTest,created:new Date().toISOString()};
+  async addUser(name,pin,isTest,role){
+    const u={name:name||"",pin:pin,isTest:!!isTest,role:role||"waiter",created:new Date().toISOString()};
     await STORE.set("users:"+pin,JSON.stringify(u));
     return u;
   },
@@ -2637,14 +3101,13 @@ function showViolationAlert(count){
 
 let shieldArmed = false;
 setTimeout(function(){ shieldArmed = true; }, 1500);
-
 let pauseStart = null;
 
 function recordViolation(durSec, type){
   if (!state.inTest) return;
   state.pauses = state.pauses || [];
   state.pauses.push({
-    leftAt: Date.now() - (durSec * 1000),
+    leftAt: Date.now() - (durSec*1000),
     returnedAt: Date.now(),
     durationSec: durSec,
     type: type || "leave"
@@ -2661,7 +3124,7 @@ document.addEventListener("visibilitychange",function(){
   } else {
     hideShield();
     if (state.inTest && pauseStart){
-      const durSec = Math.max(1, Math.round((Date.now() - pauseStart) / 1000));
+      const durSec = Math.max(1, Math.round((Date.now()-pauseStart)/1000));
       recordViolation(durSec, "leave");
       pauseStart = null;
     }
@@ -2676,8 +3139,8 @@ window.addEventListener("blur", function(){
 });
 window.addEventListener("focus", function(){
   if (!shieldArmed || !state.inTest) return;
-  if (_lastBlurTs && (Date.now() - _lastBlurTs) > 200 && !pauseStart){
-    const durSec = Math.max(1, Math.round((Date.now() - _lastBlurTs) / 1000));
+  if (_lastBlurTs && (Date.now()-_lastBlurTs) > 200 && !pauseStart){
+    const durSec = Math.max(1, Math.round((Date.now()-_lastBlurTs)/1000));
     recordViolation(durSec, "blur");
   }
   _lastBlurTs = 0;
@@ -2687,31 +3150,30 @@ window.addEventListener("beforeunload",function(){
   if (state.inTest){
     if (pauseStart){
       state.pauses = state.pauses || [];
-      state.pauses.push({leftAt: pauseStart, returnedAt: Date.now(), durationSec: Math.round((Date.now() - pauseStart) / 1000)});
+      state.pauses.push({leftAt:pauseStart,returnedAt:Date.now(),durationSec:Math.round((Date.now()-pauseStart)/1000)});
     }
-    try { saveProgressAsync(); } catch(_){}
+    try{ saveProgressAsync(); }catch(_){}
   }
 });
 
 document.addEventListener("contextmenu",function(e){e.preventDefault();});
-
 document.addEventListener("keydown",function(e){
   if(!shieldArmed) return;
   if(e.key==="PrintScreen"){
     showShield();setTimeout(hideShield,3000);
-    if (state.inTest) recordViolation(1, "printscreen");
+    if (state.inTest) recordViolation(1,"printscreen");
   }
   if((e.ctrlKey||e.metaKey) && (e.key==="p"||e.key==="P")){
     e.preventDefault();showShield();setTimeout(hideShield,2000);
-    if (state.inTest) recordViolation(1, "print");
+    if (state.inTest) recordViolation(1,"print");
   }
   if(e.key==="F12" || ((e.ctrlKey||e.metaKey) && e.shiftKey && (e.key==="I"||e.key==="i"||e.key==="J"||e.key==="j"))){
     e.preventDefault();showShield();setTimeout(hideShield,2000);
-    if (state.inTest) recordViolation(1, "devtools");
+    if (state.inTest) recordViolation(1,"devtools");
   }
   if((e.ctrlKey||e.metaKey) && e.shiftKey && (e.key==="S"||e.key==="s")){
     showShield();setTimeout(hideShield,2000);
-    if (state.inTest) recordViolation(1, "screenshot_combo");
+    if (state.inTest) recordViolation(1,"screenshot_combo");
   }
 });
 
@@ -2743,7 +3205,7 @@ const state={
   currentIdx:0, results:null,
   inTest:false, sessionId:null, startedAt:null,
   pauses:[], resumeCount:0,
-  checkMode:"answer"
+  checkMode:"answer", testKind:"main"
 };
 
 let _progressSaveTimer = null;
@@ -2751,13 +3213,12 @@ function saveProgressAsync(){
   if (_progressSaveTimer) clearTimeout(_progressSaveTimer);
   _progressSaveTimer = setTimeout(async function(){
     if (!state.user || !state.sessionId || !state.inTest) return;
-    const data = {
-      pin: state.user.pin, name: state.user.name, isTest: !!state.user.isTest,
-      sessionId: state.sessionId, startedAt: state.startedAt,
-      currentIdx: state.currentIdx, answers: state.answers, reviewResults: state.reviewResults,
-      questions: state.questions, pauses: state.pauses, resumeCount: state.resumeCount,
-      testKind: state.testKind || "main",
-      lastUpdate: Date.now()
+    const data={
+      pin:state.user.pin, name:state.user.name, isTest:!!state.user.isTest, role:state.user.role,
+      sessionId:state.sessionId, startedAt:state.startedAt,
+      currentIdx:state.currentIdx, answers:state.answers, reviewResults:state.reviewResults,
+      questions:state.questions, pauses:state.pauses, resumeCount:state.resumeCount,
+      testKind:state.testKind || "main", lastUpdate:Date.now()
     };
     await STORAGE.saveProgress(data);
   }, 200);
@@ -2765,30 +3226,40 @@ function saveProgressAsync(){
 
 async function saveProgressNow(){
   if (!state.user || !state.sessionId) return;
-  const data = {
-    pin: state.user.pin, name: state.user.name, isTest: !!state.user.isTest,
-    sessionId: state.sessionId, startedAt: state.startedAt,
-    currentIdx: state.currentIdx, answers: state.answers, reviewResults: state.reviewResults,
-    questions: state.questions, pauses: state.pauses, resumeCount: state.resumeCount,
-    testKind: state.testKind || "main",
-    lastUpdate: Date.now()
+  const data={
+    pin:state.user.pin, name:state.user.name, isTest:!!state.user.isTest, role:state.user.role,
+    sessionId:state.sessionId, startedAt:state.startedAt,
+    currentIdx:state.currentIdx, answers:state.answers, reviewResults:state.reviewResults,
+    questions:state.questions, pauses:state.pauses, resumeCount:state.resumeCount,
+    testKind:state.testKind || "main", lastUpdate:Date.now()
   };
   await STORAGE.saveProgress(data);
 }
 
 // ============================================================
-// LOGIN
+// LOGIN с РОЛЬЮ
 // ============================================================
+function setRoleTag(elementId, role){
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  if (!role || role === "waiter"){
+    el.innerHTML = ' <span class="role-tag">официант</span>';
+  } else if (role === "hostess"){
+    el.innerHTML = ' <span class="role-tag hostess">хостес</span>';
+  } else {
+    el.innerHTML = "";
+  }
+}
+
 document.getElementById("login-btn").addEventListener("click",async function(){
   const pin=document.getElementById("pin-input").value.trim();
   const err=document.getElementById("pin-error");
   err.textContent="";
-
-  if(!/^\d{4,6}$/.test(pin)){err.textContent="Код — 4–6 цифр.";return;}
+  if(!/^\d{4,6}$/.test(pin)){err.textContent="Код - 4-6 цифр.";return;}
 
   const masterPin=await STORAGE.getMasterPin();
   if(pin===masterPin){
-    state.user={name:"Менеджер",pin:"***",isAdmin:true};
+    state.user={name:"Менеджер",pin:"***",isAdmin:true,role:"admin"};
     state.isAdmin=true;
     setWatermark("");
     showStage("admin");
@@ -2799,14 +3270,14 @@ document.getElementById("login-btn").addEventListener("click",async function(){
   if (pin === TEST_PIN){
     let testUser = await STORAGE.getUserByPin(pin);
     if (!testUser || !testUser.isTest){
-      try {
-        await STORAGE.addUser("ТЕСТ-РЕЖИМ (менеджер)", pin, true);
+      try{
+        await STORAGE.addUser("ТЕСТ-РЕЖИМ (менеджер)", pin, true, "waiter");
         testUser = await STORAGE.getUserByPin(pin);
-      } catch(e) {
-        testUser = { name: "ТЕСТ-РЕЖИМ (менеджер)", pin: TEST_PIN, isTest: true };
+      }catch(e){
+        testUser = { name:"ТЕСТ-РЕЖИМ (менеджер)", pin:TEST_PIN, isTest:true, role:"waiter" };
       }
     }
-    state.user = testUser || { name: "ТЕСТ-РЕЖИМ (менеджер)", pin: TEST_PIN, isTest: true };
+    state.user = testUser || { name:"ТЕСТ-РЕЖИМ (менеджер)", pin:TEST_PIN, isTest:true, role:"waiter" };
     state.isAdmin = false;
     setWatermark(state.user.name);
     document.getElementById("home-name").textContent = state.user.name;
@@ -2814,6 +3285,7 @@ document.getElementById("login-btn").addEventListener("click",async function(){
     document.getElementById("result-name").textContent = state.user.name;
     document.getElementById("blocked-name").textContent = state.user.name;
     document.getElementById("resume-name").textContent = state.user.name;
+    document.getElementById("select-name").textContent = state.user.name;
     const progress = await STORAGE.getProgress(state.user.pin);
     if (progress && progress.questions && progress.questions.length){
       showResumeStage(progress);
@@ -2825,6 +3297,7 @@ document.getElementById("login-btn").addEventListener("click",async function(){
 
   const user=await STORAGE.getUserByPin(pin);
   if(!user){err.textContent="Код не найден. Обратись к менеджеру.";return;}
+  if(!user.role) user.role = "waiter"; // обратная совместимость
   state.user=user;
   state.isAdmin=false;
 
@@ -2834,6 +3307,9 @@ document.getElementById("login-btn").addEventListener("click",async function(){
   document.getElementById("result-name").textContent=user.name || "—";
   document.getElementById("blocked-name").textContent=user.name || "—";
   document.getElementById("resume-name").textContent=user.name || "—";
+  document.getElementById("select-name").textContent=user.name || "—";
+  setRoleTag("home-role-tag", user.role);
+  setRoleTag("select-role-tag", user.role);
 
   const progress = await STORAGE.getProgress(user.pin);
   if (progress && progress.questions && progress.questions.length){
@@ -2841,10 +3317,7 @@ document.getElementById("login-btn").addEventListener("click",async function(){
     return;
   }
 
-  if (user.isTest){
-    await goSelect();
-    return;
-  }
+  if (user.isTest){ await goSelect(); return; }
 
   if(!user.name || user.name.trim()===""){
     document.getElementById("enter-name-input").value="";
@@ -2863,12 +3336,16 @@ document.getElementById("save-name-btn").addEventListener("click",async function
   err.textContent="";
   if(name.length<3){ err.textContent="Введи имя и фамилию полностью."; return; }
   if(!/[А-Яа-яЁёA-Za-z]/.test(name)){ err.textContent="Имя должно содержать буквы."; return; }
-  await STORAGE.addUser(name, state.user.pin);
+  // сохраняем имя БЕЗ изменения роли
+  await STORAGE.updateUser(state.user.pin, {name: name});
   state.user.name = name;
   setWatermark(name);
   document.getElementById("home-name").textContent=name;
   document.getElementById("test-name").textContent=name;
   document.getElementById("result-name").textContent=name;
+  document.getElementById("select-name").textContent=name;
+  setRoleTag("home-role-tag", state.user.role);
+  setRoleTag("select-role-tag", state.user.role);
   await goSelect();
 });
 
@@ -2887,8 +3364,8 @@ function doLogout(){
   document.getElementById("pin-error").textContent="";
   showStage("login");
 }
-["logout-1","logout-2","logout-3","logout-admin","logout-blocked","logout-resume","logout-select"].forEach(function(id){
-  const el = document.getElementById(id);
+["logout-1","logout-2","logout-3","logout-admin","logout-blocked","logout-resume","logout-select","logout-materials"].forEach(function(id){
+  const el=document.getElementById(id);
   if(el) el.addEventListener("click",doLogout);
 });
 
@@ -2896,8 +3373,8 @@ function doLogout(){
 // STAGE
 // ============================================================
 function showStage(stage){
-  ["loading","setup","share","login","name","select","home","test","result","admin","blocked","resume"].forEach(function(s){
-    const el = document.getElementById("stage-"+s);
+  ["loading","setup","share","login","name","select","materials","home","test","result","admin","blocked","resume"].forEach(function(s){
+    const el=document.getElementById("stage-"+s);
     if(el) el.classList.toggle("hidden", s!==stage);
   });
   window.scrollTo(0,0);
@@ -2905,8 +3382,8 @@ function showStage(stage){
 
 function fmtMinSec(totalSec){
   if (!totalSec) return "—";
-  const m = Math.floor(totalSec / 60);
-  const s = totalSec % 60;
+  const m = Math.floor(totalSec/60);
+  const s = totalSec%60;
   if (m === 0) return s + " сек";
   if (s === 0) return m + " мин";
   return m + " мин " + s + " сек";
@@ -2914,33 +3391,28 @@ function fmtMinSec(totalSec){
 
 function showResumeStage(progress){
   state.pendingProgress = progress;
-  document.getElementById("resume-progress").textContent = progress.currentIdx + "/" + progress.questions.length;
-  document.getElementById("resume-next-num").textContent = (progress.currentIdx + 1);
-  const startedDate = new Date(progress.startedAt);
-  document.getElementById("resume-started").textContent = startedDate.toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"});
-  const pauses = progress.pauses || [];
-  document.getElementById("resume-pauses").textContent = pauses.length;
-  const totalSec = pauses.reduce(function(s,p){return s + (p.durationSec||0);}, 0);
-  document.getElementById("resume-pause-time").textContent = fmtMinSec(totalSec);
+  document.getElementById("resume-progress").textContent = progress.currentIdx+"/"+progress.questions.length;
+  document.getElementById("resume-next-num").textContent = (progress.currentIdx+1);
+  const startedDate=new Date(progress.startedAt);
+  document.getElementById("resume-started").textContent=startedDate.toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"});
+  const pauses=progress.pauses||[];
+  document.getElementById("resume-pauses").textContent=pauses.length;
+  const totalSec=pauses.reduce(function(s,p){return s+(p.durationSec||0);},0);
+  document.getElementById("resume-pause-time").textContent=fmtMinSec(totalSec);
   showStage("resume");
 }
 
 document.getElementById("resume-continue-btn").addEventListener("click", async function(){
   const p = state.pendingProgress;
   if (!p) return;
-  state.sessionId = p.sessionId;
-  state.startedAt = p.startedAt;
-  state.questions = p.questions;
-  state.answers = p.answers || {};
-  state.reviewResults = p.reviewResults || {};
-  state.currentIdx = p.currentIdx;
-  state.pauses = p.pauses || [];
-  state.resumeCount = (p.resumeCount || 0) + 1;
-  state.inTest = true;
-  state.testKind = p.testKind || "main";
+  state.sessionId=p.sessionId; state.startedAt=p.startedAt;
+  state.questions=p.questions; state.answers=p.answers||{}; state.reviewResults=p.reviewResults||{};
+  state.currentIdx=p.currentIdx; state.pauses=p.pauses||[];
+  state.resumeCount=(p.resumeCount||0)+1;
+  state.inTest=true; state.testKind=p.testKind||"main";
   state.pauses.push({
-    leftAt: p.lastUpdate || p.startedAt, returnedAt: Date.now(),
-    durationSec: Math.round((Date.now() - (p.lastUpdate || p.startedAt)) / 1000), type: "resume"
+    leftAt:p.lastUpdate||p.startedAt, returnedAt:Date.now(),
+    durationSec:Math.round((Date.now()-(p.lastUpdate||p.startedAt))/1000), type:"resume"
   });
   await saveProgressNow();
   showStage("test");
@@ -2950,7 +3422,7 @@ document.getElementById("resume-continue-btn").addEventListener("click", async f
 document.getElementById("resume-restart-btn").addEventListener("click", async function(){
   if (!confirm("Сбросить незавершённую попытку и начать тест заново?")) return;
   await STORAGE.deleteProgress(state.user.pin);
-  state.pendingProgress = null;
+  state.pendingProgress=null;
   if (state.user.isTest){await goSelect(); return;}
   if (!state.user.name || state.user.name.trim()===""){
     document.getElementById("enter-name-input").value="";
@@ -2962,16 +3434,27 @@ document.getElementById("resume-restart-btn").addEventListener("click", async fu
 });
 
 // ============================================================
-// HOME
+// SELECT — показ карточек по роли
 // ============================================================
-function getCurrentTestKind(){
-  return state.testKind || "main";
-}
+function getCurrentTestKind(){ return state.testKind||"main"; }
 
 async function goSelect(){
-  // экран выбора теста — обновляем статистику по обоим
   const isTest = !!state.user.isTest;
   document.getElementById("select-name").textContent = state.user.name || "—";
+
+  // показываем карточки только нужной роли
+  const userRole = state.user.role || "waiter";
+  document.querySelectorAll('.test-card[data-kind]').forEach(function(card){
+    const cardRole = card.getAttribute('data-role');
+    if (isTest){
+      // тест-режим (0101) видит ВСЕ
+      card.classList.remove('hidden');
+    } else {
+      card.classList.toggle('hidden', cardRole !== userRole);
+    }
+  });
+
+  // обновляем статистику
   const all = await STORAGE.getUserAttempts(state.user.pin);
   function statLine(kind){
     const arr = all.filter(function(a){ return (a.testKind||"main")===kind; });
@@ -2979,66 +3462,102 @@ async function goSelect(){
     const best = Math.max.apply(null, arr.map(function(a){return a.score;}));
     return "попыток: " + arr.length + " · лучший: " + best + "%";
   }
-  document.getElementById("tc-stats-main").textContent = statLine("main");
-  document.getElementById("tc-stats-chess").textContent = statLine("chess");
+  const elM = document.getElementById("tc-stats-main");        if (elM) elM.textContent = statLine("main");
+  const elC = document.getElementById("tc-stats-chess");       if (elC) elC.textContent = statLine("chess");
+  const elR = document.getElementById("tc-stats-hostess_reg"); if (elR) elR.textContent = statLine("hostess_reg");
+  const elD = document.getElementById("tc-stats-hostess_dep"); if (elD) elD.textContent = statLine("hostess_dep");
+
+  // заголовок зависит от роли
+  if (userRole === "hostess" && !isTest){
+    document.getElementById("select-title").textContent = "АТТЕСТАЦИЯ ХОСТЕС";
+    document.getElementById("select-subtitle").textContent = "регламент или депозитная система";
+  } else {
+    document.getElementById("select-title").textContent = "ВЫБЕРИ АТТЕСТАЦИЮ";
+    document.getElementById("select-subtitle").textContent = "какую партию открываем";
+  }
+
   showStage("select");
 }
 
 async function goHome(kind){
   state.testKind = kind || "main";
   const cfg = TEST_KINDS[state.testKind];
-  // обновляем тексты главного экрана под выбранный тест
+  const totalQ = cfg.totalQ || (cfg.positions.length * cfg.qPerPosition);
+
   if (state.testKind === "chess"){
     document.getElementById("home-title").textContent = "ШАХ И МАТ";
     document.getElementById("home-subtitle").textContent = "Игра чёрных королев · авторская партия";
     document.getElementById("home-desc").innerHTML =
-      'Аттестация состоит из <span class="cream">24 вопросов</span> &mdash; по 8 случайных вопросов на каждую из 3 позиций (Чёрная Королева, Гамбит, Шах и Мат).';
+      'Аттестация состоит из <span class="cream">'+totalQ+' вопросов</span> &mdash; по 8 случайных вопросов на каждую из 3 позиций.';
+  } else if (state.testKind === "hostess_reg"){
+    document.getElementById("home-title").textContent = "РЕГЛАМЕНТ ХОСТЕС";
+    document.getElementById("home-subtitle").textContent = "звонки, встреча, иерархия, дресс-код";
+    document.getElementById("home-desc").innerHTML =
+      'Аттестация состоит из <span class="cream">20 вопросов</span> &mdash; минимум по одному из каждой из 16 тематических позиций, остальные случайные из общего банка (77 вопросов).';
+  } else if (state.testKind === "hostess_dep"){
+    document.getElementById("home-title").textContent = "ДЕПОЗИТНАЯ СИСТЕМА";
+    document.getElementById("home-subtitle").textContent = "столы, депозиты, банкеты";
+    document.getElementById("home-desc").innerHTML =
+      'Аттестация состоит из <span class="cream">20 вопросов</span> &mdash; минимум по 2 на каждую из 8 тематических позиций, остальные случайные из общего банка (51 вопрос).';
   } else {
     document.getElementById("home-title").textContent = "ПАРТИЯ ПОЗИЦИЙ";
     document.getElementById("home-subtitle").textContent = "Аттестация по 36 ключевым позициям бара";
     document.getElementById("home-desc").innerHTML =
-      'Аттестация состоит из <span class="cream">108 вопросов</span> &mdash; по 3 случайных вопроса на каждую из 36 позиций.';
+      'Аттестация состоит из <span class="cream">'+totalQ+' вопросов</span> &mdash; по 3 случайных вопроса на каждую из 36 позиций.';
   }
   await renderHome();
   showStage("home");
 }
 
 async function renderHome(){
-  const isTest = !!state.user.isTest;
-  const kind = getCurrentTestKind();
+  const isTest=!!state.user.isTest;
+  const kind=getCurrentTestKind();
   document.getElementById("test-banner-home").classList.toggle("hidden", !isTest);
-  document.getElementById("deadline-info").style.display = isTest ? "none" : "";
+  document.getElementById("deadline-info").style.display=isTest?"none":"";
   if (!isTest) renderDeadlineInfo();
 
   const allAttempts=await STORAGE.getUserAttempts(state.user.pin);
-  const attempts = allAttempts.filter(function(a){ return (a.testKind||"main")===kind; });
+  const attempts=allAttempts.filter(function(a){return (a.testKind||"main")===kind;});
   const myStats=document.getElementById("my-stats");
   if(attempts.length===0){
     myStats.classList.add("hidden");
   } else {
     myStats.classList.remove("hidden");
     document.getElementById("stat-attempts").textContent=attempts.length;
-    const best=Math.max.apply(null, attempts.map(function(a){return a.score;}));
+    const best=Math.max.apply(null,attempts.map(function(a){return a.score;}));
     document.getElementById("stat-best").textContent=best+"%";
     document.getElementById("stat-last").textContent=attempts[0].score+"%";
   }
 
-  const startBtn = document.getElementById("start-btn");
+  const startBtn=document.getElementById("start-btn");
   if (!isTest && isTestBlocked()){
-    startBtn.disabled = true;
-    startBtn.textContent = "тест закрыт · дедлайн пропущен";
+    startBtn.disabled=true;
+    startBtn.textContent="тест закрыт · дедлайн пропущен";
   } else {
-    startBtn.disabled = false;
-    startBtn.textContent = isTest ? "запустить проверочный тест ▸" : "открыть партию ▸";
+    startBtn.disabled=false;
+    startBtn.textContent=isTest ? "запустить проверочный тест ▸" : "открыть партию ▸";
   }
 }
 
-// клики на карточки выбора теста
 document.querySelectorAll('[data-pick]').forEach(function(btn){
   btn.addEventListener('click', async function(){
     const kind = btn.getAttribute('data-pick');
+    if (kind === "hostess_materials"){
+      goMaterials();
+      return;
+    }
     await goHome(kind);
   });
+});
+
+function goMaterials(){
+  document.getElementById("materials-name").textContent = state.user.name || "—";
+  setRoleTag("materials-role-tag", state.user.role || "hostess");
+  showStage("materials");
+}
+
+document.getElementById("materials-back-btn").addEventListener("click", async function(){
+  await goSelect();
 });
 document.getElementById("back-to-select-btn").addEventListener("click", async function(){
   await goSelect();
@@ -3055,22 +3574,39 @@ document.getElementById("start-btn").addEventListener("click", async function(){
   }
   const kind = getCurrentTestKind();
   const cfg = TEST_KINDS[kind];
-  const arr=[];
+  let arr=[];
   for(const key of cfg.positions){
     const section=BANKS[key];
-    const picked=pickRandom(section.bank,cfg.qPerPosition);
+    const picked=pickRandom(section.bank, cfg.qPerPosition);
     picked.forEach(function(q,idx){ arr.push({sectionKey:key,sectionName:section.name,q:q,sectionIdx:idx+1}); });
   }
+  // Если задан totalQ и нужно больше — добираем случайных вопросов из оставшихся
+  if (cfg.totalQ && arr.length < cfg.totalQ){
+    const need = cfg.totalQ - arr.length;
+    const usedQs = new Set(arr.map(function(a){return a.q;}));
+    const remaining = [];
+    for(const key of cfg.positions){
+      const section = BANKS[key];
+      section.bank.forEach(function(q){
+        if (!usedQs.has(q)) remaining.push({sectionKey:key, sectionName:section.name, q:q, sectionIdx:99});
+      });
+    }
+    const extra = pickRandom(remaining, Math.min(need, remaining.length));
+    arr = arr.concat(extra);
+    // перенумеровать sectionIdx внутри каждой позиции
+    const counters = {};
+    arr.forEach(function(a){
+      counters[a.sectionKey] = (counters[a.sectionKey]||0) + 1;
+      a.sectionIdx = counters[a.sectionKey];
+    });
+  }
   state.questions=arr;
-  state.answers={};
-  state.reviewResults={};
+  state.answers={}; state.reviewResults={};
   state.currentIdx=0;
-  state.sessionId = "s_" + Date.now() + "_" + Math.random().toString(36).slice(2,8);
-  state.startedAt = Date.now();
-  state.pauses = [];
-  state.resumeCount = 0;
-  state.inTest = true;
-  state.testKind = kind;
+  state.sessionId="s_"+Date.now()+"_"+Math.random().toString(36).slice(2,8);
+  state.startedAt=Date.now();
+  state.pauses=[]; state.resumeCount=0;
+  state.inTest=true; state.testKind=kind;
   await saveProgressNow();
   showStage("test");
   renderQuestion();
@@ -3080,72 +3616,67 @@ function renderQuestion(){
   const idx=state.currentIdx;
   const item=state.questions[idx];
   const total=state.questions.length;
-  const positions = (TEST_KINDS[state.testKind || "main"] || TEST_KINDS.main).positions;
-  document.getElementById("pbar").style.width = ((idx/total)*100) + "%";
+  const positions=(TEST_KINDS[state.testKind||"main"]||TEST_KINDS.main).positions;
+  document.getElementById("pbar").style.width=((idx/total)*100)+"%";
   const positionsBefore=positions.indexOf(item.sectionKey);
-  document.getElementById("pmeta-section").textContent = "позиция " + (positionsBefore+1) + " / " + positions.length + " · " + item.sectionName;
-  document.getElementById("pmeta-q").textContent = "вопрос " + (idx+1) + " из " + total;
+  document.getElementById("pmeta-section").textContent="позиция "+(positionsBefore+1)+" / "+positions.length+" · "+item.sectionName;
+  document.getElementById("pmeta-q").textContent="вопрос "+(idx+1)+" из "+total;
   document.getElementById("q-section-name").textContent=item.sectionName;
-  document.getElementById("q-num").textContent="Вопрос " + item.sectionIdx + " в позиции";
+  document.getElementById("q-num").textContent="Вопрос "+item.sectionIdx+" в позиции";
   document.getElementById("q-text").textContent=item.q.q;
   document.getElementById("q-hint").textContent=item.q.hint||"";
 
   const ta=document.getElementById("q-input");
   ta.value=state.answers[idx]||"";
-  ta.disabled = false;
+  ta.disabled=false;
   ta.focus();
 
   document.getElementById("q-review").classList.add("hidden");
-  state.checkMode = "answer";
+  state.checkMode="answer";
   document.getElementById("prev-btn").style.visibility="hidden";
   document.getElementById("next-btn").textContent="проверить ▸";
-  document.getElementById("next-btn").disabled = false;
+  document.getElementById("next-btn").disabled=false;
 }
 
 function showReview(){
   const idx=state.currentIdx;
   const item=state.questions[idx];
-  const ans = state.answers[idx] || "";
-  const r = checkAnswer(item.q, ans);
-  state.reviewResults = state.reviewResults || {};
-  state.reviewResults[idx] = r;
+  const ans=state.answers[idx]||"";
+  const r=checkAnswer(item.q,ans);
+  state.reviewResults=state.reviewResults||{};
+  state.reviewResults[idx]=r;
 
-  const verdictBox = document.getElementById("q-verdict");
-  const icon = document.getElementById("q-verdict-icon");
-  const txt = document.getElementById("q-verdict-text");
+  const verdictBox=document.getElementById("q-verdict");
+  const icon=document.getElementById("q-verdict-icon");
+  const txt=document.getElementById("q-verdict-text");
   if (r.passed){
-    verdictBox.style.borderColor = "var(--green)";
-    verdictBox.style.background = "rgba(122,164,124,0.08)";
-    icon.style.color = "var(--green)";
-    icon.textContent = "✓";
-    txt.style.color = "var(--green)";
-    txt.textContent = "Зачёт по этому вопросу";
+    verdictBox.style.borderColor="var(--green)";
+    verdictBox.style.background="rgba(122,164,124,0.08)";
+    icon.style.color="var(--green)"; icon.textContent="✓";
+    txt.style.color="var(--green)"; txt.textContent="Зачёт по этому вопросу";
   } else {
-    verdictBox.style.borderColor = "var(--red)";
-    verdictBox.style.background = "rgba(200,100,90,0.08)";
-    icon.style.color = "var(--red)";
-    icon.textContent = "✕";
-    txt.style.color = "var(--red)";
-    txt.textContent = "Не зачтено";
+    verdictBox.style.borderColor="var(--red)";
+    verdictBox.style.background="rgba(200,100,90,0.08)";
+    icon.style.color="var(--red)"; icon.textContent="✕";
+    txt.style.color="var(--red)"; txt.textContent="Не зачтено";
   }
-  document.getElementById("q-correct").textContent = item.q.answer || "—";
+  document.getElementById("q-correct").textContent=item.q.answer||"—";
 
-  const missedBlock = document.getElementById("q-missed-block");
+  const missedBlock=document.getElementById("q-missed-block");
   if (!r.passed && r.missed && r.missed.length){
-    const examples = r.missed.slice(0,5).map(function(g){return Array.isArray(g)?g[0]:g;}).join(" · ");
-    document.getElementById("q-missed").textContent = examples || "—";
+    const examples=r.missed.slice(0,5).map(function(g){return Array.isArray(g)?g[0]:g;}).join(" · ");
+    document.getElementById("q-missed").textContent=examples||"—";
     missedBlock.classList.remove("hidden");
   } else {
     missedBlock.classList.add("hidden");
   }
 
   document.getElementById("q-review").classList.remove("hidden");
-  document.getElementById("q-input").disabled = true;
-  state.checkMode = "review";
+  document.getElementById("q-input").disabled=true;
+  state.checkMode="review";
 
-  const total = state.questions.length;
-  document.getElementById("next-btn").textContent =
-    idx === total-1 ? "сыграть партию ▸" : "следующий ход ▸";
+  const total=state.questions.length;
+  document.getElementById("next-btn").textContent = idx===total-1 ? "сыграть партию ▸" : "следующий ход ▸";
 
   setTimeout(function(){
     document.getElementById("q-review").scrollIntoView({behavior:"smooth", block:"center"});
@@ -3154,12 +3685,12 @@ function showReview(){
 
 document.getElementById("next-btn").addEventListener("click",function(){
   if (state.checkMode === "answer"){
-    state.answers[state.currentIdx] = document.getElementById("q-input").value;
+    state.answers[state.currentIdx]=document.getElementById("q-input").value;
     saveProgressAsync();
     showReview();
     return;
   }
-  if (state.currentIdx < state.questions.length - 1){
+  if (state.currentIdx < state.questions.length-1){
     state.currentIdx++;
     saveProgressAsync();
     renderQuestion();
@@ -3175,13 +3706,13 @@ document.getElementById("prev-btn").addEventListener("click",function(){
 });
 
 async function finishTest(){
-  state.inTest = false;
-  const kind = state.testKind || "main";
-  const cfg = TEST_KINDS[kind];
-  const positions = cfg.positions;
+  state.inTest=false;
+  const kind=state.testKind||"main";
+  const cfg=TEST_KINDS[kind];
+  const positions=cfg.positions;
   const reviews=state.questions.map(function(item,i){
     const ans=state.answers[i]||"";
-    const r = (state.reviewResults && state.reviewResults[i]) || checkAnswer(item.q,ans);
+    const r=(state.reviewResults && state.reviewResults[i]) || checkAnswer(item.q,ans);
     return Object.assign({}, item, {answer:ans, review:r});
   });
   const byPosition={};
@@ -3192,54 +3723,56 @@ async function finishTest(){
   const overallScore=Math.round((totalPassed/totalQ)*100);
   const passed=overallScore>=PASS_THRESHOLD;
 
-  const pauses = state.pauses || [];
-  const pauseCount = pauses.length;
-  const totalPauseSec = pauses.reduce(function(s,p){return s+(p.durationSec||0);},0);
-  const durationSec = state.startedAt ? Math.round((Date.now() - state.startedAt) / 1000) : 0;
+  const pauses=state.pauses||[];
+  const pauseCount=pauses.length;
+  const totalPauseSec=pauses.reduce(function(s,p){return s+(p.durationSec||0);},0);
+  const durationSec=state.startedAt ? Math.round((Date.now()-state.startedAt)/1000) : 0;
 
-  state.results={reviews:reviews,byPosition:byPosition,totalQ:totalQ,totalPassed:totalPassed,overallScore:overallScore,passed:passed,
-    pauseCount:pauseCount, totalPauseSec:totalPauseSec, resumeCount: state.resumeCount, durationSec:durationSec, testKind: kind};
+  state.results={reviews,byPosition,totalQ,totalPassed,overallScore,passed,
+    pauseCount, totalPauseSec, resumeCount:state.resumeCount, durationSec, testKind:kind};
 
   try{
     await STORAGE.addAttempt({
-      name:state.user.name, pin:state.user.pin, score:overallScore, passed:passed,
-      isTest: !!state.user.isTest,
-      testKind: kind,
-      testKindLabel: cfg.label,
+      name:state.user.name, pin:state.user.pin, score:overallScore, passed,
+      isTest:!!state.user.isTest,
+      role: state.user.role || "waiter",
+      testKind:kind,
+      testKindLabel:cfg.label,
       byPosition:Object.fromEntries(Object.entries(byPosition).map(function(e){return [e[0], e[1].passed+"/"+e[1].total];})),
-      pauseCount:pauseCount, totalPauseSec:totalPauseSec, resumeCount: state.resumeCount, durationSec:durationSec,
-      pauseDetails: pauses, sessionId: state.sessionId,
+      pauseCount, totalPauseSec, resumeCount:state.resumeCount, durationSec,
+      pauseDetails:pauses, sessionId:state.sessionId,
       date:new Date().toISOString()
     });
   }catch(e){console.warn("save failed",e);}
 
   try{ await STORAGE.deleteProgress(state.user.pin); }catch(_){}
 
-  // Уведомление в Telegram (не блокируем UI — отправляем фоном)
+  // Telegram уведомление (фоном)
   try{
-    const detailedAttempt = {
-      name: state.user.name, pin: state.user.pin,
-      score: overallScore, passed: passed,
-      isTest: !!state.user.isTest,
-      testKind: kind,
-      testKindLabel: cfg.label,
-      testKindFull: cfg.name,
-      totalQuestions: totalQ, correctAnswers: totalPassed,
-      violations: pauseCount,
-      violationLog: pauses.map(function(p){
-        return { at: new Date(p.leftAt||Date.now()).toISOString(), reason: "tab-hidden" };
+    const detailedAttempt={
+      name:state.user.name, pin:state.user.pin,
+      score:overallScore, passed,
+      isTest:!!state.user.isTest,
+      role: state.user.role || "waiter",
+      testKind:kind,
+      testKindLabel:cfg.label,
+      testKindFull:cfg.name,
+      totalQuestions:totalQ, correctAnswers:totalPassed,
+      violations:pauseCount,
+      violationLog:pauses.map(function(p){
+        return { at:new Date(p.leftAt||Date.now()).toISOString(), reason:p.type||"tab-hidden" };
       }),
-      byPosition: Object.fromEntries(Object.entries(byPosition).map(function(e){
-        return [e[0], { name: e[1].name, ok: e[1].passed, total: e[1].total }];
+      byPosition:Object.fromEntries(Object.entries(byPosition).map(function(e){
+        return [e[0], { name:e[1].name, ok:e[1].passed, total:e[1].total }];
       })),
-      questions: state.questions.map(function(q){
-        return { name: q.name||BANKS[q.sectionKey].name, q: q.q, answer: q.answer };
+      questions:state.questions.map(function(q){
+        return { name:q.sectionName||BANKS[q.sectionKey].name, q:q.q.q, answer:q.q.answer };
       }),
-      answers: Object.fromEntries(reviews.map(function(r,i){
-        return [i, { text: r.answer||"", ok: r.review.passed, missed: r.review.missed||[] }];
+      answers:Object.fromEntries(reviews.map(function(r,i){
+        return [i, { text:r.answer||"", ok:r.review.passed, missed:r.review.missed||[] }];
       })),
-      startedAt: state.startedAt ? new Date(state.startedAt).toISOString() : null,
-      finishedAt: new Date().toISOString()
+      startedAt:state.startedAt ? new Date(state.startedAt).toISOString() : null,
+      finishedAt:new Date().toISOString()
     };
     if(typeof notifyAttemptComplete === "function"){
       notifyAttemptComplete(detailedAttempt);
@@ -3251,11 +3784,11 @@ async function finishTest(){
 
 async function renderResult(){
   showStage("result");
-  const overallScore = state.results.overallScore;
-  const passed = state.results.passed;
-  const byPosition = state.results.byPosition;
-  const totalQ = state.results.totalQ;
-  const totalPassed = state.results.totalPassed;
+  const overallScore=state.results.overallScore;
+  const passed=state.results.passed;
+  const byPosition=state.results.byPosition;
+  const totalQ=state.results.totalQ;
+  const totalPassed=state.results.totalPassed;
 
   const scoreEl=document.getElementById("score-big");
   scoreEl.textContent=overallScore+"%";
@@ -3264,11 +3797,11 @@ async function renderResult(){
   if(passed){
     v.textContent=overallScore>=95?"Партия сыграна безупречно":overallScore>=85?"Партия выиграна":"Зачёт принят";
   } else { v.textContent="Шах. Партия не сыграна."; }
-  document.getElementById("verdict-sub").textContent = totalPassed + " из " + totalQ + " вопросов закрыты · порог " + PASS_THRESHOLD + "%";
+  document.getElementById("verdict-sub").textContent=totalPassed+" из "+totalQ+" вопросов закрыты · порог "+PASS_THRESHOLD+"%";
 
   const br=document.getElementById("breakdown");
   br.innerHTML="";
-  const resultPositions = (TEST_KINDS[state.results.testKind || "main"] || TEST_KINDS.main).positions;
+  const resultPositions=(TEST_KINDS[state.results.testKind||"main"]||TEST_KINDS.main).positions;
   for(const k of resultPositions){
     const s=byPosition[k];
     if(!s) continue;
@@ -3282,7 +3815,7 @@ async function renderResult(){
 
   const attempts=await STORAGE.getUserAttempts(state.user.pin);
   document.getElementById("r-attempt").textContent=attempts.length;
-  const best=Math.max.apply(null, attempts.map(function(a){return a.score;}));
+  const best=Math.max.apply(null,attempts.map(function(a){return a.score;}));
   document.getElementById("r-best").textContent=best+"%";
   const passedCount=attempts.filter(function(a){return a.passed;}).length;
   document.getElementById("r-passed").textContent=passedCount;
@@ -3337,24 +3870,24 @@ async function renderAdmin(){
 }
 
 document.getElementById("test-telegram-btn").addEventListener("click", async function(){
-  const result = document.getElementById("test-telegram-result");
-  this.disabled = true;
-  result.style.color = "var(--cream-2)";
-  result.textContent = "отправляем...";
+  const result=document.getElementById("test-telegram-result");
+  this.disabled=true;
+  result.style.color="var(--cream-2)";
+  result.textContent="отправляем...";
   try{
-    const ok = await sendTelegram("✅ <b>NOMO Аттестация</b>\n\nТестовое сообщение из админки. Уведомления настроены и работают.\n\n<i>" + new Date().toLocaleString("ru-RU") + "</i>");
+    const ok=await sendTelegram("✅ <b>NOMO Аттестация</b>\n\nТестовое сообщение из админки. Уведомления настроены и работают.\n\n<i>"+new Date().toLocaleString("ru-RU")+"</i>");
     if(ok){
-      result.style.color = "var(--green)";
-      result.textContent = "✓ Сообщение доставлено в Telegram";
+      result.style.color="var(--green)";
+      result.textContent="✓ Сообщение доставлено в Telegram";
     } else {
-      result.style.color = "var(--red)";
-      result.textContent = "Не получилось. Зайди в @nomo_attestaciya_bot и нажми Start.";
+      result.style.color="var(--red)";
+      result.textContent="Не получилось. Зайди в @nomo_attestaciya_bot и нажми Start.";
     }
   }catch(e){
-    result.style.color = "var(--red)";
-    result.textContent = "Ошибка: " + e.message;
+    result.style.color="var(--red)";
+    result.textContent="Ошибка: "+e.message;
   }
-  this.disabled = false;
+  this.disabled=false;
 });
 
 document.querySelectorAll(".admin-tab[data-atab]").forEach(function(t){
@@ -3375,21 +3908,60 @@ async function renderUsersList(){
     el.innerHTML='<div class="muted center" style="padding:14px 0;font-style:italic">Сотрудников ещё нет.</div>';
     return;
   }
-  users.sort(function(a,b){
-    const aHas = (a.name && a.name.trim()) ? 1 : 0;
-    const bHas = (b.name && b.name.trim()) ? 1 : 0;
-    if(aHas !== bHas) return bHas - aHas;
+
+  // Разделяем на две группы по роли
+  const waiters=[];
+  const hostesses=[];
+  for(const u of users){
+    const role = u.role || "waiter";
+    if (role === "hostess") hostesses.push(u);
+    else waiters.push(u);
+  }
+  const sortFn = function(a,b){
+    const aHas=(a.name && a.name.trim())?1:0;
+    const bHas=(b.name && b.name.trim())?1:0;
+    if(aHas !== bHas) return bHas-aHas;
     return (a.name||"").localeCompare(b.name||"","ru");
-  });
-  el.innerHTML=users.map(function(u){
-    const nameDisplay = (u.name && u.name.trim()) ? escapeHtml(u.name) : '<span style="color:var(--ink-dim);font-style:italic">— ещё не вошёл —</span>';
-    const tag = u.isTest ? '<span class="test-tag">тест</span>' : '';
+  };
+  waiters.sort(sortFn);
+  hostesses.sort(sortFn);
+
+  function rowHtml(u){
+    const nameDisplay=(u.name && u.name.trim()) ? escapeHtml(u.name) : '<span style="color:var(--ink-dim);font-style:italic">— ещё не вошёл —</span>';
+    const tag=u.isTest ? '<span class="test-tag">тест</span>' : '';
+    const role=u.role||"waiter";
+    const roleLabel=role==="hostess" ? "хостес" : "офиц.";
     return '<div class="user-row">'
       + '<div class="user-name">'+nameDisplay+tag+'</div>'
+      + '<div class="user-role '+role+'">'+roleLabel+'</div>'
       + '<div class="user-pin">'+escapeHtml(u.pin)+'</div>'
       + '<div class="user-act"><button class="btn danger" data-del-pin="'+escapeHtml(u.pin)+'">удалить</button></div>'
       + '</div>';
-  }).join("");
+  }
+
+  let html = '';
+  // Секция Официанты
+  html += '<div style="margin-bottom:18px">';
+  html += '<h4 class="qsection" style="color:var(--gold-br);margin-bottom:10px;border-bottom:1px solid var(--gold-ln);padding-bottom:6px">';
+  html += '🍷 Официанты &middot; '+waiters.length+'</h4>';
+  if (waiters.length===0){
+    html += '<div class="muted center" style="padding:10px 0;font-style:italic;font-size:12px">— нет официантов —</div>';
+  } else {
+    html += waiters.map(rowHtml).join("");
+  }
+  html += '</div>';
+  // Секция Хостес
+  html += '<div style="margin-top:24px">';
+  html += '<h4 class="qsection" style="color:var(--rose);margin-bottom:10px;border-bottom:1px solid var(--rose);padding-bottom:6px">';
+  html += '🌹 Хостес &middot; '+hostesses.length+'</h4>';
+  if (hostesses.length===0){
+    html += '<div class="muted center" style="padding:10px 0;font-style:italic;font-size:12px">— нет хостес —</div>';
+  } else {
+    html += hostesses.map(rowHtml).join("");
+  }
+  html += '</div>';
+
+  el.innerHTML = html;
   el.querySelectorAll("[data-del-pin]").forEach(function(b){
     b.addEventListener("click",async function(){
       const pin=b.dataset.delPin;
@@ -3403,15 +3975,17 @@ async function renderUsersList(){
 document.getElementById("add-user-btn").addEventListener("click",async function(){
   const name=document.getElementById("new-user-name").value.trim();
   const pin=document.getElementById("new-user-pin").value.trim();
+  const role=document.getElementById("new-user-role").value;
   const err=document.getElementById("user-add-error");
   err.textContent="";
-  if(!/^\d{4}$/.test(pin)){err.textContent="Код — ровно 4 цифры.";return;}
+  if(!/^\d{4}$/.test(pin)){err.textContent="Код - ровно 4 цифры.";return;}
   if(pin===await STORAGE.getMasterPin()){err.textContent="Этот код занят менеджерским.";return;}
   const exists=await STORAGE.getUserByPin(pin);
   if(exists){err.textContent="Этот код уже занят.";return;}
-  await STORAGE.addUser(name, pin);
+  await STORAGE.addUser(name, pin, false, role);
   document.getElementById("new-user-name").value="";
   document.getElementById("new-user-pin").value="";
+  document.getElementById("new-user-role").value="waiter";
   await renderUsersList();
 });
 
@@ -3426,24 +4000,26 @@ document.querySelectorAll(".admin-tab[data-rsubtab]").forEach(function(t){
 });
 
 async function renderAllAttempts(mode){
-  const active = await STORAGE.getAllProgress();
-  const activeBox = document.getElementById("active-sessions");
-  const activeList = document.getElementById("active-sessions-list");
-  if (active.length === 0){
+  const active=await STORAGE.getAllProgress();
+  const activeBox=document.getElementById("active-sessions");
+  const activeList=document.getElementById("active-sessions-list");
+  if (active.length===0){
     activeBox.classList.add("hidden");
   } else {
     activeBox.classList.remove("hidden");
-    activeList.innerHTML = active.map(function(p){
-      const total = (p.questions || []).length || 108;
-      const pCount = (p.pauses || []).length;
-      const pSec = (p.pauses || []).reduce(function(s,x){return s+(x.durationSec||0);},0);
-      const startedTime = new Date(p.startedAt).toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"});
-      const name = (p.name && p.name.trim()) ? escapeHtml(p.name) : '<span class="muted" style="font-style:italic">PIN '+escapeHtml(p.pin)+'</span>';
-      let alerts = '';
-      if (p.resumeCount > 0) alerts += '<span class="test-tag" style="border-color:var(--red);color:var(--red);background:rgba(200,100,90,0.1)">возоб ×'+p.resumeCount+'</span>';
-      if (pCount > 0) alerts += '<span class="test-tag" style="border-color:var(--red);color:var(--red);background:rgba(200,100,90,0.1)">'+pCount+' наруш · '+fmtMinSec(pSec)+'</span>';
+    activeList.innerHTML=active.map(function(p){
+      const total=(p.questions||[]).length||108;
+      const pCount=(p.pauses||[]).length;
+      const pSec=(p.pauses||[]).reduce(function(s,x){return s+(x.durationSec||0);},0);
+      const startedTime=new Date(p.startedAt).toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"});
+      const name=(p.name && p.name.trim()) ? escapeHtml(p.name) : '<span class="muted" style="font-style:italic">PIN '+escapeHtml(p.pin)+'</span>';
+      const role=p.role||"waiter";
+      const roleTag = role==="hostess" ? '<span class="test-tag" style="border-color:var(--rose);color:var(--rose);background:rgba(156,90,110,0.1)">хостес</span>' : '';
+      let alerts='';
+      if (p.resumeCount>0) alerts+='<span class="test-tag" style="border-color:var(--red);color:var(--red);background:rgba(200,100,90,0.1)">возоб ×'+p.resumeCount+'</span>';
+      if (pCount>0) alerts+='<span class="test-tag" style="border-color:var(--red);color:var(--red);background:rgba(200,100,90,0.1)">'+pCount+' наруш · '+fmtMinSec(pSec)+'</span>';
       return '<div style="display:grid;grid-template-columns:1fr 80px 70px;gap:10px;padding:8px 0;border-bottom:1px solid rgba(90,74,48,0.2);align-items:center;font-size:12px">'
-        + '<div class="cream">'+name+alerts+'</div>'
+        + '<div class="cream">'+name+roleTag+alerts+'</div>'
         + '<div style="color:var(--gold);text-align:right">'+p.currentIdx+'/'+total+'</div>'
         + '<div class="muted" style="text-align:right">с '+startedTime+'</div>'
         + '</div>';
@@ -3456,29 +4032,46 @@ async function renderAllAttempts(mode){
     el.innerHTML='<div class="muted center" style="padding:14px 0;font-style:italic">Попыток ещё нет.</div>';
     return;
   }
-  if(mode==="best"){
+  // Фильтр по ролям через testKind
+  if (mode==="waiters"){
+    attempts = attempts.filter(function(a){
+      const k = a.testKind || "main";
+      return k === "main" || k === "chess";
+    });
+  } else if (mode==="hostesses"){
+    attempts = attempts.filter(function(a){
+      const k = a.testKind || "main";
+      return k === "hostess_reg" || k === "hostess_dep";
+    });
+  } else if(mode==="best"){
     const best={};
     for(const a of attempts){
-      const k=a.pin+"::"+a.name;
+      const k=a.pin+"::"+a.testKind;
       if(!best[k] || a.score>best[k].score) best[k]=a;
     }
     attempts=Object.values(best);
+  }
+  if(attempts.length===0){
+    el.innerHTML='<div class="muted center" style="padding:14px 0;font-style:italic">— нет попыток в этой категории —</div>';
+    return;
   }
   attempts.sort(function(a,b){
     if(b.score!==a.score) return b.score-a.score;
     return new Date(b.date)-new Date(a.date);
   });
   el.innerHTML=attempts.slice(0,80).map(function(a,i){
-    const tag = a.isTest ? '<span class="test-tag">тест</span>' : '';
-    const kindLbl = a.testKindLabel || (a.testKind === "chess" ? "Шах и Мат" : "Основная");
-    const kindCls = (a.testKind === "chess") ? 'style="border-color:var(--gold);color:var(--gold-br);background:rgba(200,169,110,0.18)"' : '';
-    const kindTag = '<span class="test-tag" '+kindCls+'>'+escapeHtml(kindLbl)+'</span>';
-    let alertTag = '';
-    if (a.resumeCount && a.resumeCount > 0){
-      alertTag += '<span class="test-tag" style="border-color:var(--red);color:var(--red);background:rgba(200,100,90,0.1)">возоб ×'+a.resumeCount+'</span>';
+    const tag=a.isTest ? '<span class="test-tag">тест</span>' : '';
+    const kindLbl=a.testKindLabel || (a.testKind==="chess" ? "Шах и Мат" : (a.testKind==="hostess_reg" ? "Регламент" : (a.testKind==="hostess_dep" ? "Депозит" : "Основная")));
+    let kindCls='';
+    if (a.testKind==="chess") kindCls='style="border-color:var(--gold);color:var(--gold-br);background:rgba(200,169,110,0.18)"';
+    else if (a.testKind==="hostess_reg" || a.testKind==="hostess_dep") kindCls='style="border-color:var(--rose);color:var(--rose);background:rgba(156,90,110,0.1)"';
+    const kindTag='<span class="test-tag" '+kindCls+'>'+escapeHtml(kindLbl)+'</span>';
+    let alertTag='';
+    if (a.resumeCount && a.resumeCount>0){
+      alertTag+='<span class="test-tag" style="border-color:var(--red);color:var(--red);background:rgba(200,100,90,0.1)">возоб ×'+a.resumeCount+'</span>';
     }
-    if (a.pauseCount && a.pauseCount > 0){
-      alertTag += '<span class="test-tag" style="border-color:var(--red);color:var(--red);background:rgba(200,100,90,0.15)">'+a.pauseCount+' наруш · '+fmtMinSec(a.totalPauseSec||0)+'</span>';
+    if (a.pauseCount && a.pauseCount>0){
+      alertTag+='<span class="test-tag" style="border-color:var(--red);color:var(--red);background:rgba(200,100,90,0.15)">'+a.pauseCount+' наруш · '+fmtMinSec(a.totalPauseSec||0)+'</span>';
     }
     return '<div class="lb-row">'
       + '<div class="lb-rank">'+(i+1)+'</div>'
@@ -3501,7 +4094,7 @@ document.getElementById("save-master-btn").addEventListener("click",async functi
   const v=document.getElementById("new-master-pin").value.trim();
   const err=document.getElementById("master-pin-error");
   err.textContent="";
-  if(!/^\d{4,6}$/.test(v)){err.textContent="Код — 4–6 цифр.";return;}
+  if(!/^\d{4,6}$/.test(v)){err.textContent="Код - 4-6 цифр.";return;}
   const u=await STORAGE.getUserByPin(v);
   if(u){err.textContent="Этот код занят сотрудником: "+u.name;return;}
   await STORAGE.setMasterPin(v);
@@ -3518,15 +4111,18 @@ document.getElementById("clear-attempts-btn").addEventListener("click",async fun
 });
 
 // ============================================================
-// СИДИНГ — добавляем PIN-коды, которых ещё нет в localStorage
+// СИДИНГ — добавляем 30 PIN-кодов с ролями
 // ============================================================
 async function seedUsersIfNeeded(){
   try{
     for(const u of SEED_USERS){
       try{
-        const exists = await STORAGE.getUserByPin(u.pin);
+        const exists=await STORAGE.getUserByPin(u.pin);
         if(!exists){
-          await STORAGE.addUser(u.name||"", u.pin, !!u.isTest);
+          await STORAGE.addUser(u.name||"", u.pin, !!u.isTest, u.role||"waiter");
+        } else if (!exists.role){
+          // обратная совместимость: если у существующего PIN нет роли — присваиваем waiter
+          await STORAGE.updateUser(u.pin, {role: u.role||"waiter"});
         }
       }catch(_){}
     }
@@ -3534,141 +4130,144 @@ async function seedUsersIfNeeded(){
 }
 
 // ============================================================
-// TELEGRAM УВЕДОМЛЕНИЯ
+// TELEGRAM
 // ============================================================
 async function sendTelegram(text, parseMode){
   try{
-    const url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage";
-    const body = {
-      chat_id: TELEGRAM_CHAT_ID,
-      text: text,
-      parse_mode: parseMode || "HTML",
-      disable_web_page_preview: true
+    const url="https://api.telegram.org/bot"+TELEGRAM_BOT_TOKEN+"/sendMessage";
+    const body={
+      chat_id:TELEGRAM_CHAT_ID,
+      text:text,
+      parse_mode:parseMode||"HTML",
+      disable_web_page_preview:true
     };
-    const r = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body)
+    const r=await fetch(url,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(body)
     });
     if(!r.ok) return false;
-    const data = await r.json();
+    const data=await r.json();
     return !!(data && data.ok);
   }catch(e){
-    console.warn("Telegram send failed:", e);
+    console.warn("Telegram send failed:",e);
     return false;
   }
 }
 
 async function sendTelegramDocument(filename, content, caption){
   try{
-    const url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendDocument";
-    const blob = new Blob([content], { type: "text/plain; charset=utf-8" });
-    const fd = new FormData();
+    const url="https://api.telegram.org/bot"+TELEGRAM_BOT_TOKEN+"/sendDocument";
+    const blob=new Blob([content], {type:"text/plain; charset=utf-8"});
+    const fd=new FormData();
     fd.append("chat_id", TELEGRAM_CHAT_ID);
     fd.append("document", blob, filename);
     if(caption){
       fd.append("caption", caption);
       fd.append("parse_mode", "HTML");
     }
-    const r = await fetch(url, { method: "POST", body: fd });
+    const r=await fetch(url,{method:"POST",body:fd});
     if(!r.ok) return false;
-    const data = await r.json();
+    const data=await r.json();
     return !!(data && data.ok);
   }catch(e){
-    console.warn("Telegram document failed:", e);
+    console.warn("Telegram document failed:",e);
     return false;
   }
 }
 
 function buildAttemptReport(attempt){
-  const escTg = (s) => String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-  const passEmoji = attempt.passed ? "\u2705" : "\u274C";
-  const passLabel = attempt.passed ? "ЗАЧЁТ" : "НЕЗАЧЁТ";
-  const isTest = attempt.isTest ? " 🧪" : "";
+  const escTg=(s)=>String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const passEmoji=attempt.passed ? "\u2705" : "\u274C";
+  const passLabel=attempt.passed ? "ЗАЧЁТ" : "НЕЗАЧЁТ";
+  const isTest=attempt.isTest ? " 🧪" : "";
+  const roleEmoji=attempt.role==="hostess" ? "🌹" : "🍷";
 
-  let durationStr = "—";
+  let durationStr="—";
   if(attempt.startedAt && attempt.finishedAt){
-    const sec = Math.floor((new Date(attempt.finishedAt) - new Date(attempt.startedAt))/1000);
-    const m = Math.floor(sec/60);
-    const s = sec%60;
-    durationStr = m + " мин " + s + " сек";
+    const sec=Math.floor((new Date(attempt.finishedAt)-new Date(attempt.startedAt))/1000);
+    const m=Math.floor(sec/60);
+    const s=sec%60;
+    durationStr=m+" мин "+s+" сек";
   }
 
-  let txt = "";
-  txt += "🎯 <b>NOMO · Аттестация</b>" + isTest + "\n";
+  let txt="";
+  txt+="🎯 <b>NOMO · Аттестация</b>"+isTest+"\n";
   if(attempt.testKindFull || attempt.testKindLabel){
-    txt += "<i>" + escTg(attempt.testKindFull || attempt.testKindLabel) + "</i>\n";
+    txt+="<i>"+escTg(attempt.testKindFull || attempt.testKindLabel)+"</i>\n";
   }
-  txt += "\n";
-  txt += "👤 <b>" + escTg(attempt.name || ("Код " + attempt.pin)) + "</b>";
-  txt += " <code>" + escTg(attempt.pin) + "</code>\n\n";
-  txt += passEmoji + " <b>" + attempt.score + "%</b> · " + passLabel + "\n";
-  txt += "📝 " + (attempt.correctAnswers||0) + " из " + (attempt.totalQuestions||0) + " правильно\n";
-  txt += "⏱ Время: " + durationStr + "\n";
+  txt+="\n";
+  txt+=roleEmoji+" <b>"+escTg(attempt.name || ("Код "+attempt.pin))+"</b>";
+  txt+=" <code>"+escTg(attempt.pin)+"</code>\n\n";
+  txt+=passEmoji+" <b>"+attempt.score+"%</b> · "+passLabel+"\n";
+  txt+="📝 "+(attempt.correctAnswers||0)+" из "+(attempt.totalQuestions||0)+" правильно\n";
+  txt+="⏱ Время: "+durationStr+"\n";
 
-  if(attempt.violations && attempt.violations > 0){
-    txt += "⚠️ <b>Нарушений: " + attempt.violations + "</b>\n";
+  if(attempt.violations && attempt.violations>0){
+    txt+="⚠️ <b>Нарушений: "+attempt.violations+"</b>\n";
     if(attempt.violationLog && attempt.violationLog.length){
-      const reasons = {};
-      attempt.violationLog.forEach(v => { reasons[v.reason] = (reasons[v.reason]||0)+1; });
-      const labels = { "tab-hidden":"переключение вкладки", "blur":"свернуто", "printscreen":"PrintScreen", "ctrl-p":"печать", "f12":"DevTools", "devtools-shortcut":"DevTools" };
-      const parts = [];
-      for(const r in reasons){ parts.push((labels[r]||r) + " ×" + reasons[r]); }
-      txt += "   <i>" + escTg(parts.join(", ")) + "</i>\n";
+      const reasons={};
+      attempt.violationLog.forEach(v=>{reasons[v.reason]=(reasons[v.reason]||0)+1;});
+      const labels={"tab-hidden":"переключение вкладки","leave":"переключение вкладки","blur":"свернуто","printscreen":"PrintScreen","print":"печать","devtools":"DevTools","screenshot_combo":"скрин-комбинация","resume":"возобновление"};
+      const parts=[];
+      for(const r in reasons){ parts.push((labels[r]||r)+" ×"+reasons[r]); }
+      txt+="   <i>"+escTg(parts.join(", "))+"</i>\n";
     }
   }
 
   if(attempt.byPosition){
-    const failed = [];
+    const failed=[];
     for(const k in attempt.byPosition){
-      const p = attempt.byPosition[k];
-      const pct = p.total > 0 ? Math.round((p.ok/p.total)*100) : 0;
-      if(pct < PASS_THRESHOLD) failed.push({ name: p.name, ok: p.ok, total: p.total, pct: pct });
+      const p=attempt.byPosition[k];
+      const pct=p.total>0 ? Math.round((p.ok/p.total)*100) : 0;
+      if(pct<PASS_THRESHOLD) failed.push({name:p.name,ok:p.ok,total:p.total,pct});
     }
     if(failed.length){
-      txt += "\n<b>Слабые позиции:</b>\n";
-      failed.slice(0, 12).forEach(f => {
-        txt += "× " + escTg(f.name) + " (" + f.ok + "/" + f.total + ")\n";
+      txt+="\n<b>Слабые позиции:</b>\n";
+      failed.slice(0,12).forEach(f=>{
+        txt+="× "+escTg(f.name)+" ("+f.ok+"/"+f.total+")\n";
       });
-      if(failed.length > 12) txt += "<i>...и ещё " + (failed.length-12) + "</i>\n";
+      if(failed.length>12) txt+="<i>...и ещё "+(failed.length-12)+"</i>\n";
     }
   }
 
-  txt += "\n🕐 " + new Date(attempt.finishedAt || Date.now()).toLocaleString("ru-RU");
+  txt+="\n🕐 "+new Date(attempt.finishedAt||Date.now()).toLocaleString("ru-RU");
   return txt;
 }
 
 function buildAttemptDetailsText(attempt){
-  let txt = "NOMO · АТТЕСТАЦИЯ · ПОДРОБНЫЙ ОТЧЁТ\n";
-  txt += "=".repeat(60) + "\n\n";
-  txt += "Сотрудник: " + (attempt.name || "Код "+attempt.pin) + "\n";
-  txt += "PIN: " + attempt.pin + "\n";
-  if(attempt.isTest) txt += "ТЕСТ-РЕЖИМ МЕНЕДЖЕРА\n";
-  txt += "Дата: " + new Date(attempt.finishedAt || attempt.at).toLocaleString("ru-RU") + "\n";
-  txt += "Результат: " + attempt.score + "% (" + (attempt.passed ? "ЗАЧЁТ" : "НЕЗАЧЁТ") + ")\n";
-  txt += "Правильных ответов: " + (attempt.correctAnswers||0) + " из " + (attempt.totalQuestions||0) + "\n";
-  txt += "Нарушений: " + (attempt.violations||0) + "\n";
+  let txt="NOMO · АТТЕСТАЦИЯ · ПОДРОБНЫЙ ОТЧЁТ\n";
+  txt+="=".repeat(60)+"\n\n";
+  txt+="Сотрудник: "+(attempt.name||"Код "+attempt.pin)+"\n";
+  txt+="PIN: "+attempt.pin+"\n";
+  txt+="Роль: "+(attempt.role==="hostess"?"Хостес":"Официант")+"\n";
+  if(attempt.isTest) txt+="ТЕСТ-РЕЖИМ МЕНЕДЖЕРА\n";
+  txt+="Тест: "+(attempt.testKindFull||attempt.testKindLabel||attempt.testKind)+"\n";
+  txt+="Дата: "+new Date(attempt.finishedAt||attempt.at).toLocaleString("ru-RU")+"\n";
+  txt+="Результат: "+attempt.score+"% ("+(attempt.passed?"ЗАЧЁТ":"НЕЗАЧЁТ")+")\n";
+  txt+="Правильных ответов: "+(attempt.correctAnswers||0)+" из "+(attempt.totalQuestions||0)+"\n";
+  txt+="Нарушений: "+(attempt.violations||0)+"\n";
   if(attempt.violationLog && attempt.violationLog.length){
-    txt += "\nЛог нарушений:\n";
-    attempt.violationLog.forEach(v => {
-      txt += "  - " + new Date(v.at).toLocaleTimeString("ru-RU") + " - " + v.reason + "\n";
+    txt+="\nЛог нарушений:\n";
+    attempt.violationLog.forEach(v=>{
+      txt+="  - "+new Date(v.at).toLocaleTimeString("ru-RU")+" - "+v.reason+"\n";
     });
   }
-  txt += "\n" + "=".repeat(60) + "\n";
-  txt += "ОТВЕТЫ ПО ВОПРОСАМ\n";
-  txt += "=".repeat(60) + "\n\n";
+  txt+="\n"+"=".repeat(60)+"\n";
+  txt+="ОТВЕТЫ ПО ВОПРОСАМ\n";
+  txt+="=".repeat(60)+"\n\n";
 
   if(attempt.questions && attempt.answers){
-    for(let i = 0; i < attempt.questions.length; i++){
-      const q = attempt.questions[i];
-      const a = attempt.answers[i] || {};
-      txt += "[" + (i+1) + "/" + attempt.questions.length + "] " + (q.name||"") + "\n";
-      txt += "Вопрос: " + q.q + "\n";
-      txt += "Ответ сотрудника: " + (a.text || "(пусто)") + "\n";
-      txt += "Правильный ответ: " + (q.answer || "—") + "\n";
-      txt += "Результат: " + (a.ok ? "ПРИНЯТО" : "НЕ ПРИНЯТО");
-      if(a.missed && a.missed.length) txt += " (пропущено: " + a.missed.join(", ") + ")";
-      txt += "\n\n";
+    for(let i=0;i<attempt.questions.length;i++){
+      const q=attempt.questions[i];
+      const a=attempt.answers[i]||{};
+      txt+="["+(i+1)+"/"+attempt.questions.length+"] "+(q.name||"")+"\n";
+      txt+="Вопрос: "+q.q+"\n";
+      txt+="Ответ сотрудника: "+(a.text||"(пусто)")+"\n";
+      txt+="Правильный ответ: "+(q.answer||"—")+"\n";
+      txt+="Результат: "+(a.ok?"ПРИНЯТО":"НЕ ПРИНЯТО");
+      if(a.missed && a.missed.length) txt+=" (пропущено: "+a.missed.map(g=>Array.isArray(g)?g[0]:g).join(", ")+")";
+      txt+="\n\n";
     }
   }
   return txt;
@@ -3676,18 +4275,16 @@ function buildAttemptDetailsText(attempt){
 
 async function notifyAttemptComplete(attempt){
   try{
-    const summary = buildAttemptReport(attempt);
-    const details = buildAttemptDetailsText(attempt);
-    const filename = "NOMO_" + attempt.pin + "_" + new Date().toISOString().slice(0,19).replace(/[:T]/g,"-") + ".txt";
-    const sentDoc = await sendTelegramDocument(filename, details, summary);
-    if(!sentDoc){
-      await sendTelegram(summary);
-    }
-  }catch(e){ console.warn("notify failed:", e); }
+    const summary=buildAttemptReport(attempt);
+    const details=buildAttemptDetailsText(attempt);
+    const filename="NOMO_"+attempt.pin+"_"+new Date().toISOString().slice(0,19).replace(/[:T]/g,"-")+".txt";
+    const sentDoc=await sendTelegramDocument(filename,details,summary);
+    if(!sentDoc){ await sendTelegram(summary); }
+  }catch(e){ console.warn("notify failed:",e); }
 }
 
-window.notifyAttemptComplete = notifyAttemptComplete;
-window.sendTelegram = sendTelegram;
+window.notifyAttemptComplete=notifyAttemptComplete;
+window.sendTelegram=sendTelegram;
 
 // ============================================================
 // BOOT
