@@ -8,10 +8,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0C0B09; --panel:#16140F; --panel-2:#1F1B14;
-    --gold:#C8A96E; --gold-br:#E8C98A; --gold-dk:#8E7849; --gold-ln:#5A4A30;
-    --cream:#EDE0C4; --cream-2:#B8A98C; --white:#F4ECDA; --ink-dim:#7A6F5C;
-    --green:#7AA47C; --red:#C8645A;
+    /* Светлая палитра как в PDF NOMO PIN-карты */
+    --bg:#F5EFE0;           /* кремовый фон */
+    --panel:#FAF5E8;        /* светлая карточка */
+    --panel-2:#EFE7D2;      /* акцент чуть темнее */
+    --gold:#A88A4E;         /* приглушённое золото для текста */
+    --gold-br:#8E6F38;      /* насыщенное золото для заголовков */
+    --gold-dk:#6E5528;      /* тёмное золото для акцентов */
+    --gold-ln:#D4C39A;      /* линии и рамки */
+    --cream:#3A2E1C;        /* основной тёмно-коричневый текст */
+    --cream-2:#5C4E37;      /* вторичный текст */
+    --white:#1F1812;        /* самый тёмный (для заголовков на светлом) */
+    --ink-dim:#9A8966;      /* приглушённый */
+    --green:#5C7A4C;        /* зелёный для зачёта */
+    --red:#A04A3F;          /* красный для незачёта */
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{
@@ -22,8 +32,8 @@
   }
   body{
     background:
-      radial-gradient(ellipse at top,rgba(200,169,110,0.06),transparent 60%),
-      radial-gradient(ellipse at bottom,rgba(200,169,110,0.04),transparent 50%),
+      radial-gradient(ellipse at top,rgba(168,138,78,0.08),transparent 60%),
+      radial-gradient(ellipse at bottom,rgba(168,138,78,0.05),transparent 50%),
       var(--bg);
     padding:32px 18px 80px;position:relative;
   }
@@ -31,9 +41,9 @@
   .wrap{max-width:780px;margin:0 auto;position:relative;z-index:1}
 
 #watermark{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden;opacity:1}
-.wm-row{white-space:nowrap;font-family:‘Inter’,sans-serif;font-size:18px;color:rgba(232,201,138,0.32);font-weight:700;letter-spacing:.45em;transform:rotate(-30deg);transform-origin:0 0;padding:60px 0;text-shadow:0 0 1px rgba(232,201,138,0.15)}
+.wm-row{white-space:nowrap;font-family:‘Inter’,sans-serif;font-size:18px;color:rgba(110,85,40,0.18);font-weight:700;letter-spacing:.45em;transform:rotate(-30deg);transform-origin:0 0;padding:60px 0;text-shadow:0 0 1px rgba(110,85,40,0.10)}
 #watermark2{position:fixed;inset:0;pointer-events:none;z-index:51;overflow:hidden;opacity:1}
-#watermark2 .wm-row{font-size:16px;color:rgba(232,201,138,0.22);transform:rotate(28deg);padding:80px 0}
+#watermark2 .wm-row{font-size:16px;color:rgba(110,85,40,0.12);transform:rotate(28deg);padding:80px 0}
 
 #shield{position:fixed;inset:0;background:#FFFFFF;z-index:9999;display:none;align-items:center;justify-content:center;color:#000;font-family:‘Cormorant Garamond’,serif;font-size:22px;text-align:center;padding:30px}
 #shield.on{display:flex}
@@ -46,7 +56,7 @@
 #violation-alert .vio-icon{font-family:‘Cormorant Garamond’,serif;font-size:54px;line-height:1;margin-bottom:10px;color:#fff}
 #violation-alert .vio-title{font-family:‘Cormorant Garamond’,serif;font-size:26px;line-height:1.15;margin-bottom:10px;letter-spacing:.04em;font-weight:600}
 #violation-alert .vio-body{font-size:13.5px;line-height:1.55;color:rgba(255,255,255,0.92);margin-bottom:14px}
-#violation-alert .vio-counter{display:inline-block;background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.4);padding:8px 16px;font-family:‘Cormorant Garamond’,serif;font-size:18px;letter-spacing:.1em;font-weight:600}
+#violation-alert .vio-counter{display:inline-block;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.4);padding:8px 16px;font-family:‘Cormorant Garamond’,serif;font-size:18px;letter-spacing:.1em;font-weight:600}
 #violation-alert .vio-counter b{color:#FFD590;font-size:24px;margin:0 4px}
 #violation-alert .vio-name{font-size:11px;letter-spacing:.3em;text-transform:uppercase;margin-top:14px;color:rgba(255,255,255,0.7)}
 
@@ -71,7 +81,7 @@ h1.title{font-family:‘Cormorant Garamond’,serif;font-size:34px;color:var(–
 .card::before{top:-1px;left:-1px;border-right:none;border-bottom:none}
 .card::after{bottom:-1px;right:-1px;border-left:none;border-top:none}
 
-.pin-input{width:100%;background:rgba(0,0,0,0.4);border:1px solid var(–gold-ln);color:var(–gold-br);padding:16px;font-family:‘Cormorant Garamond’,serif;font-size:32px;letter-spacing:.5em;text-align:center;font-weight:600;border-radius:0;margin:14px 0 4px}
+.pin-input{width:100%;background:rgba(255,250,235,0.6);border:1px solid var(–gold-ln);color:var(–gold-br);padding:16px;font-family:‘Cormorant Garamond’,serif;font-size:32px;letter-spacing:.5em;text-align:center;font-weight:600;border-radius:0;margin:14px 0 4px}
 .pin-input:focus{outline:none;border-color:var(–gold);background:rgba(200,169,110,0.04)}
 .pin-error{color:var(–red);font-size:12px;text-align:center;margin-top:8px;min-height:18px;letter-spacing:.05em}
 
@@ -82,22 +92,22 @@ h1.title{font-family:‘Cormorant Garamond’,serif;font-size:34px;color:var(–
 
 label.fld{display:block;margin-top:18px}
 label.fld .lbl{display:block;font-size:10px;color:var(–gold);letter-spacing:.35em;text-transform:uppercase;margin-bottom:8px}
-input[type=text],input[type=tel],textarea{width:100%;background:rgba(0,0,0,0.4);border:1px solid var(–gold-ln);color:var(–cream);padding:14px 16px;font-family:‘Inter’,sans-serif;font-size:15px;line-height:1.55;border-radius:0;transition:border-color .2s,background .2s;resize:vertical}
+input[type=text],input[type=tel],textarea{width:100%;background:rgba(255,250,235,0.6);border:1px solid var(–gold-ln);color:var(–cream);padding:14px 16px;font-family:‘Inter’,sans-serif;font-size:15px;line-height:1.55;border-radius:0;transition:border-color .2s,background .2s;resize:vertical}
 textarea{min-height:120px;font-size:14.5px}
 input:focus,textarea:focus{outline:none;border-color:var(–gold);background:rgba(200,169,110,0.04)}
 textarea::placeholder,input::placeholder{color:var(–ink-dim);font-style:italic}
 
 .btn{display:inline-block;background:transparent;border:1px solid var(–gold);color:var(–gold-br);padding:14px 32px;font-family:‘Cormorant Garamond’,serif;font-weight:600;font-size:14px;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;transition:all .25s;margin-top:10px}
-.btn:hover{background:var(–gold);color:var(–bg)}
+.btn:hover{background:var(–gold);color:#FAF5E8}
 .btn:disabled{opacity:.4;cursor:not-allowed}
-.btn.primary{background:var(–gold);color:var(–bg)}
-.btn.primary:hover{background:var(–gold-br)}
+.btn.primary{background:var(–gold-dk);color:#FAF5E8;border-color:var(–gold-dk)}
+.btn.primary:hover{background:var(–white);border-color:var(–white);color:#FAF5E8}
 .btn.ghost{border-color:var(–gold-dk);color:var(–cream-2)}
-.btn.danger{border-color:var(–red);color:var(–red)}
-.btn.danger:hover{background:var(–red);color:var(–white)}
+.btn.danger{border-color:var(–red);color:var(–red);background:transparent}
+.btn.danger:hover{background:var(–red);color:#FAF5E8}
 .btn.full{width:100%;display:block}
 
-.progress{background:rgba(0,0,0,0.5);border:1px solid var(–gold-ln);height:6px;position:relative;margin:20px 0 26px}
+.progress{background:rgba(168,138,78,0.15);border:1px solid var(–gold-ln);height:6px;position:relative;margin:20px 0 26px}
 .progress-bar{background:linear-gradient(90deg,var(–gold-dk),var(–gold-br));height:100%;transition:width .4s ease-out}
 .progress-meta{display:flex;justify-content:space-between;font-size:10px;color:var(–cream-2);letter-spacing:.3em;text-transform:uppercase;margin-top:8px}
 
@@ -507,7 +517,7 @@ const QUESTIONS_PER_POSITION = 3;
 
 // Telegram бот для уведомлений о результатах
 const TELEGRAM_BOT_TOKEN = "8441895467:AAFS1OsuIK7EvMs2ofuXdcYe7Z04JzgYQUU";
-const TELEGRAM_CHAT_ID = "5824440463";
+const TELEGRAM_CHAT_ID = "-5018199781";
 
 const SEED_USERS = [
   { pin: "0101", name: "ТЕСТ-РЕЖИМ (менеджер)", isTest: true },
