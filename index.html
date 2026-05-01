@@ -185,6 +185,19 @@ textarea::placeholder,input::placeholder{color:var(–cream-2);font-style:italic
 .test-card .btn{margin-top:14px;position:relative;z-index:61;background:#1F1812 !important;color:#F5EFE0 !important;border-color:#1F1812 !important;border-width:1.5px !important}
 .test-card .btn:hover{background:#000 !important;border-color:#000 !important}
 
+/* Главные табы выбора роли */
+.role-tabs{display:flex;gap:10px;margin:0 0 24px;padding:0}
+.role-tab{flex:1;background:#FAF5E8;border:1.5px solid var(–gold-ln);padding:18px 14px;text-align:center;cursor:pointer;transition:all .2s;position:relative;z-index:60}
+.role-tab:hover{border-color:var(–gold-dk)}
+.role-tab.active{background:#1F1812;border-color:#1F1812}
+.role-tab.active .rt-icon{color:#C8A96E}
+.role-tab.active .rt-title{color:#F5EFE0}
+.role-tab.active .rt-sub{color:#C8A96E}
+.role-tab.disabled{opacity:.35;cursor:not-allowed;pointer-events:none}
+.role-tab .rt-icon{font-size:28px;line-height:1;margin-bottom:6px;color:var(–gold-br)}
+.role-tab .rt-title{font-family:‘Cormorant Garamond’,serif;font-size:22px;font-weight:600;color:var(–white);letter-spacing:.04em;line-height:1}
+.role-tab .rt-sub{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(–cream-2);margin-top:6px}
+
 /* Карточка обучающего материала — отдельный синий-зелёный акцент */
 .test-card.materials{border-color:#5C7A4C}
 .test-card.materials:hover{border-color:#3F5734}
@@ -335,49 +348,73 @@ h1.title{font-size:26px}
   <h1 class="title" id="select-title">ВЫБЕРИ АТТЕСТАЦИЮ</h1>
   <div class="subtitle" id="select-subtitle">какую партию открываем</div>
 
-  <div class="test-card" data-kind="main" data-role="waiter">
-    <div class="tc-tag">основная</div>
-    <div class="tc-title">Аттестация бара</div>
-    <div class="tc-desc">36 позиций &middot; 108 вопросов &middot; от Dom Perignon до Да Хун Пао</div>
-    <div class="tc-stats" id="tc-stats-main">&mdash;</div>
-    <button class="btn primary full" data-pick="main">открыть &#9656;</button>
+  <div class="role-tabs" id="role-tabs">
+    <div class="role-tab" data-role-tab="waiter">
+      <div class="rt-icon">🍷</div>
+      <div class="rt-title">Официанты</div>
+      <div class="rt-sub">Бар &middot; Шах и Мат</div>
+    </div>
+    <div class="role-tab" data-role-tab="hostess">
+      <div class="rt-icon">🌹</div>
+      <div class="rt-title">Хостес</div>
+      <div class="rt-sub">Регламент &middot; Депозит &middot; Материал</div>
+    </div>
   </div>
 
-  <div class="test-card" data-kind="chess" data-role="waiter">
-    <div class="tc-tag">авторская партия</div>
-    <div class="tc-title">Шах и Мат</div>
-    <div class="tc-sub">Игра чёрных королев</div>
-    <div class="tc-desc">3 позиции &middot; 24 вопроса &middot; Чёрная Королева, Гамбит, Шах и Мат</div>
-    <div class="tc-stats" id="tc-stats-chess">&mdash;</div>
-    <button class="btn primary full" data-pick="chess">открыть &#9656;</button>
+  <div class="role-section hidden" data-role-section="waiter">
+    <div class="test-card" data-kind="main" data-role="waiter">
+      <div class="tc-tag">основная</div>
+      <div class="tc-title">Аттестация бара</div>
+      <div class="tc-desc">36 позиций &middot; 108 вопросов &middot; от Dom Perignon до Да Хун Пао</div>
+      <div class="tc-stats" id="tc-stats-main">&mdash;</div>
+      <button class="btn primary full" data-pick="main">открыть &#9656;</button>
+    </div>
+
+```
+<div class="test-card" data-kind="chess" data-role="waiter">
+  <div class="tc-tag">авторская партия</div>
+  <div class="tc-title">Шах и Мат</div>
+  <div class="tc-sub">Игра чёрных королев</div>
+  <div class="tc-desc">3 позиции &middot; 24 вопроса &middot; Чёрная Королева, Гамбит, Шах и Мат</div>
+  <div class="tc-stats" id="tc-stats-chess">&mdash;</div>
+  <button class="btn primary full" data-pick="chess">открыть &#9656;</button>
+</div>
+```
+
   </div>
 
-  <div class="test-card hostess" data-kind="hostess_reg" data-role="hostess">
-    <div class="tc-tag">хостес</div>
-    <div class="tc-title">Регламент хостес</div>
-    <div class="tc-sub">Звонки &middot; Встреча &middot; Иерархия &middot; Дресс-код</div>
-    <div class="tc-desc">16 позиций &middot; 20 вопросов &middot; полный регламент работы</div>
-    <div class="tc-stats" id="tc-stats-hostess_reg">&mdash;</div>
-    <button class="btn primary full" data-pick="hostess_reg">открыть &#9656;</button>
-  </div>
+  <div class="role-section hidden" data-role-section="hostess">
+    <div class="test-card hostess" data-kind="hostess_reg" data-role="hostess">
+      <div class="tc-tag">хостес</div>
+      <div class="tc-title">Регламент хостес</div>
+      <div class="tc-sub">Звонки &middot; Встреча &middot; Иерархия &middot; Дресс-код</div>
+      <div class="tc-desc">16 позиций &middot; 20 вопросов &middot; полный регламент работы</div>
+      <div class="tc-stats" id="tc-stats-hostess_reg">&mdash;</div>
+      <button class="btn primary full" data-pick="hostess_reg">открыть &#9656;</button>
+    </div>
 
-  <div class="test-card hostess" data-kind="hostess_dep" data-role="hostess">
-    <div class="tc-tag">хостес</div>
-    <div class="tc-title">Депозитная система</div>
-    <div class="tc-sub">Столы &middot; Депозиты &middot; Банкеты</div>
-    <div class="tc-desc">8 позиций &middot; 20 вопросов &middot; тарифы, доплаты, ловушки банкета</div>
-    <div class="tc-stats" id="tc-stats-hostess_dep">&mdash;</div>
-    <button class="btn primary full" data-pick="hostess_dep">открыть &#9656;</button>
-  </div>
+```
+<div class="test-card hostess" data-kind="hostess_dep" data-role="hostess">
+  <div class="tc-tag">хостес</div>
+  <div class="tc-title">Депозитная система</div>
+  <div class="tc-sub">Столы &middot; Депозиты &middot; Банкеты</div>
+  <div class="tc-desc">8 позиций &middot; 20 вопросов &middot; тарифы, доплаты, ловушки банкета</div>
+  <div class="tc-stats" id="tc-stats-hostess_dep">&mdash;</div>
+  <button class="btn primary full" data-pick="hostess_dep">открыть &#9656;</button>
+</div>
 
-  <div class="test-card materials" data-kind="hostess_materials" data-role="hostess">
-    <div class="tc-tag">📚 материалы</div>
-    <div class="tc-title">Обучающий материал</div>
-    <div class="tc-sub">Полное руководство &middot; Регламент &middot; Шаблоны</div>
-    <div class="tc-desc">5 PDF-документов в 4 группах &mdash; читай и обновляй знания между аттестациями</div>
-    <div class="tc-stats" style="color:#5C7A4C">библиотека хостес</div>
-    <button class="btn primary full" data-pick="hostess_materials" style="background:#5C7A4C !important;border-color:#5C7A4C !important">открыть &#9656;</button>
+<div class="test-card materials" data-kind="hostess_materials" data-role="hostess">
+  <div class="tc-tag">📚 материалы</div>
+  <div class="tc-title">Обучающий материал</div>
+  <div class="tc-sub">Полное руководство &middot; Регламент &middot; Шаблоны</div>
+  <div class="tc-desc">5 PDF-документов в 4 группах &mdash; читай и обновляй знания между аттестациями</div>
+  <div class="tc-stats" style="color:#5C7A4C">библиотека хостес</div>
+  <button class="btn primary full" data-pick="hostess_materials" style="background:#5C7A4C !important;border-color:#5C7A4C !important">открыть &#9656;</button>
+</div>
+```
+
   </div>
+</div>
 
 <div id="stage-materials" class="hidden">
   <div class="top-bar">
@@ -3442,17 +3479,28 @@ async function goSelect(){
   const isTest = !!state.user.isTest;
   document.getElementById("select-name").textContent = state.user.name || "—";
 
-  // показываем карточки только нужной роли
   const userRole = state.user.role || "waiter";
-  document.querySelectorAll('.test-card[data-kind]').forEach(function(card){
-    const cardRole = card.getAttribute('data-role');
-    if (isTest){
-      // тест-режим (0101) видит ВСЕ
-      card.classList.remove('hidden');
-    } else {
-      card.classList.toggle('hidden', cardRole !== userRole);
-    }
-  });
+
+  // Настройка табов: какие активны/доступны
+  const waiterTab = document.querySelector('.role-tab[data-role-tab="waiter"]');
+  const hostessTab = document.querySelector('.role-tab[data-role-tab="hostess"]');
+
+  if (isTest){
+    // тест-режим (0101) — обе вкладки доступны и кликабельны
+    waiterTab.classList.remove("disabled");
+    hostessTab.classList.remove("disabled");
+    setActiveRoleTab(null); // ни одна вкладка не активна — пусть выберет сам
+  } else if (userRole === "hostess"){
+    // хостес — только своя вкладка кликабельна, официантская задизейблена
+    waiterTab.classList.add("disabled");
+    hostessTab.classList.remove("disabled");
+    setActiveRoleTab("hostess");
+  } else {
+    // официант — наоборот
+    waiterTab.classList.remove("disabled");
+    hostessTab.classList.add("disabled");
+    setActiveRoleTab("waiter");
+  }
 
   // обновляем статистику
   const all = await STORAGE.getUserAttempts(state.user.pin);
@@ -3467,17 +3515,34 @@ async function goSelect(){
   const elR = document.getElementById("tc-stats-hostess_reg"); if (elR) elR.textContent = statLine("hostess_reg");
   const elD = document.getElementById("tc-stats-hostess_dep"); if (elD) elD.textContent = statLine("hostess_dep");
 
-  // заголовок зависит от роли
-  if (userRole === "hostess" && !isTest){
-    document.getElementById("select-title").textContent = "АТТЕСТАЦИЯ ХОСТЕС";
-    document.getElementById("select-subtitle").textContent = "регламент или депозитная система";
-  } else {
-    document.getElementById("select-title").textContent = "ВЫБЕРИ АТТЕСТАЦИЮ";
-    document.getElementById("select-subtitle").textContent = "какую партию открываем";
-  }
+  document.getElementById("select-title").textContent = "ВЫБЕРИ АТТЕСТАЦИЮ";
+  document.getElementById("select-subtitle").textContent = "сначала &mdash; вкладка, потом партия";
+  document.getElementById("select-subtitle").innerHTML = "сначала &mdash; вкладка, потом партия";
 
   showStage("select");
 }
+
+function setActiveRoleTab(role){
+  document.querySelectorAll('.role-tab').forEach(function(t){
+    t.classList.toggle('active', role !== null && t.getAttribute('data-role-tab')===role);
+  });
+  document.querySelectorAll('.role-section').forEach(function(s){
+    if (role === null){
+      s.classList.add('hidden');
+    } else {
+      s.classList.toggle('hidden', s.getAttribute('data-role-section')!==role);
+    }
+  });
+}
+
+// Клики по табам
+document.querySelectorAll('.role-tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    if (tab.classList.contains('disabled')) return;
+    const role = tab.getAttribute('data-role-tab');
+    setActiveRoleTab(role);
+  });
+});
 
 async function goHome(kind){
   state.testKind = kind || "main";
