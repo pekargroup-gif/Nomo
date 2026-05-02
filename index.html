@@ -569,7 +569,7 @@ h1.title{font-size:26px}
   </div>
   <div id="time-limit-bar" class="hidden" style="margin:0 0 10px;padding:10px 14px;border:1.5px solid var(--gold-ln);background:#FAF5E8;display:flex;align-items:center;justify-content:space-between;font-family:'Cormorant Garamond',serif">
     <span style="font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--cream-2)">осталось времени</span>
-    <span id="time-limit-value" style="font-size:22px;font-weight:600;color:var(--white);letter-spacing:.04em">20:00</span>
+    <span id="time-limit-value" style="font-size:22px;font-weight:600;color:var(--white);letter-spacing:.04em">30:00</span>
   </div>
   <div class="progress"><div class="progress-bar" id="pbar" style="width:0%"></div></div>
   <div class="progress-meta">
@@ -2607,7 +2607,7 @@ const POSITIONS_ORDER_HOSTESS_DEP = [
 
 const TEST_KINDS = {
   main:        { name: "Основная аттестация бара",          positions: POSITIONS_ORDER,             qPerPosition: 3, label: "Основная",  role: "waiter"  },
-  chess:       { name: "Шах и Мат - Игра чёрных королев",   positions: POSITIONS_ORDER_CHESS,       qPerPosition: 8, timeLimitSec: 1200, label: "Шах и Мат", role: "waiter"  },
+  chess:       { name: "Шах и Мат - Игра чёрных королев",   positions: POSITIONS_ORDER_CHESS,       qPerPosition: 8, timeLimitSec: 1800, label: "Шах и Мат", role: "waiter"  },
   hostess_reg: { name: "Регламент хостес",                  positions: POSITIONS_ORDER_HOSTESS_REG, qPerPosition: 1, totalQ: 20, label: "Регламент", role: "hostess" },
   hostess_dep: { name: "Депозитная система",                positions: POSITIONS_ORDER_HOSTESS_DEP, qPerPosition: 2, totalQ: 20, label: "Депозит",   role: "hostess" }
 };
@@ -4030,7 +4030,7 @@ async function goHome(kind){
     document.getElementById("home-subtitle").textContent = "Игра чёрных королев · авторская партия";
     document.getElementById("home-desc").innerHTML =
       'Аттестация состоит из <span class="cream">'+totalQ+' вопросов</span> &mdash; по 8 случайных вопросов на каждую из 3 позиций.<br><br>'+
-      '<span style="color:var(--gold-br);font-weight:600">Ограничение времени &mdash; 20 минут.</span> Если выйдешь из вкладки &mdash; таймер встаёт на паузу. После 20 минут активного времени партия закрывается автоматически: что не отвечено &mdash; засчитывается как «не сдано».';
+      '<span style="color:var(--gold-br);font-weight:600">Ограничение времени &mdash; 30 минут.</span> Если выйдешь из вкладки &mdash; таймер встаёт на паузу. После 30 минут активного времени партия закрывается автоматически: что не отвечено &mdash; засчитывается как «не сдано».';
   } else if (state.testKind === "hostess_reg"){
     document.getElementById("home-title").textContent = "РЕГЛАМЕНТ ХОСТЕС";
     document.getElementById("home-subtitle").textContent = "звонки, встреча, иерархия, дресс-код";
