@@ -226,6 +226,10 @@ h1.title{font-size:26px}
 .lb-row,.hist-row{font-size:11px}
 .user-row{grid-template-columns:1fr 60px 70px 70px;font-size:12px}
 }
+@keyframes pulse-red {
+0%, 100% { box-shadow: 0 0 0 0 rgba(200,100,90,0.4); }
+50% { box-shadow: 0 0 0 6px rgba(200,100,90,0); }
+}
 </style>
 
 </head>
@@ -515,6 +519,21 @@ h1.title{font-size:26px}
     <p class="dim" id="home-desc" style="line-height:1.7;margin-bottom:14px">
       Аттестация состоит из <span class="cream">108 вопросов</span> &mdash; по 3 случайных вопроса на каждую из 36 позиций.
     </p>
+    <div style="margin:18px 0 6px;padding:18px 20px;border:1.5px solid var(--gold);background:rgba(200,169,110,0.10)">
+      <div class="qsection" style="color:var(--gold);margin-bottom:10px">как отвечать на вопросы</div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.55;color:var(--cream);margin-bottom:14px">
+        Это не школьный тест &mdash; это тренировка речи. Отвечай развёрнуто, так как сказал бы гостю за столом.
+      </p>
+      <div style="font-size:13px;line-height:1.6;color:var(--cream-2);margin-bottom:6px">
+        <span style="color:var(--red)">&#10007;</span> Плохо: <span style="font-style:italic">«1800»</span>
+      </div>
+      <div style="font-size:13px;line-height:1.6;color:var(--cream-2);margin-bottom:14px">
+        <span style="color:var(--green)">&#10003;</span> Хорошо: <span style="font-style:italic;color:var(--cream)">«Авторский коктейль партии Игра чёрных королев, 120 мл, 1800 рублей»</span>
+      </div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;line-height:1.5;color:var(--cream)">
+        Мы тренируем не знание &mdash; мы тренируем подачу. Гость должен почувствовать что ты знаешь о чём говоришь.
+      </p>
+    </div>
     <div class="rules">
       <h3>правила партии</h3>
       <ul>
@@ -547,6 +566,10 @@ h1.title{font-size:26px}
   <div class="top-bar">
     <span>сотрудник: <span class="who" id="test-name">&mdash;</span></span>
     <span class="logout" id="logout-2">выйти</span>
+  </div>
+  <div id="time-limit-bar" class="hidden" style="margin:0 0 10px;padding:10px 14px;border:1.5px solid var(--gold-ln);background:#FAF5E8;display:flex;align-items:center;justify-content:space-between;font-family:'Cormorant Garamond',serif">
+    <span style="font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--cream-2)">осталось времени</span>
+    <span id="time-limit-value" style="font-size:22px;font-weight:600;color:var(--white);letter-spacing:.04em">20:00</span>
   </div>
   <div class="progress"><div class="progress-bar" id="pbar" style="width:0%"></div></div>
   <div class="progress-meta">
@@ -590,6 +613,11 @@ h1.title{font-size:26px}
     <div class="score-big" id="score-big">0</div>
     <div class="verdict" id="verdict">&mdash;</div>
     <div class="verdict-sub" id="verdict-sub">&mdash;</div>
+    <div id="verdict-feedback" class="hidden" style="margin:18px 0 8px;padding:18px 20px;border:1.5px solid var(--gold-ln);background:#FAF5E8;font-family:'Cormorant Garamond',serif;font-size:16px;line-height:1.55;color:var(--cream);text-align:left">
+      <div style="font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--cream-2);margin-bottom:10px">оценка</div>
+      <div id="verdict-feedback-text">&mdash;</div>
+      <div id="verdict-feedback-extra" class="hidden" style="margin-top:12px;padding-top:12px;border-top:1px dashed var(--gold-ln);font-size:14px;font-style:italic;color:var(--cream-2)"></div>
+    </div>
     <div class="stat-grid">
       <div class="stat-cell"><div class="stat-num" id="r-attempt">1</div><div class="stat-lbl">эта попытка</div></div>
       <div class="stat-cell"><div class="stat-num" id="r-best">0%</div><div class="stat-lbl">лучший</div></div>
@@ -682,6 +710,13 @@ h1.title{font-size:26px}
       </p>
       <button class="btn" id="test-telegram-btn" style="font-size:11px;margin-top:12px">отправить тестовое сообщение</button>
       <div id="test-telegram-result" style="font-size:11px;margin-top:8px"></div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--gold-ln)">
+        <p class="muted" style="font-size:10.5px;line-height:1.5;margin-bottom:8px">
+          Если у сотрудника был плохой интернет в момент завершения теста &mdash; отчёт сохраняется на его телефоне и автоматически досылается при следующем заходе на сайт. Кнопка ниже &mdash; принудительная попытка дослать всё что застряло на этом устройстве.
+        </p>
+        <button class="btn" id="flush-queue-btn" style="font-size:11px">дослать застрявшие отчёты &#9658;</button>
+        <div id="flush-queue-result" style="font-size:11px;margin-top:8px"></div>
+      </div>
     </div>
     <label class="fld" style="margin-top:0">
       <span class="lbl">сменить мастер-код</span>
@@ -1792,35 +1827,35 @@ const BANKS = {
   chess_queen: {
     name: "Чёрная Королева",
     bank: [
-      { q:"Что такое Чёрная Королева - категория, объём и цена?",
+      { q:"Расскажи про Чёрную Королеву как про позицию: к чему относится, какой объём и сколько стоит?",
         groups:[["коктейл"],["120"],["1800","1 800","тысяч"]],
         min:2, hint:"Категория + объём + цена.",
         answer:"Авторский коктейль партии Игра чёрных королев, 120 мл, 1800 рублей." },
-      { q:"Какой главный спирт в Чёрной Королеве и какие три ключевых ароматических компонента?",
+      { q:"На какой основе сделана Чёрная Королева и какие три ноты создают её характер?",
         groups:[["водк"],["черри","cherry","вишн"],["херес","sherry","pedro","ximenez","педро","хименес"],["шокол","mozart","моцарт"]],
         min:3, hint:"База + три ноты вкуса.",
         answer:"База - водка. Три ключевых компонента: Cherry Brandy, херес Pedro Ximenez Barbadillo, ликёр Mozart Chocolate Dark." },
-      { q:"Опиши вкусовой профиль Чёрной Королевы. Главное - НЕ называть его сладким.",
+      { q:"Опиши гостю каков на вкус коктейль Чёрная Королева. Важно: слово «сладкий» использовать нельзя.",
         groups:[["плотн","тёмн","темн"],["шокол","вишн"],["херес","дымок","sherry"],["не сладк","серьёзн","серьезн"]],
         min:3, hint:"Цвет + ноты + характер.",
         answer:"Тёмный, плотный, шоколадно-вишнёвый, с дымком хереса. Серьёзный, не сладкий - плотный." },
-      { q:"Кому подходит Чёрная Королева и кому НЕ предлагать?",
+      { q:"С каким гостем и заказом Чёрная Королева попадает в цель, а кому её точно не стоит предлагать?",
         groups:[["мужчин","35"],["виски","негрон","амарон"],["мяс","фуа","тёмн","темн"],["не предлаг","полегч","десерт","сливочн","девушк"]],
         min:3, hint:"Кому да + кому нет.",
         answer:"Подходит: мужчинам 35+, тем кто пьёт виски, негрони, амароне. К тёмному мясу и фуа-гра. Первый коктейль вечера. НЕ предлагать: тем кто просит полегче, на десерт, девушкам которые любят сливочные напитки." },
-      { q:"Гость говорит: Сладкий? Как ответить?",
+      { q:"Гость уточняет: «Он сладкий?» Что ответить?",
         groups:[["не сладк"],["плотн"],["лимон","херес","сух","балансир"]],
         min:2, hint:"Ключевое слово + чем балансируется.",
         answer:"Не сладкий. Плотный. Сахар балансируется лимоном и сухим хересом." },
-      { q:"Гость говорит: Не пью водку. Что ответить?",
+      { q:"Гость заявляет: «Я водку не пью». Чем закроешь возражение про Чёрную Королеву?",
         groups:[["каркас","нейтральн","основ","фон"],["не слышно","не главн","не чувств"],["херес","шокол","ведут","главн"]],
         min:2, hint:"Роль водки + что ведёт вкус.",
         answer:"Водка тут как нейтральный каркас, на вкусе её не слышно. Вкус ведут херес и шоколад." },
-      { q:"Как подаётся Чёрная Королева - бокал и декор?",
+      { q:"В каком бокале и с каким декором выходит Чёрная Королева на стол?",
         groups:[["купе","nick","нора"],["охлажд"],["шокол","стружк","70"],["вишн","шпажк"]],
         min:3, hint:"Бокал + температура + два элемента декора.",
         answer:"Бокал купе или Nick & Nora 180 мл, охлаждённый. Декор - стружка тёмного шоколада 70% и вишня на шпажке." },
-      { q:"Какие 4 формулировки НЕЛЬЗЯ говорить про Чёрную Королеву? Назови минимум 2.",
+      { q:"Назови минимум 2 формулировки из 4 запретных, которые НЕЛЬЗЯ говорить про Чёрную Королеву.",
         groups:[["сладк"],["дамск","женск"],["наливк","профан"],["самый дешёв","самый дешев","дешёв","дешев"]],
         min:2, hint:"Минимум 2 запретных слова из 4: сладкая / дамская / наливка / дешёвая.",
         answer:"Нельзя: называть сладким (он плотный); называть дамским (мужской характер); сравнивать с вишнёвой наливкой (профанация); называть самым дешёвым (все три по одной цене)." }
@@ -1829,35 +1864,35 @@ const BANKS = {
   chess_gambit: {
     name: "Гамбит",
     bank: [
-      { q:"Что такое Гамбит - категория, объём и цена?",
+      { q:"Расскажи про Гамбит как про позицию: к чему относится, какой объём и сколько стоит?",
         groups:[["коктейл"],["120"],["1800","1 800","тысяч"]],
         min:2, hint:"Категория + объём + цена.",
         answer:"Авторский коктейль партии Игра чёрных королев, 120 мл, 1800 рублей." },
-      { q:"Какой главный спирт в Гамбите и какие четыре других ингредиента? Назови минимум три.",
+      { q:"На какой основе сделан Гамбит и какие ещё четыре ингредиента в нём звучат? Хватит назвать минимум три.",
         groups:[["джин","gin","house"],["nonino","нонино","аперитив"],["роз"],["онегин","яблок"],["белок","яичн"]],
         min:3, hint:"База + минимум 2 из 4 компонентов.",
         answer:"База - джин House. Плюс: Nonino Aperitivo, сироп розы, настойка Онегин Gourmet Яблоко, яичный белок." },
-      { q:"Опиши вкусовой профиль Гамбита. Что особенно отличает его от других коктейлей партии?",
+      { q:"Опиши гостю каков Гамбит на вкус. Что в нём есть такого, чего нет у Чёрной Королевы и Шах и Мата?",
         groups:[["цветочн"],["яблочн","яблок"],["лёгк","легк"],["пенн","пена","шапк"],["шипуч","фин","финал","послевкус"]],
         min:3, hint:"Вкус + текстура + финал.",
         answer:"Цветочно-яблочный, лёгкий, с плотной пенной шапкой и шипучестью в финале." },
-      { q:"Кому подходит Гамбит и кому НЕ предлагать?",
+      { q:"С каким гостем и заказом Гамбит попадает в цель, а кому его лучше не предлагать?",
         groups:[["девушк","смешан","компани"],["сауэр","эспрессо","мартин"],["полегч","фотограф","фото"],["не предлаг","мужчин","крепк","деловой","делов"]],
         min:3, hint:"Кому да + кому нет.",
         answer:"Подходит: девушкам и смешанным компаниям 25-35, тем кто пьёт сауэры и эспрессо мартини, кто просит полегче, кто фотографирует напитки. НЕ предлагать: мужчинам которые попросили крепкое и тёмное, деловому ужину без шоу." },
-      { q:"Гость говорит: Яичный белок? Как ответить?",
+      { q:"Гостья настораживается: «Там яичный белок?» Чем закроешь возражение?",
         groups:[["плотн","пенк","пен"],["сауэр"],["вкус","нет","текстур"]],
         min:2, hint:"Зачем нужен + что с вкусом.",
         answer:"Он даёт плотную пенку - как в сауэрах. На вкусе его нет, только текстура." },
-      { q:"Гость говорит: Не люблю сладкое. Что ответить про Гамбит?",
+      { q:"Гость уточняет: «Только не сладкое». Что ответить про Гамбит?",
         groups:[["не сладк"],["цветочн","горьк","nonino","нонино"],["сахар","балансир","уравновеш"]],
         min:2, hint:"Профиль + что балансирует.",
         answer:"Гамбит не сладкий - у него цветочно-горький профиль от Nonino. Сахар уравновешен." },
-      { q:"Как подаётся Гамбит - бокал и декор?",
+      { q:"В каком бокале выходит Гамбит и какой у него декор?",
         groups:[["купе","180","200"],["охлажд"],["стрелк","биттер"],["лепест","роз"]],
         min:3, hint:"Бокал + два элемента декора.",
         answer:"Бокал купе 180-200 мл, охлаждённый. Декор - стрелка из биттера на пене (символ хода коня) плюс лепесток розы." },
-      { q:"Какие 5 формулировок НЕЛЬЗЯ говорить про Гамбит? Назови минимум 2.",
+      { q:"Назови минимум 2 формулировки из 5 запретных, которые НЕЛЬЗЯ употреблять про Гамбит.",
         groups:[["слаб"],["дамск","женск"],["простой","прост"],["белок","начин","смутит"],["дешёв","дешев"]],
         min:2, hint:"Минимум 2 из 5: слабый / дамский / простой / начинать с белка / дешёвый.",
         answer:"Нельзя: называть слабым (он лёгкий по ощущению, не слабый); называть дамским коктейлем; называть простым (там пять сбалансированных ингредиентов); начинать с яичного белка (гость смутится); говорить дешевле других (все по одной цене)." }
@@ -1866,35 +1901,35 @@ const BANKS = {
   chess_mate: {
     name: "Шах и Мат",
     bank: [
-      { q:"Что такое Шах и Мат - категория, объём и цена?",
+      { q:"Расскажи про Шах и Мат как про позицию: к чему относится, какой объём напитка, какой объём пенки и сколько стоит?",
         groups:[["коктейл"],["120"],["30","пенк","пен"],["1800","1 800","тысяч"]],
         min:3, hint:"Категория + объём напитка + объём пенки + цена.",
         answer:"Авторский коктейль партии Игра чёрных королев, 120 мл напитка плюс 30 мл пенной шапки, 1800 рублей." },
-      { q:"Какой главный спирт в Шах и Мат и какие пять других компонентов? Назови минимум три.",
+      { q:"На какой основе сделан Шах и Мат и какие пять других ингредиентов в нём звучат? Хватит назвать минимум три.",
         groups:[["водк","cavalli","кавалли","черник"],["mozart","моцарт","шокол","кокос","white"],["bols","болс","йогурт"],["лаванд"],["сливк"],["пенк","сифон"]],
         min:3, hint:"База + минимум 2 из 5 компонентов.",
         answer:"База - водка Roberto Cavalli Черника. Плюс: Mozart White Chocolate Coconut, Bols Yogurt, сироп лаванды, сливки 11%, кокосово-белошоколадная пенка из сифона." },
-      { q:"Опиши вкусовой профиль Шах и Мат и его роль в партии.",
+      { q:"Опиши гостю каков Шах и Мат на вкус и какую роль он играет в вечере?",
         groups:[["кремов"],["кокос","шокол"],["лаванд"],["десерт","финал"]],
         min:3, hint:"Текстура + ноты + роль.",
         answer:"Кремовый, кокосово-шоколадный, лавандовый, десертный. Финал вечера." },
-      { q:"Кому подходит Шах и Мат и кому НЕ предлагать?",
+      { q:"С каким гостем и заказом Шах и Мат попадает в цель, а кому его лучше не предлагать?",
         groups:[["девушк","десерт","финал"],["сливочн","свидан","день рожд","торт"],["не предлаг","старт","начал","сух","плотн"]],
         min:3, hint:"Кому да + кому нет.",
         answer:"Подходит: девушкам, на десерт, в финал вечера, тем кто пьёт сливочные напитки, парам на свидании, вместо торта на день рождения. НЕ предлагать: на старте вечера, гостям которые просят сухое и плотное." },
-      { q:"Гость говорит: Сладкое не люблю. Что ответить про Шах и Мат?",
+      { q:"Гость уточняет: «Только не сладкое». Чем закроешь возражение про Шах и Мат?",
         groups:[["не приторн","не сладк"],["лаванд","черник"],["свеж","балансе","балансир"]],
         min:2, hint:"Что не приторное + что даёт свежесть.",
         answer:"Шах и Мат не приторный - лаванда и черника дают свежесть, сладость в балансе." },
-      { q:"Гость говорит: Уже наелся. Как продать Шах и Мат?",
+      { q:"Гость говорит: «Я уже наелся, ничего не хочу». Как продашь Шах и Мат?",
         groups:[["десерт","чизкейк","мороженое","торт"],["120","не тяжёл","не тяжел","лёгк","легк"]],
         min:2, hint:"Замена десерта + про объём.",
         answer:"Это и есть десерт - заменит чизкейк или мороженое. 120 мл, не тяжёлый." },
-      { q:"Как подаётся Шах и Мат - бокал, что сверху и почему важна срочность?",
+      { q:"В каком бокале выходит Шах и Мат, что у него сверху и почему его нужно нести гостю срочно?",
         groups:[["купе","old fashioned","олд фешн","220","250"],["шахматн","фигурк","шокол"],["лаванд","цветок","микро"],["пять минут","5 мин","живёт","живет","срочн"]],
         min:3, hint:"Бокал + декор + срочность.",
         answer:"Бокал купе 220 мл или Old Fashioned 250 мл с одним крупным кубом. Сверху - плотная пенка из сифона 2-2.5 см, на пенке - шахматная фигурка из тёмного шоколада и микро-цветок лаванды. Подача срочная - пенка живёт пять минут." },
-      { q:"Какие 5 формулировок НЕЛЬЗЯ говорить про Шах и Мат? Назови минимум 2.",
+      { q:"Назови минимум 2 формулировки из 5 запретных, которые НЕЛЬЗЯ употреблять про Шах и Мат.",
         groups:[["сладк","варен"],["слаб"],["молочн","профан"],["баллончик","аэрозол"],["начал","старт"]],
         min:2, hint:"Минимум 2 из 5: сладкий-варенье / слабый / молочный / баллончик / в начале вечера.",
         answer:"Нельзя: называть сладким как варенье (он не приторный); называть слабым (там 60 мл крепкого алкоголя); называть просто молочным коктейлем (профанация); говорить пена из баллончика (это сифонная пенка, не аэрозоль); предлагать в начале вечера (только финал)." }
@@ -2572,7 +2607,7 @@ const POSITIONS_ORDER_HOSTESS_DEP = [
 
 const TEST_KINDS = {
   main:        { name: "Основная аттестация бара",          positions: POSITIONS_ORDER,             qPerPosition: 3, label: "Основная",  role: "waiter"  },
-  chess:       { name: "Шах и Мат - Игра чёрных королев",   positions: POSITIONS_ORDER_CHESS,       qPerPosition: 8, label: "Шах и Мат", role: "waiter"  },
+  chess:       { name: "Шах и Мат - Игра чёрных королев",   positions: POSITIONS_ORDER_CHESS,       qPerPosition: 8, timeLimitSec: 1200, label: "Шах и Мат", role: "waiter"  },
   hostess_reg: { name: "Регламент хостес",                  positions: POSITIONS_ORDER_HOSTESS_REG, qPerPosition: 1, totalQ: 20, label: "Регламент", role: "hostess" },
   hostess_dep: { name: "Депозитная система",                positions: POSITIONS_ORDER_HOSTESS_DEP, qPerPosition: 2, totalQ: 20, label: "Депозит",   role: "hostess" }
 };
@@ -2641,9 +2676,28 @@ function renderDeadlineInfo(){
 // ============================================================
 // ПРОВЕРКА ОТВЕТА
 // ============================================================
+function expandShortNumbers(s){
+  // 50к -> 50000, 50 к -> 50000, 50тыс -> 50000, 50 тыс -> 50000
+  s = s.replace(/(\d+)\s*(?:тыс(?:\.|яч)?|к\b|k\b|т\b)/gi, function(_,num){
+    return (parseInt(num,10) * 1000).toString();
+  });
+  // 1.5к -> 1500, 1,5к -> 1500
+  s = s.replace(/(\d+)[.,](\d+)\s*(?:тыс(?:\.|яч)?|к\b|k\b)/gi, function(_,a,b){
+    return Math.round(parseFloat(a + "." + b) * 1000).toString();
+  });
+  // "50 000" с пробелом или табом между цифрами -> 50000
+  s = s.replace(/(\d)\s+(\d{3})\b/g, "$1$2");
+  s = s.replace(/(\d)\s+(\d{3})\b/g, "$1$2"); // второй проход для длинных чисел
+  return s;
+}
+
 function normalize(s){
-  return (s||"").toLowerCase().replace(/\u0451/g,"\u0435").replace(/[\u00ab\u00bb\u201c\u201d\u2018\u2019`""]/g,"")
-    .replace(/[.,!?;:()\-\u2014\u2013_\/\\\u2116]/g," ").replace(/\s+/g," ").trim();
+  let r = (s||"").toLowerCase().replace(/\u0451/g,"\u0435").replace(/[\u00ab\u00bb\u201c\u201d\u2018\u2019`""]/g,"");
+  r = expandShortNumbers(r);
+  // плюсы и слеши и амперсанды как разделители — заменяем на пробел
+  r = r.replace(/[+&]/g, " ");
+  r = r.replace(/[.,!?;:()\-\u2014\u2013_\/\\\u2116]/g," ").replace(/\s+/g," ").trim();
+  return r;
 }
 
 const RU_TO_LAT = {
@@ -2982,11 +3036,39 @@ function expandGroupWithSynonyms(group){
   return Array.from(result);
 }
 
+function isAllAnswer(norm){
+  // Пользователь ответил «все», «всё», «все 4», «все четыре», «все четыре стола»
+  if (!norm) return false;
+  const tokens = norm.split(/\s+/);
+  if (tokens.length === 0) return false;
+  // первый токен — "все" или "всё" или "all"
+  const first = tokens[0];
+  if (first === "все" || first === "всё" || first === "all" || first === "vse"){
+    return true;
+  }
+  return false;
+}
+
+function isNumericGroup(group){
+  // Группа считается «числовой» если хотя бы один из её вариантов содержит цифру
+  // (например ["43"], ["44"], ["45"], ["46"]) - это перечисление номеров
+  return group.some(w => /\d/.test(String(w)));
+}
+
 function checkAnswer(q,answer){
   const norm=normalize(answer);
   if(!norm) return {passed:false,hits:0,total:q.min||1,missed:q.groups||[],score:0};
   const userForms = flexVariants(answer);
   const groups=q.groups||[];
+
+  // Спец-логика: если пользователь написал "все"/"всё" и все группы вопроса числовые - засчитываем всё
+  if (groups.length >= 2 && isAllAnswer(norm)){
+    const allNumeric = groups.every(isNumericGroup);
+    if (allNumeric){
+      return {passed:true, hits:groups.length, total:groups.length, missed:[], score:100};
+    }
+  }
+
   let hits=0; const missed=[];
   for(const group of groups){
     const expandedGroup = expandGroupWithSynonyms(group);
@@ -3009,7 +3091,54 @@ function fmtDate(iso){
 }
 
 // ============================================================
-// LOCAL STORAGE
+// ============================================================
+// SUPABASE — общая база данных для всех устройств
+// ============================================================
+// Эти константы заполняются после регистрации на supabase.com
+// Если оставить пустыми — система работает на localStorage как раньше.
+// ============================================================
+const SUPABASE_URL = "__SUPABASE_URL_PLACEHOLDER__";
+const SUPABASE_ANON_KEY = "__SUPABASE_ANON_KEY_PLACEHOLDER__";
+const SB_ENABLED = SUPABASE_URL && SUPABASE_URL.indexOf("PLACEHOLDER") === -1 && SUPABASE_ANON_KEY && SUPABASE_ANON_KEY.indexOf("PLACEHOLDER") === -1;
+
+// Простой клиент к Supabase REST API без зависимостей
+const SB = (function(){
+  if (!SB_ENABLED) return null;
+  const headers = {
+    "apikey": SUPABASE_ANON_KEY,
+    "Authorization": "Bearer " + SUPABASE_ANON_KEY,
+    "Content-Type": "application/json"
+  };
+  async function req(method, path, body, extraHeaders){
+    const url = SUPABASE_URL.replace(/\/$/,"") + "/rest/v1" + path;
+    const opts = {
+      method,
+      headers: Object.assign({}, headers, extraHeaders || {})
+    };
+    if (body !== undefined && body !== null){
+      opts.body = JSON.stringify(body);
+    }
+    const r = await fetch(url, opts);
+    if (!r.ok){
+      const txt = await r.text().catch(()=>"");
+      throw new Error("Supabase " + r.status + ": " + txt);
+    }
+    if (r.status === 204) return null;
+    const txt = await r.text();
+    if (!txt) return null;
+    return JSON.parse(txt);
+  }
+  return {
+    select: (path) => req("GET", path, null, {"Accept":"application/json"}),
+    insert: (path, body) => req("POST", path, body, {"Prefer":"return=representation"}),
+    upsert: (path, body, onConflict) => req("POST", path + (path.indexOf("?")>=0?"&":"?") + "on_conflict=" + onConflict, body, {"Prefer":"resolution=merge-duplicates,return=representation"}),
+    update: (path, body) => req("PATCH", path, body, {"Prefer":"return=representation"}),
+    remove: (path) => req("DELETE", path, null)
+  };
+})();
+
+// ============================================================
+// LOCAL STORAGE (fallback и буфер для offline)
 // ============================================================
 const STORE = (function(){
   const PFX = "nomo_att_v3_";
@@ -3030,13 +3159,50 @@ const STORE = (function(){
   };
 })();
 
+// ============================================================
+// STORAGE — гибридный фасад: Supabase + localStorage
+// ============================================================
+// При записи: пишем в Supabase, локально кэшируем.
+// Если Supabase упал — пишем только локально, при следующей операции
+// синхронизация подтянет.
+// При чтении: если Supabase доступен — читаем оттуда, иначе локально.
+// ============================================================
 const STORAGE = {
+  // ---------- master pin ----------
   async getMasterPin(){
+    if (SB){
+      try{
+        const rows = await SB.select("/nomo_settings?key=eq.master_pin&select=value");
+        if (rows && rows.length && rows[0].value) return rows[0].value;
+      }catch(e){ /* fallback */ }
+    }
     try{const v=await STORE.get("master_pin");if(v) return JSON.parse(v);}catch(e){}
     return DEFAULT_MASTER_PIN;
   },
-  async setMasterPin(pin){await STORE.set("master_pin",JSON.stringify(pin));},
+  async setMasterPin(pin){
+    await STORE.set("master_pin",JSON.stringify(pin));
+    if (SB){
+      try{
+        await SB.upsert("/nomo_settings", {key:"master_pin", value:String(pin), updated_at:new Date().toISOString()}, "key");
+      }catch(e){ console.warn("setMasterPin Supabase fail:", e); }
+    }
+  },
+
+  // ---------- users ----------
   async getAllUsers(){
+    if (SB){
+      try{
+        const rows = await SB.select("/nomo_users?select=*&order=created_at.asc");
+        if (rows){
+          // кэшируем локально
+          for (const u of rows){
+            const local = { name:u.name||"", pin:u.pin, isTest:!!u.is_test, role:u.role||"waiter", created:u.created_at };
+            try{ await STORE.set("users:"+u.pin, JSON.stringify(local)); }catch(_){}
+          }
+          return rows.map(u => ({ name:u.name||"", pin:u.pin, isTest:!!u.is_test, role:u.role||"waiter", created:u.created_at }));
+        }
+      }catch(e){ console.warn("getAllUsers Supabase fail, fallback to local:", e); }
+    }
     try{
       const keys=await STORE.list("users:");
       const out=[];
@@ -3047,12 +3213,32 @@ const STORAGE = {
     }catch(e){return [];}
   },
   async getUserByPin(pin){
+    if (SB){
+      try{
+        const rows = await SB.select("/nomo_users?pin=eq."+encodeURIComponent(pin)+"&select=*&limit=1");
+        if (rows && rows.length){
+          const u = rows[0];
+          const local = { name:u.name||"", pin:u.pin, isTest:!!u.is_test, role:u.role||"waiter", created:u.created_at };
+          try{ await STORE.set("users:"+pin, JSON.stringify(local)); }catch(_){}
+          return local;
+        }
+        return null;
+      }catch(e){ /* fallback */ }
+    }
     try{const v=await STORE.get("users:"+pin);if(v) return JSON.parse(v);}catch(e){}
     return null;
   },
   async addUser(name,pin,isTest,role){
     const u={name:name||"",pin:pin,isTest:!!isTest,role:role||"waiter",created:new Date().toISOString()};
     await STORE.set("users:"+pin,JSON.stringify(u));
+    if (SB){
+      try{
+        await SB.upsert("/nomo_users", {
+          pin:pin, name:name||"", role:role||"waiter", is_test:!!isTest,
+          updated_at:new Date().toISOString()
+        }, "pin");
+      }catch(e){ console.warn("addUser Supabase fail:", e); }
+    }
     return u;
   },
   async updateUser(pin,patch){
@@ -3060,6 +3246,16 @@ const STORAGE = {
     if(!u) return null;
     Object.assign(u,patch);
     await STORE.set("users:"+pin,JSON.stringify(u));
+    if (SB){
+      try{
+        const sbPatch = {};
+        if (patch.name !== undefined) sbPatch.name = patch.name;
+        if (patch.role !== undefined) sbPatch.role = patch.role;
+        if (patch.isTest !== undefined) sbPatch.is_test = !!patch.isTest;
+        sbPatch.updated_at = new Date().toISOString();
+        await SB.update("/nomo_users?pin=eq."+encodeURIComponent(pin), sbPatch);
+      }catch(e){ console.warn("updateUser Supabase fail:", e); }
+    }
     return u;
   },
   async deleteUser(pin){
@@ -3069,15 +3265,82 @@ const STORAGE = {
       if(k.endsWith(":"+pin)){try{await STORE.delete(k);}catch(_){}}
     }
     await STORE.delete("progress:"+pin);
+    if (SB){
+      try{
+        await SB.remove("/nomo_attempts?pin=eq."+encodeURIComponent(pin));
+        await SB.remove("/nomo_progress?pin=eq."+encodeURIComponent(pin));
+        await SB.remove("/nomo_users?pin=eq."+encodeURIComponent(pin));
+      }catch(e){ console.warn("deleteUser Supabase fail:", e); }
+    }
   },
+
+  // ---------- attempts ----------
   async addAttempt(rec){
     const ts=Date.now();
     const key="attempts:"+ts+":"+rec.pin;
     rec.id=key; rec.ts=ts;
     await STORE.set(key,JSON.stringify(rec));
+    if (SB){
+      try{
+        await SB.insert("/nomo_attempts", {
+          id: key,
+          pin: rec.pin,
+          name: rec.name || "",
+          role: rec.role || "waiter",
+          test_kind: rec.testKind || "main",
+          test_kind_label: rec.testKindLabel || "",
+          score: rec.score || 0,
+          passed: !!rec.passed,
+          is_test: !!rec.isTest,
+          total_questions: rec.totalQuestions || 0,
+          correct_answers: rec.correctAnswers || 0,
+          duration_sec: rec.durationSec || 0,
+          pause_count: rec.pauseCount || 0,
+          total_pause_sec: rec.totalPauseSec || 0,
+          resume_count: rec.resumeCount || 0,
+          by_position: rec.byPosition || {},
+          questions: rec.questions || [],
+          answers: rec.answers || {},
+          pause_details: rec.pauseDetails || [],
+          device_id: getDeviceId(),
+          date: rec.date || new Date().toISOString()
+        });
+      }catch(e){
+        console.warn("addAttempt Supabase fail (saved locally):", e);
+        // помечаем как требующее синхронизации
+        try{ await STORE.set("sbqueue:"+key, JSON.stringify({type:"attempt", id:key})); }catch(_){}
+      }
+    }
     return rec;
   },
   async getAllAttempts(){
+    if (SB){
+      try{
+        const rows = await SB.select("/nomo_attempts?select=*&order=date.desc&limit=500");
+        if (rows){
+          return rows.map(a => ({
+            id: a.id,
+            pin: a.pin,
+            name: a.name || "",
+            role: a.role || "waiter",
+            testKind: a.test_kind,
+            testKindLabel: a.test_kind_label || "",
+            score: a.score,
+            passed: !!a.passed,
+            isTest: !!a.is_test,
+            totalQuestions: a.total_questions,
+            correctAnswers: a.correct_answers,
+            durationSec: a.duration_sec,
+            pauseCount: a.pause_count,
+            totalPauseSec: a.total_pause_sec,
+            resumeCount: a.resume_count,
+            byPosition: a.by_position || {},
+            date: a.date,
+            ts: new Date(a.date).getTime()
+          }));
+        }
+      }catch(e){ console.warn("getAllAttempts Supabase fail, fallback to local:", e); }
+    }
     try{
       const keys=await STORE.list("attempts:");
       const out=[];
@@ -3088,24 +3351,69 @@ const STORAGE = {
     }catch(e){return [];}
   },
   async getUserAttempts(pin){
+    if (SB){
+      try{
+        const rows = await SB.select("/nomo_attempts?pin=eq."+encodeURIComponent(pin)+"&select=*&order=date.desc");
+        if (rows){
+          return rows.map(a => ({
+            id: a.id, pin: a.pin, name: a.name || "", role: a.role || "waiter",
+            testKind: a.test_kind, testKindLabel: a.test_kind_label || "",
+            score: a.score, passed: !!a.passed, isTest: !!a.is_test,
+            date: a.date, ts: new Date(a.date).getTime()
+          }));
+        }
+      }catch(e){ /* fallback */ }
+    }
     const all=await this.getAllAttempts();
     return all.filter(a=>a.pin===pin);
   },
-  async deleteAttempt(id){await STORE.delete(id);},
+  async deleteAttempt(id){
+    await STORE.delete(id);
+    if (SB){
+      try{ await SB.remove("/nomo_attempts?id=eq."+encodeURIComponent(id)); }catch(e){ console.warn("deleteAttempt Supabase fail:", e); }
+    }
+  },
   async clearAllAttempts(){
     const all=await this.getAllAttempts();
     for(const a of all){try{await STORE.delete(a.id);}catch(_){}}
+    if (SB){
+      try{ await SB.remove("/nomo_attempts?id=neq.__never__"); }catch(e){ console.warn("clearAllAttempts Supabase fail:", e); }
+    }
   },
+
+  // ---------- progress ----------
   async getProgress(pin){
+    if (SB){
+      try{
+        const rows = await SB.select("/nomo_progress?pin=eq."+encodeURIComponent(pin)+"&select=data&limit=1");
+        if (rows && rows.length) return rows[0].data;
+      }catch(e){ /* fallback */ }
+    }
     try{const v=await STORE.get("progress:"+pin);if(v) return JSON.parse(v);}catch(e){}
     return null;
   },
   async saveProgress(data){
     if(!data || !data.pin) return;
     try{await STORE.set("progress:"+data.pin,JSON.stringify(data));}catch(e){console.warn("saveProgress failed",e);}
+    if (SB){
+      try{
+        await SB.upsert("/nomo_progress", {pin:data.pin, data:data, updated_at:new Date().toISOString()}, "pin");
+      }catch(e){ /* не критично */ }
+    }
   },
-  async deleteProgress(pin){try{await STORE.delete("progress:"+pin);}catch(_){}},
+  async deleteProgress(pin){
+    try{await STORE.delete("progress:"+pin);}catch(_){}
+    if (SB){
+      try{ await SB.remove("/nomo_progress?pin=eq."+encodeURIComponent(pin)); }catch(e){ /* не критично */ }
+    }
+  },
   async getAllProgress(){
+    if (SB){
+      try{
+        const rows = await SB.select("/nomo_progress?select=*");
+        if (rows) return rows.map(r => r.data);
+      }catch(e){ /* fallback */ }
+    }
     try{
       const keys=await STORE.list("progress:");
       const out=[];
@@ -3116,6 +3424,18 @@ const STORAGE = {
     }catch(e){return [];}
   }
 };
+
+// Уникальный идентификатор устройства (для отчётов)
+function getDeviceId(){
+  try{
+    let id = localStorage.getItem("nomo_device_id");
+    if (!id){
+      id = "dev_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2,8);
+      localStorage.setItem("nomo_device_id", id);
+    }
+    return id;
+  }catch(e){ return "dev_unknown"; }
+}
 
 // ============================================================
 // ЗАЩИТА ОТ СКРИНОВ
@@ -3158,6 +3478,7 @@ document.addEventListener("visibilitychange",function(){
   if(document.hidden){
     showShield();
     if (state.inTest && !pauseStart){ pauseStart = Date.now(); }
+    pauseTimeLimit();
   } else {
     hideShield();
     if (state.inTest && pauseStart){
@@ -3165,6 +3486,7 @@ document.addEventListener("visibilitychange",function(){
       recordViolation(durSec, "leave");
       pauseStart = null;
     }
+    if (state.inTest) resumeTimeLimit();
   }
 });
 
@@ -3173,6 +3495,7 @@ window.addEventListener("blur", function(){
   if (!shieldArmed || !state.inTest) return;
   if (document.hidden) return;
   _lastBlurTs = Date.now();
+  pauseTimeLimit();
 });
 window.addEventListener("focus", function(){
   if (!shieldArmed || !state.inTest) return;
@@ -3181,7 +3504,132 @@ window.addEventListener("focus", function(){
     recordViolation(durSec, "blur");
   }
   _lastBlurTs = 0;
+  if (state.inTest) resumeTimeLimit();
 });
+
+// ============================================================
+// ТАЙМЕР ОГРАНИЧЕНИЯ ВРЕМЕНИ (с паузами на закрытии вкладки)
+// ============================================================
+function fmtMMSS(totalSec){
+  if (totalSec < 0) totalSec = 0;
+  const m = Math.floor(totalSec/60);
+  const s = totalSec % 60;
+  return (m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+}
+
+function updateTimeLimitUI(){
+  const bar = document.getElementById("time-limit-bar");
+  const valEl = document.getElementById("time-limit-value");
+  if (!bar || !valEl) return;
+  if (!state.timeLimitSec || !state.inTest){
+    bar.classList.add("hidden");
+    return;
+  }
+  bar.classList.remove("hidden");
+  const remaining = Math.max(0, state.timeLimitSec - state.timeUsedSec);
+  valEl.textContent = fmtMMSS(remaining);
+  // Цвета по остатку
+  if (remaining <= 60){
+    bar.style.borderColor = "var(--red)";
+    bar.style.background = "rgba(200,100,90,0.10)";
+    valEl.style.color = "var(--red)";
+    bar.style.animation = "pulse-red 1s infinite";
+  } else if (remaining <= 300){
+    bar.style.borderColor = "var(--gold)";
+    bar.style.background = "rgba(200,169,110,0.12)";
+    valEl.style.color = "var(--gold-br)";
+    bar.style.animation = "";
+  } else {
+    bar.style.borderColor = "var(--gold-ln)";
+    bar.style.background = "#FAF5E8";
+    valEl.style.color = "var(--white)";
+    bar.style.animation = "";
+  }
+}
+
+function startTimeLimit(testKind){
+  const cfg = TEST_KINDS[testKind] || {};
+  const limit = cfg.timeLimitSec || 0;
+  state.timeLimitSec = limit;
+  // timeUsedSec мог быть восстановлен из progress (resume) — не сбрасываем
+  if (typeof state.timeUsedSec !== "number") state.timeUsedSec = 0;
+  if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
+  state.timerActive = false;
+  if (!limit) {
+    updateTimeLimitUI();
+    return;
+  }
+  resumeTimeLimit();
+  updateTimeLimitUI();
+}
+
+function resumeTimeLimit(){
+  if (!state.timeLimitSec || !state.inTest) return;
+  if (state.timerActive) return;
+  state.timerActive = true;
+  state.timerLastTick = Date.now();
+  if (state.timerInterval) clearInterval(state.timerInterval);
+  state.timerInterval = setInterval(tickTimeLimit, 1000);
+}
+
+function pauseTimeLimit(){
+  if (!state.timerActive) return;
+  // Накапливаем уже прошедшее время
+  const now = Date.now();
+  const delta = Math.floor((now - state.timerLastTick)/1000);
+  if (delta > 0) state.timeUsedSec += delta;
+  state.timerActive = false;
+  if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
+  saveProgressAsync();
+  updateTimeLimitUI();
+}
+
+function stopTimeLimit(){
+  if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
+  state.timerActive = false;
+  const bar = document.getElementById("time-limit-bar");
+  if (bar) bar.classList.add("hidden");
+}
+
+function tickTimeLimit(){
+  if (!state.inTest || !state.timerActive){ return; }
+  const now = Date.now();
+  const delta = Math.floor((now - state.timerLastTick)/1000);
+  if (delta >= 1){
+    state.timeUsedSec += delta;
+    state.timerLastTick = now - ((now - state.timerLastTick) - delta*1000);
+  }
+  updateTimeLimitUI();
+  // Проверка на превышение
+  if (state.timeUsedSec >= state.timeLimitSec){
+    state.timerActive = false;
+    if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; }
+    onTimeLimitExpired();
+  }
+  // Сохранение прогресса каждые 10 секунд (чтобы при закрытии вкладки время не потерялось)
+  if (state.timeUsedSec % 10 === 0) saveProgressAsync();
+}
+
+async function onTimeLimitExpired(){
+  if (!state.inTest) return;
+  // Помечаем все ещё неотвеченные вопросы как пустые
+  for (let i = 0; i < state.questions.length; i++){
+    if (state.answers[i] === undefined){
+      state.answers[i] = "";
+    }
+    if (!state.reviewResults || !state.reviewResults[i]){
+      const item = state.questions[i];
+      state.reviewResults = state.reviewResults || {};
+      state.reviewResults[i] = checkAnswer(item.q, state.answers[i] || "");
+    }
+  }
+  // Уведомление
+  try{
+    alert("Время вышло. Партия закрыта автоматически. Неотвеченные вопросы засчитаны как «не сдано».");
+  }catch(_){}
+  // Завершаем как обычно
+  await finishTest();
+}
 
 window.addEventListener("beforeunload",function(){
   if (state.inTest){
@@ -3242,7 +3690,13 @@ const state={
   currentIdx:0, results:null,
   inTest:false, sessionId:null, startedAt:null,
   pauses:[], resumeCount:0,
-  checkMode:"answer", testKind:"main"
+  checkMode:"answer", testKind:"main",
+  // Лимит времени (только для тестов с timeLimitSec)
+  timeLimitSec: 0,         // лимит для текущего теста (0 = без лимита)
+  timeUsedSec: 0,          // накопленные активные секунды на этом тесте
+  timerLastTick: 0,        // timestamp последнего тика интервала
+  timerInterval: null,     // id setInterval
+  timerActive: false       // тикает ли таймер прямо сейчас
 };
 
 let _progressSaveTimer = null;
@@ -3255,7 +3709,8 @@ function saveProgressAsync(){
       sessionId:state.sessionId, startedAt:state.startedAt,
       currentIdx:state.currentIdx, answers:state.answers, reviewResults:state.reviewResults,
       questions:state.questions, pauses:state.pauses, resumeCount:state.resumeCount,
-      testKind:state.testKind || "main", lastUpdate:Date.now()
+      testKind:state.testKind || "main", lastUpdate:Date.now(),
+      timeUsedSec: state.timeUsedSec || 0
     };
     await STORAGE.saveProgress(data);
   }, 200);
@@ -3268,7 +3723,8 @@ async function saveProgressNow(){
     sessionId:state.sessionId, startedAt:state.startedAt,
     currentIdx:state.currentIdx, answers:state.answers, reviewResults:state.reviewResults,
     questions:state.questions, pauses:state.pauses, resumeCount:state.resumeCount,
-    testKind:state.testKind || "main", lastUpdate:Date.now()
+    testKind:state.testKind || "main", lastUpdate:Date.now(),
+    timeUsedSec: state.timeUsedSec || 0
   };
   await STORAGE.saveProgress(data);
 }
@@ -3394,8 +3850,11 @@ document.getElementById("pin-input").addEventListener("keydown",function(e){
 });
 
 function doLogout(){
+  state.inTest = false;
+  stopTimeLimit();
   state.user=null; state.isAdmin=false;
   state.questions=[]; state.answers={}; state.currentIdx=0; state.results=null;
+  state.timeUsedSec = 0;
   setWatermark("");
   document.getElementById("pin-input").value="";
   document.getElementById("pin-error").textContent="";
@@ -3447,6 +3906,7 @@ document.getElementById("resume-continue-btn").addEventListener("click", async f
   state.currentIdx=p.currentIdx; state.pauses=p.pauses||[];
   state.resumeCount=(p.resumeCount||0)+1;
   state.inTest=true; state.testKind=p.testKind||"main";
+  state.timeUsedSec = p.timeUsedSec || 0;
   state.pauses.push({
     leftAt:p.lastUpdate||p.startedAt, returnedAt:Date.now(),
     durationSec:Math.round((Date.now()-(p.lastUpdate||p.startedAt))/1000), type:"resume"
@@ -3454,6 +3914,7 @@ document.getElementById("resume-continue-btn").addEventListener("click", async f
   await saveProgressNow();
   showStage("test");
   renderQuestion();
+  startTimeLimit(state.testKind);
 });
 
 document.getElementById("resume-restart-btn").addEventListener("click", async function(){
@@ -3553,7 +4014,8 @@ async function goHome(kind){
     document.getElementById("home-title").textContent = "ШАХ И МАТ";
     document.getElementById("home-subtitle").textContent = "Игра чёрных королев · авторская партия";
     document.getElementById("home-desc").innerHTML =
-      'Аттестация состоит из <span class="cream">'+totalQ+' вопросов</span> &mdash; по 8 случайных вопросов на каждую из 3 позиций.';
+      'Аттестация состоит из <span class="cream">'+totalQ+' вопросов</span> &mdash; по 8 случайных вопросов на каждую из 3 позиций.<br><br>'+
+      '<span style="color:var(--gold-br);font-weight:600">Ограничение времени &mdash; 20 минут.</span> Если выйдешь из вкладки &mdash; таймер встаёт на паузу. После 20 минут активного времени партия закрывается автоматически: что не отвечено &mdash; засчитывается как «не сдано».';
   } else if (state.testKind === "hostess_reg"){
     document.getElementById("home-title").textContent = "РЕГЛАМЕНТ ХОСТЕС";
     document.getElementById("home-subtitle").textContent = "звонки, встреча, иерархия, дресс-код";
@@ -3672,9 +4134,11 @@ document.getElementById("start-btn").addEventListener("click", async function(){
   state.startedAt=Date.now();
   state.pauses=[]; state.resumeCount=0;
   state.inTest=true; state.testKind=kind;
+  state.timeUsedSec = 0;
   await saveProgressNow();
   showStage("test");
   renderQuestion();
+  startTimeLimit(kind);
 });
 
 function renderQuestion(){
@@ -3772,6 +4236,7 @@ document.getElementById("prev-btn").addEventListener("click",function(){
 
 async function finishTest(){
   state.inTest=false;
+  stopTimeLimit();
   const kind=state.testKind||"main";
   const cfg=TEST_KINDS[kind];
   const positions=cfg.positions;
@@ -3824,6 +4289,7 @@ async function finishTest(){
       testKindFull:cfg.name,
       totalQuestions:totalQ, correctAnswers:totalPassed,
       violations:pauseCount,
+      pauseCount, totalPauseSec, durationSec,
       violationLog:pauses.map(function(p){
         return { at:new Date(p.leftAt||Date.now()).toISOString(), reason:p.type||"tab-hidden" };
       }),
@@ -3863,6 +4329,51 @@ async function renderResult(){
     v.textContent=overallScore>=95?"Партия сыграна безупречно":overallScore>=85?"Партия выиграна":"Зачёт принят";
   } else { v.textContent="Шах. Партия не сыграна."; }
   document.getElementById("verdict-sub").textContent=totalPassed+" из "+totalQ+" вопросов закрыты · порог "+PASS_THRESHOLD+"%";
+
+  // Персональная оценка
+  try {
+    const verdictData = {
+      score: overallScore,
+      pauseCount: state.results.pauseCount || 0,
+      totalPauseSec: state.results.totalPauseSec || 0,
+      durationSec: state.results.durationSec || 0,
+      byPosition: byPosition,
+      totalQ: totalQ
+    };
+    const vmsg = buildVerdictMessage(verdictData);
+    const fb = document.getElementById("verdict-feedback");
+    const fbText = document.getElementById("verdict-feedback-text");
+    const fbExtra = document.getElementById("verdict-feedback-extra");
+    if (fb && fbText){
+      fbText.textContent = vmsg.main;
+      if (fbExtra){
+        if (vmsg.extras && vmsg.extras.length){
+          fbExtra.innerHTML = vmsg.extras.map(function(e){ return "&middot; " + escapeHtml(e); }).join("<br>");
+          fbExtra.classList.remove("hidden");
+        } else {
+          fbExtra.classList.add("hidden");
+        }
+      }
+      // Цветовое акцентирование
+      if (overallScore < 40){
+        fb.style.borderColor = "var(--red)";
+        fb.style.background = "rgba(200,100,90,0.08)";
+      } else if (overallScore < 60){
+        fb.style.borderColor = "var(--red)";
+        fb.style.background = "rgba(200,100,90,0.05)";
+      } else if (overallScore < 80){
+        fb.style.borderColor = "var(--gold)";
+        fb.style.background = "rgba(200,169,110,0.08)";
+      } else if (overallScore < 95){
+        fb.style.borderColor = "var(--gold-ln)";
+        fb.style.background = "#FAF5E8";
+      } else {
+        fb.style.borderColor = "var(--green)";
+        fb.style.background = "rgba(122,164,124,0.08)";
+      }
+      fb.classList.remove("hidden");
+    }
+  } catch(e){ console.warn("verdict feedback failed:", e); }
 
   const br=document.getElementById("breakdown");
   br.innerHTML="";
@@ -3953,6 +4464,39 @@ document.getElementById("test-telegram-btn").addEventListener("click", async fun
     result.textContent="Ошибка: "+e.message;
   }
   this.disabled=false;
+});
+
+document.getElementById("flush-queue-btn").addEventListener("click", async function(){
+  const result = document.getElementById("flush-queue-result");
+  this.disabled = true;
+  result.style.color = "var(--cream-2)";
+  try{
+    const before = await getQueueSize();
+    if (before === 0){
+      result.style.color = "var(--cream-2)";
+      result.textContent = "Очередь пуста — все отчёты с этого устройства уже доставлены.";
+      this.disabled = false;
+      return;
+    }
+    result.textContent = "В очереди " + before + " отчёт(ов). Отправляем...";
+    await flushTelegramQueue();
+    const after = await getQueueSize();
+    const sent = before - after;
+    if (after === 0){
+      result.style.color = "var(--green)";
+      result.textContent = "✓ Все " + sent + " отчёт(ов) успешно доставлены в Telegram.";
+    } else if (sent > 0){
+      result.style.color = "var(--gold-br)";
+      result.textContent = "Отправлено: " + sent + ". Осталось в очереди: " + after + " (попробуй ещё раз позже).";
+    } else {
+      result.style.color = "var(--red)";
+      result.textContent = "Не удалось отправить ни одного. Проверь интернет и бота.";
+    }
+  }catch(e){
+    result.style.color = "var(--red)";
+    result.textContent = "Ошибка: " + e.message;
+  }
+  this.disabled = false;
 });
 
 document.querySelectorAll(".admin-tab[data-atab]").forEach(function(t){
@@ -4241,6 +4785,76 @@ async function sendTelegramDocument(filename, content, caption){
   }
 }
 
+// ============================================================
+// ОЦЕНКА ПО РЕЗУЛЬТАТУ — для экрана сотрудника и Telegram
+// ============================================================
+// Возвращает {main, extras:[...]}
+//   main — основная фраза по уровню результата
+//   extras — массив дополнительных пометок (паузы / скорость / провал позиций)
+// ============================================================
+function buildVerdictMessage(data){
+  const score = data.score || 0;
+  const pauseCount = data.pauseCount || 0;
+  const totalPauseSec = data.totalPauseSec || 0;
+  const durationSec = data.durationSec || 0;
+  const byPosition = data.byPosition || {};
+  const totalQ = data.totalQ || 0;
+
+  let main = "";
+  if (score >= 95){
+    main = "Ты явно учил материал и понимаешь о чём говоришь. Так и работай с гостями — уверенно, развёрнуто, с деталями. Это стандарт NOMO.";
+  } else if (score >= 80){
+    main = "Зачёт получен, но видно что есть позиции которые проседают. Перед сменой пробегись по ним ещё раз — гость не должен слышать, как ты задумываешься.";
+  } else if (score >= 60){
+    main = "Видно что материал смотрел, но не до конца. Половину знаешь, половину — наугад. Так с гостем работать нельзя — он почувствует неуверенность и закроется. Сядь, перечитай слабые позиции и пересдай.";
+  } else if (score >= 40){
+    main = "По ответам видно — материал почти не открывал. Это не двойка за невнимательность, это значит ты выходишь к гостю не подготовленным. Гость это видит. Возьми меню, скрипты, посиди час — и пересдай.";
+  } else {
+    main = "Катастрофа. Ты не готовился к тесту. Это не пройдёт ни по одной позиции, смена аннулирована.";
+  }
+
+  const extras = [];
+
+  // 1. Много пауз / долго не было на вкладке
+  if (pauseCount >= 5 || totalPauseSec >= 300){
+    extras.push("Видно что выходил из теста несколько раз — возможно, подсматривал. Для NOMO это не показатель знаний. На смене у тебя не будет возможности отойти и погуглить.");
+  }
+
+  // 2. Прошёл слишком быстро и при этом не сдал
+  if (totalQ > 0 && durationSec > 0 && score < 60){
+    const avgSecPerQ = durationSec / totalQ;
+    if (avgSecPerQ < 15){
+      extras.push("Пролетел тест за минуту — не вчитывался в вопросы. Тест не на скорость. Перечитай и пересдай вдумчиво.");
+    }
+  }
+
+  // 3. По 1-2 позициям полный ноль или почти ноль
+  if (byPosition && typeof byPosition === "object"){
+    const zeroNames = [];
+    for (const k in byPosition){
+      const p = byPosition[k];
+      if (!p || !p.total) continue;
+      // p.passed (на экране) или p.ok (в Telegram-данных) — поддерживаем оба
+      const correct = (typeof p.passed === "number") ? p.passed : (p.ok || 0);
+      const pct = Math.round((correct / p.total) * 100);
+      if (pct === 0) zeroNames.push(p.name);
+    }
+    if (zeroNames.length > 0 && zeroNames.length <= 3){
+      extras.push("Особенно провалены: " + zeroNames.join(", ") + ". Эти позиции учить с нуля.");
+    }
+  }
+
+  // 4. Высокий результат + долгое время
+  if (score >= 90 && totalQ > 0 && durationSec > 0){
+    const avgSecPerQ = durationSec / totalQ;
+    if (avgSecPerQ >= 60){
+      extras.push("Видно что думал над каждым ответом — это правильно. На смене так же: не торопись с гостем.");
+    }
+  }
+
+  return { main: main, extras: extras };
+}
+
 function buildAttemptReport(attempt){
   const escTg=(s)=>String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
   const passEmoji=attempt.passed ? "\u2705" : "\u274C";
@@ -4296,6 +4910,23 @@ function buildAttemptReport(attempt){
     }
   }
 
+  // Персональная оценка
+  try {
+    const vmsg = buildVerdictMessage({
+      score: attempt.score || 0,
+      pauseCount: attempt.pauseCount || 0,
+      totalPauseSec: attempt.totalPauseSec || 0,
+      durationSec: attempt.durationSec || 0,
+      byPosition: attempt.byPosition || {},
+      totalQ: attempt.totalQuestions || 0
+    });
+    txt += "\n<b>Оценка:</b>\n" + escTg(vmsg.main);
+    if (vmsg.extras && vmsg.extras.length){
+      vmsg.extras.forEach(function(e){ txt += "\n<i>· " + escTg(e) + "</i>"; });
+    }
+    txt += "\n";
+  } catch(e){ /* не критично */ }
+
   txt+="\n🕐 "+new Date(attempt.finishedAt||Date.now()).toLocaleString("ru-RU");
   return txt;
 }
@@ -4338,18 +4969,107 @@ function buildAttemptDetailsText(attempt){
   return txt;
 }
 
-async function notifyAttemptComplete(attempt){
+// ============================================================
+// ОЧЕРЕДЬ ОТПРАВКИ В TELEGRAM
+// ============================================================
+// Если отправка не удалась (сеть, VPN, fetch упал) — попытка
+// сохраняется в localStorage. При следующем заходе на сайт
+// автоматически дошлётся всё, что не дошло.
+// ============================================================
+
+async function flushTelegramQueue(){
   try{
-    const summary=buildAttemptReport(attempt);
-    const details=buildAttemptDetailsText(attempt);
-    const filename="NOMO_"+attempt.pin+"_"+new Date().toISOString().slice(0,19).replace(/[:T]/g,"-")+".txt";
-    const sentDoc=await sendTelegramDocument(filename,details,summary);
-    if(!sentDoc){ await sendTelegram(summary); }
-  }catch(e){ console.warn("notify failed:",e); }
+    const keys = await STORE.list("tgqueue:");
+    if (!keys || keys.length === 0) return;
+    let sent = 0;
+    for (const k of keys){
+      try{
+        const raw = await STORE.get(k);
+        if (!raw) continue;
+        const item = JSON.parse(raw);
+        const filename = item.filename || ("NOMO_"+item.pin+"_retry.txt");
+        const ok = await sendTelegramDocument(filename, item.details, item.summary);
+        if (ok){
+          await STORE.delete(k);
+          sent++;
+        } else {
+          // если документ не пошёл - попробуем хоть текстом
+          const okText = await sendTelegram((item.summary || "")+"\n\n<i>(дослано из очереди)</i>");
+          if (okText){
+            await STORE.delete(k);
+            sent++;
+          } else {
+            // не получилось - оставляем в очереди до следующего раза
+            break;
+          }
+        }
+      }catch(e){
+        // если что-то совсем сломалось с этим элементом - пропускаем
+        console.warn("queue item failed:", e);
+      }
+    }
+    if (sent > 0) console.log("[Telegram queue] доотправлено:", sent);
+  }catch(e){
+    console.warn("flushTelegramQueue failed:", e);
+  }
 }
 
-window.notifyAttemptComplete=notifyAttemptComplete;
-window.sendTelegram=sendTelegram;
+async function getQueueSize(){
+  try{
+    const keys = await STORE.list("tgqueue:");
+    return keys ? keys.length : 0;
+  }catch(e){ return 0; }
+}
+
+async function notifyAttemptComplete(attempt){
+  let summary = "";
+  let details = "";
+  let filename = "";
+  try{
+    summary = buildAttemptReport(attempt);
+    details = buildAttemptDetailsText(attempt);
+    filename = "NOMO_"+attempt.pin+"_"+new Date().toISOString().slice(0,19).replace(/[:T]/g,"-")+".txt";
+  }catch(e){
+    console.warn("build report failed:", e);
+    return;
+  }
+
+  let delivered = false;
+  try{
+    const sentDoc = await sendTelegramDocument(filename, details, summary);
+    if (sentDoc){
+      delivered = true;
+    } else {
+      // документ не пошёл - попробуем хотя бы текстом
+      const sentText = await sendTelegram(summary);
+      if (sentText) delivered = true;
+    }
+  }catch(e){
+    console.warn("telegram send failed:", e);
+    delivered = false;
+  }
+
+  if (!delivered){
+    // Сохраняем в очередь — дошлётся при следующем заходе
+    try{
+      const queueKey = "tgqueue:"+Date.now()+"_"+attempt.pin;
+      await STORE.set(queueKey, JSON.stringify({
+        filename: filename,
+        summary: summary,
+        details: details,
+        pin: attempt.pin,
+        savedAt: Date.now()
+      }));
+      console.log("[Telegram] сохранено в очередь для повторной отправки");
+    }catch(e){
+      console.warn("queue save failed:", e);
+    }
+  }
+}
+
+window.notifyAttemptComplete = notifyAttemptComplete;
+window.sendTelegram = sendTelegram;
+window.flushTelegramQueue = flushTelegramQueue;
 
 // ============================================================
 // BOOT
@@ -4357,6 +5077,13 @@ window.sendTelegram=sendTelegram;
 (async function(){
   await seedUsersIfNeeded();
   showStage("login");
+  // Тихо доотправляем все застрявшие отчёты в Telegram
+  // (если сеть была плохая в момент завершения теста на этом устройстве)
+  setTimeout(function(){
+    if (typeof flushTelegramQueue === "function"){
+      flushTelegramQueue().catch(function(e){ console.warn("flush failed:", e); });
+    }
+  }, 1500);
 })();
 </script>
 
