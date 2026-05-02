@@ -333,11 +333,11 @@ h1.title{font-size:26px}
     <div class="qsection center" style="color:var(--red)">аттестация закрыта</div>
     <div style="font-family:'Cormorant Garamond',serif;font-size:72px;color:var(--red);line-height:1;margin:18px 0 10px;font-weight:600;letter-spacing:.05em">ПРОВАЛ</div>
     <div class="verdict" style="color:var(--cream)">Дедлайн пропущен</div>
-    <div class="verdict-sub">Суббота, 20:00 &mdash; крайний срок сдачи аттестации за неделю.</div>
+    <div class="verdict-sub">Суббота, 22:00 &mdash; крайний срок сдачи аттестации за неделю.</div>
     <div style="background:rgba(200,100,90,0.08);border-left:3px solid var(--red);padding:18px 20px;margin:24px auto;max-width:520px;text-align:left">
       <div class="qsection" style="color:var(--red);margin-bottom:8px">что это значит</div>
       <p class="dim" style="font-size:13.5px;line-height:1.6">
-        Ты опоздал со сдачей за эту неделю. Тест в субботу после 20:00 закрыт.
+        Ты опоздал со сдачей за эту неделю. Тест в субботу после 22:00 закрыт.
         Следующая аттестация откроется <span class="gold-br">в воскресенье в 00:00</span>.
       </p>
     </div>
@@ -2615,21 +2615,21 @@ const TEST_KINDS = {
 
 <script id="logic-script">
 // ============================================================
-// ДЕДЛАЙН - суббота 20:00
+// ДЕДЛАЙН - суббота 22:00
 // ============================================================
 function isTestBlocked(){
   const now = new Date();
-  return now.getDay() === 6 && now.getHours() >= 20;
+  return now.getDay() === 6 && now.getHours() >= 22;
 }
 
 function getDeadlineInfo(){
   const now = new Date();
   const day = now.getDay();
-  if (day === 6 && now.getHours() >= 20){ return { blocked: true }; }
+  if (day === 6 && now.getHours() >= 22){ return { blocked: true }; }
   const deadline = new Date(now);
   let daysUntilSat = (day === 6) ? 0 : (6 - day);
   deadline.setDate(now.getDate() + daysUntilSat);
-  deadline.setHours(20, 0, 0, 0);
+  deadline.setHours(22, 0, 0, 0);
   const diff = deadline.getTime() - now.getTime();
   const totalMin = Math.floor(diff / 60000);
   const days = Math.floor(totalMin / (60*24));
@@ -2640,7 +2640,7 @@ function getDeadlineInfo(){
 
 function fmtDeadline(d){
   const dayNames = ["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"];
-  return dayNames[d.getDay()] + ", " + String(d.getDate()).padStart(2,'0') + "." + String(d.getMonth()+1).padStart(2,'0') + " в 20:00";
+  return dayNames[d.getDay()] + ", " + String(d.getDate()).padStart(2,'0') + "." + String(d.getMonth()+1).padStart(2,'0') + " в 22:00";
 }
 
 function renderDeadlineInfo(){
