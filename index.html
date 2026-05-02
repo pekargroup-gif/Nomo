@@ -3905,7 +3905,22 @@ document.getElementById("resume-continue-btn").addEventListener("click", async f
   state.questions=p.questions; state.answers=p.answers||{}; state.reviewResults=p.reviewResults||{};
   state.currentIdx=p.currentIdx; state.pauses=p.pauses||[];
   state.resumeCount=(p.resumeCount||0)+1;
-  state.inTest=true; state.testKind=p.testKind||"main";
+  // Определяем testKind: если в прогрессе не сохранён (старая попытка) —
+  // выводим из содержимого по уникальным позициям
+  let restoredKind = p.testKind;
+  if (!restoredKind && state.questions && state.questions.length){
+    const firstKey = state.questions[0].sectionKey || "";
+    if (firstKey === "chess_queen" || firstKey === "chess_gambit" || firstKey === "chess_mate"){
+      restoredKind = "chess";
+    } else if (firstKey.indexOf("hostess_reg") === 0 || firstKey === "h_calls" || firstKey === "h_meeting" || firstKey === "h_dresscode"){
+      restoredKind = "hostess_reg";
+    } else if (firstKey.indexOf("hostess_dep") === 0 || firstKey === "h_deposit" || firstKey === "h_tables"){
+      restoredKind = "hostess_dep";
+    } else {
+      restoredKind = "main";
+    }
+  }
+  state.inTest=true; state.testKind = restoredKind || "main";
   state.timeUsedSec = p.timeUsedSec || 0;
   state.pauses.push({
     leftAt:p.lastUpdate||p.startedAt, returnedAt:Date.now(),
