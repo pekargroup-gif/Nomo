@@ -3350,7 +3350,7 @@ function renderQuestion(){
   document.getElementById("q-section-name").textContent = q.posName;
   document.getElementById("q-num").textContent = "Вопрос " + (state.qIndex + 1);
   document.getElementById("q-text").textContent = q.q.q;
-  document.getElementById("q-hint").textContent = q.q.hint ? "Подсказка: " + q.q.hint : "";
+  document.getElementById("q-hint").textContent = "";
 
   const stored = state.answers[state.qIndex];
   const inp = document.getElementById("q-input");
@@ -3414,20 +3414,29 @@ document.getElementById("next-btn").addEventListener("click", function(){
     const q = state.questions[state.qIndex];
     const inp = document.getElementById("q-input");
     const userAnswer = inp.value.trim();
+    let result;
     if (!userAnswer){
-      inp.style.borderColor = "var(--red)";
-      setTimeout(()=>{ inp.style.borderColor = ""; }, 1200);
-      return;
+      // пустой ответ — засчитываем как "не знаю", но даём пройти дальше
+      result = { ok: false, matched: 0, total: (q.groups || []).length, need: q.min || 1, missed: (q.groups || []).map(g => g[0]) };
+      state.answers[state.qIndex] = {
+        userAnswer: "(не отвечено)",
+        ok: false,
+        matched: 0,
+        total: result.total,
+        need: result.need,
+        missed: result.missed
+      };
+    } else {
+      result = checkAnswer(userAnswer, q.q);
+      state.answers[state.qIndex] = {
+        userAnswer: userAnswer,
+        ok: result.ok,
+        matched: result.matched,
+        total: result.total,
+        need: result.need,
+        missed: result.missed
+      };
     }
-    const result = checkAnswer(userAnswer, q.q);
-    state.answers[state.qIndex] = {
-      userAnswer: userAnswer,
-      ok: result.ok,
-      matched: result.matched,
-      total: result.total,
-      need: result.need,
-      missed: result.missed
-    };
     saveProgressAsync();
     showQuestionReview(state.answers[state.qIndex], q.q);
     state.reviewing = true;
