@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOMO · Меню кухня</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5EFE0;--panel:#FAF5E8;--panel-2:#EFE7D2;
+  --gold:#A88A4E;--gold-br:#8E6F38;--gold-dk:#6E5528;--gold-ln:#D4C39A;
+  --cream:#3A2E1C;--cream-2:#5C4E37;--white:#1F1812;--ink-dim:#9A8966;
+  --green:#5C7A4C;--red:#A04A3F;--rose:#9C5A6E;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--cream);font-family:'Inter',sans-serif;min-height:100vh;letter-spacing:.01em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-touch-callout:none}
+body{background:radial-gradient(ellipse at top,rgba(168,138,78,0.08),transparent 60%),radial-gradient(ellipse at bottom,rgba(168,138,78,0.05),transparent 50%),var(--bg);padding:32px 18px 80px;position:relative}
+textarea,input{user-select:text;-webkit-user-select:text}
+.wrap{max-width:780px;margin:0 auto;position:relative;z-index:1}
+
+#watermark{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
+.wm-row{white-space:nowrap;font-family:‘Inter’,sans-serif;font-size:18px;color:rgba(110,85,40,0.18);font-weight:700;letter-spacing:.45em;transform:rotate(-30deg);transform-origin:0 0;padding:60px 0}
+
+#shield{position:fixed;inset:0;background:#FFFFFF;z-index:9999;display:none;align-items:center;justify-content:center;color:#000;font-family:‘Cormorant Garamond’,serif;font-size:22px;text-align:center;padding:30px}
+#shield.on{display:flex}
+#shield .icon{font-size:40px;margin-bottom:14px;color:#888}
+#shield .small{font-size:13px;color:#888;margin-top:14px;font-family:‘Inter’;letter-spacing:.05em}
+
+.head{text-align:center;padding:6px 0 26px;border-bottom:1px solid var(–gold-ln);margin-bottom:36px;position:relative}
+.head .crown{font-size:11px;color:var(–gold-dk);letter-spacing:.5em;margin-bottom:18px}
+.brand{font-family:‘Cormorant Garamond’,serif;font-weight:700;color:var(–gold-br);font-size:42px;line-height:1;letter-spacing:.18em}
+.brand-rule{width:160px;height:1px;background:var(–gold);margin:14px auto;position:relative}
+.brand-rule::before,.brand-rule::after{content:””;position:absolute;top:50%;width:6px;height:6px;background:var(–gold);transform:translateY(-50%) rotate(45deg)}
+.brand-rule::before{left:-3px}
+.brand-rule::after{right:-3px}
+.head .sub{font-size:11px;color:var(–cream-2);letter-spacing:.4em;text-transform:uppercase}
+
+.serif{font-family:‘Cormorant Garamond’,serif;font-weight:500}
+.gold{color:var(–gold)} .gold-br{color:var(–gold-br)}
+.cream{color:var(–cream)} .dim{color:var(–white);opacity:0.85} .muted{color:var(–cream-2)}
+.center{text-align:center}
+h1.title{font-family:‘Cormorant Garamond’,serif;font-size:34px;color:var(–white);text-align:center;margin:24px 0 8px;letter-spacing:.06em;line-height:1.1}
+.subtitle{font-family:‘Cormorant Garamond’,serif;font-style:italic;font-size:18px;color:var(–gold);text-align:center;margin-bottom:22px}
+
+.card{background:linear-gradient(180deg,var(–panel-2),var(–panel));border:1px solid var(–gold-ln);border-radius:2px;padding:28px 30px;position:relative;margin-bottom:20px}
+.card::before,.card::after{content:””;position:absolute;width:14px;height:14px;border:1px solid var(–gold)}
+.card::before{top:-1px;left:-1px;border-right:none;border-bottom:none}
+.card::after{bottom:-1px;right:-1px;border-left:none;border-top:none}
+
+.pin-input{width:100%;background:#FAF5E8;border:2px solid var(–gold-dk);color:var(–white);padding:16px;font-family:‘Cormorant Garamond’,serif;font-size:32px;letter-spacing:.5em;text-align:center;font-weight:700;border-radius:0;margin:14px 0 4px}
+.pin-input:focus{outline:none;border-color:var(–gold-br);background:#FFFFFF}
+.pin-error{color:var(–red);font-size:12px;text-align:center;margin-top:8px;min-height:18px;letter-spacing:.05em}
+
+.rules{background:rgba(200,169,110,0.04);border:1px solid var(–gold-ln);padding:20px 24px;margin:22px 0;text-align:left}
+.rules h3{font-size:11px;color:var(–gold);letter-spacing:.4em;text-transform:uppercase;margin-bottom:14px;text-align:center}
+.rules li{list-style:none;padding:6px 0 6px 22px;position:relative;color:var(–cream);font-size:13.5px;line-height:1.55}
+.rules li::before{content:”\25C6”;position:absolute;left:0;color:var(–gold);font-size:9px;top:9px}
+
+label.fld{display:block;margin-top:18px}
+label.fld .lbl{display:block;font-size:10px;color:var(–gold);letter-spacing:.35em;text-transform:uppercase;margin-bottom:8px}
+input[type=text],input[type=tel],textarea{width:100%;background:rgba(255,250,235,0.6);border:1px solid var(–gold-ln);color:var(–cream);padding:14px 16px;font-family:‘Inter’,sans-serif;font-size:15px;line-height:1.55;border-radius:0;transition:border-color .2s,background .2s;resize:vertical}
+textarea{min-height:120px;font-size:14.5px}
+input:focus,textarea:focus{outline:none;border-color:var(–gold);background:rgba(200,169,110,0.04)}
+textarea::placeholder,input::placeholder{color:var(–cream-2);font-style:italic;opacity:0.7}
+
+.btn{display:inline-block;background:transparent;border:1.5px solid var(–gold-dk);color:var(–gold-dk);padding:14px 32px;font-family:‘Cormorant Garamond’,serif;font-weight:700;font-size:14px;letter-spacing:.3em;text-transform:uppercase;cursor:pointer;transition:all .25s;margin-top:10px}
+.btn:hover{background:var(–gold-dk);color:#FAF5E8}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.primary{background:#1F1812 !important;color:#F5EFE0 !important;border:1.5px solid #1F1812 !important}
+.btn.primary:hover{background:#000 !important;border-color:#000 !important;color:#F5EFE0 !important}
+.btn.primary:disabled{opacity:.5;background:#5C4E37 !important;border-color:#5C4E37 !important}
+.btn.ghost{border-color:var(–gold-dk);color:var(–cream-2)}
+.btn.danger{border-color:var(–red);color:var(–red);background:transparent}
+.btn.full{width:100%;display:block}
+
+.progress{background:rgba(168,138,78,0.15);border:1px solid var(–gold-ln);height:6px;position:relative;margin:20px 0 26px}
+.progress-bar{background:linear-gradient(90deg,var(–gold-dk),var(–gold-br));height:100%;transition:width .4s ease-out}
+.progress-meta{display:flex;justify-content:space-between;font-size:10px;color:var(–cream-2);letter-spacing:.3em;text-transform:uppercase;margin-top:8px}
+
+.qsection{color:var(–gold);font-size:11px;letter-spacing:.4em;text-transform:uppercase;margin-bottom:8px}
+.qnum{font-family:‘Cormorant Garamond’,serif;font-style:italic;color:var(–gold-dk);font-size:14px;margin-bottom:6px}
+.qtext{font-family:‘Cormorant Garamond’,serif;font-size:22px;line-height:1.3;color:var(–white);margin-bottom:18px;letter-spacing:.01em}
+.hint{font-size:12px;color:var(–ink-dim);margin-top:6px;font-style:italic}
+.nav{display:flex;justify-content:space-between;gap:14px;margin-top:24px}
+
+.score-big{font-family:‘Cormorant Garamond’,serif;font-size:88px;line-height:1;font-weight:600;color:var(–gold-br);text-align:center;margin:18px 0 8px}
+.score-big.fail{color:var(–red)}
+.verdict{text-align:center;font-family:‘Cormorant Garamond’,serif;font-style:italic;font-size:22px;color:var(–cream);margin-bottom:8px;letter-spacing:.02em}
+.verdict-sub{text-align:center;color:var(–cream-2);font-size:13px;margin-bottom:24px}
+.breakdown{margin-top:24px;max-height:320px;overflow-y:auto;padding-right:8px}
+.br-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(–gold-ln);gap:14px}
+.br-row:last-child{border-bottom:none}
+.br-name{font-family:‘Cormorant Garamond’,serif;font-size:16px;color:var(–cream);flex:1;line-height:1.3}
+.br-score{font-family:‘Cormorant Garamond’,serif;font-size:20px;font-weight:600;min-width:60px;text-align:right}
+.br-score.pass{color:var(–green)}
+.br-score.fail{color:var(–red)}
+
+.review-q{border-left:2px solid var(–gold-dk);padding:14px 18px;margin:14px 0;background:rgba(200,169,110,0.03)}
+.review-q.correct{border-left-color:var(–green)}
+.review-q.wrong{border-left-color:var(–red)}
+.review-q .qt{font-family:‘Cormorant Garamond’,serif;font-size:16px;color:var(–cream);margin-bottom:8px}
+.review-q .ans{font-size:13px;color:var(–cream-2);margin-bottom:6px;line-height:1.55}
+.review-q .ans .lbl{color:var(–gold);font-size:9px;letter-spacing:.3em;text-transform:uppercase;margin-right:8px}
+
+.hidden{display:none !important}
+.footer{text-align:center;color:var(–ink-dim);font-size:10px;letter-spacing:.3em;text-transform:uppercase;margin-top:50px}
+
+.top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;font-size:11px;color:var(–cream-2);letter-spacing:.3em;text-transform:uppercase}
+.top-bar .who{color:var(–gold)}
+.top-bar .logout{color:var(–cream-2);cursor:pointer;text-decoration:underline;text-decoration-color:var(–gold-dk)}
+
+.back-link{display:inline-block;margin-bottom:14px;font-size:11px;color:var(–cream-2);letter-spacing:.3em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(–gold-dk)}
+.back-link:hover{color:var(–gold-br)}
+
+@media (max-width:600px){
+body{padding:18px 10px 60px}
+.card{padding:22px 18px}
+.brand{font-size:32px}
+h1.title{font-size:26px}
+.qtext{font-size:18px}
+.score-big{font-size:64px}
+}
+</style>
+
+</head>
+<body>
+
+<div id="shield">
+  <div>
+    <div class="icon">&#9679;</div>
+    <div>Аттестация приостановлена</div>
+    <div class="small">Вернись в окно теста. Скриншоты и переключение между приложениями запрещены.</div>
+  </div>
+</div>
+
+<div id="watermark"></div>
+
+<div class="wrap">
+
+<div class="head">
+  <div class="crown">N&nbsp;O&nbsp;M&nbsp;O&nbsp;&nbsp;&middot;&nbsp;&nbsp;H&nbsp;U&nbsp;Q&nbsp;Q&nbsp;A&nbsp;.&nbsp;R&nbsp;E&nbsp;S&nbsp;T</div>
+  <div class="brand">NOMO</div>
+  <div class="brand-rule"></div>
+  <div class="sub">меню кухня &middot; аттестация</div>
+</div>
+
+<div id="stage-login">
+  <h1 class="title">МЕНЮ КУХНЯ</h1>
+  <div class="subtitle">аттестация по новому меню</div>
+  <div class="card">
+    <p class="dim center" style="margin-bottom:16px;line-height:1.6">
+      Введи свой <span class="cream">персональный 4-значный код</span> &mdash; тот же, что и для основной аттестации.
+    </p>
+    <input type="tel" maxlength="6" id="pin-input" class="pin-input" inputmode="numeric" pattern="[0-9]*" placeholder="••••" autocomplete="off">
+    <div class="pin-error" id="pin-error">&nbsp;</div>
+    <button class="btn primary full" id="login-btn">войти &#9656;</button>
+    <p class="muted center" style="margin-top:16px;font-size:11px;letter-spacing:.2em;text-transform:uppercase">
+      нет кода &mdash; обратись к управляющему
+    </p>
+  </div>
+</div>
+
+<div id="stage-name" class="hidden">
+  <h1 class="title">ВВЕДИ ИМЯ</h1>
+  <div class="subtitle">первый вход</div>
+  <div class="card">
+    <p class="dim center" style="margin-bottom:20px;line-height:1.6">
+      Введи имя и фамилию &mdash; они будут привязаны к твоему коду.
+    </p>
+    <label class="fld" style="margin-top:0">
+      <span class="lbl">имя &middot; фамилия</span>
+      <input type="text" id="enter-name-input" placeholder="например, Иван Петров" autocomplete="off">
+    </label>
+    <div class="pin-error" id="name-error">&nbsp;</div>
+    <button class="btn primary full" id="save-name-btn">сохранить и продолжить &#9656;</button>
+  </div>
+</div>
+
+<div id="stage-home" class="hidden">
+  <div class="top-bar">
+    <span>сотрудник: <span class="who" id="home-name">&mdash;</span></span>
+    <span class="logout" id="logout-1">выйти</span>
+  </div>
+  <h1 class="title">МЕНЮ КУХНЯ</h1>
+  <div class="subtitle">16 новых блюд + обновлённый греческий</div>
+  <div class="card">
+    <p class="dim" style="line-height:1.7;margin-bottom:14px">
+      Аттестация состоит из <span class="cream">20 случайных вопросов</span> из банка в 51 вопрос &mdash; по 3 на каждое из 17 блюд.
+    </p>
+    <div style="margin:18px 0 6px;padding:18px 20px;border:1.5px solid var(--gold);background:rgba(200,169,110,0.10)">
+      <div class="qsection" style="color:var(--gold);margin-bottom:10px">как отвечать</div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.55;color:var(--cream);margin-bottom:14px">
+        Это тренировка речи. Отвечай так, как сказал бы гостю за столом.
+      </p>
+      <div style="font-size:13px;line-height:1.6;color:var(--cream-2);margin-bottom:6px">
+        <span style="color:var(--red)">&#10007;</span> Плохо: <span style="font-style:italic">«страчателла, манго, пекан»</span>
+      </div>
+      <div style="font-size:13px;line-height:1.6;color:var(--cream-2)">
+        <span style="color:var(--green)">&#10003;</span> Хорошо: <span style="font-style:italic;color:var(--cream)">«Сливочная страчателла со спелым манго, карамелизованным пеканом и зелёным маслом — десерт-закуска, идеальная пара к шампанскому»</span>
+      </div>
+    </div>
+    <div class="rules">
+      <h3>правила</h3>
+      <ul>
+        <li>Все ответы вводятся <span class="gold-br">вручную</span> &mdash; никаких вариантов.</li>
+        <li>Вопросы каждый раз <span class="gold-br">случайные</span> из общего банка.</li>
+        <li>Минимум для зачёта &mdash; <span class="gold-br">80 %</span>.</li>
+        <li>Скриншоты, переключение приложений и сворачивание &mdash; <span class="gold-br">нарушение</span>. Фиксируется.</li>
+        <li>На каждом экране &mdash; <span class="gold-br">водяной знак с твоим именем</span>.</li>
+      </ul>
+    </div>
+    <button class="btn primary full" id="start-btn" style="margin-top:24px">начать аттестацию &#9656;</button>
+  </div>
+</div>
+
+<div id="stage-test" class="hidden">
+  <div class="top-bar">
+    <span>сотрудник: <span class="who" id="test-name">&mdash;</span></span>
+    <span class="logout" id="logout-2">выйти</span>
+  </div>
+  <div class="progress"><div class="progress-bar" id="pbar" style="width:0%"></div></div>
+  <div class="progress-meta">
+    <span id="pmeta-section">блюдо 1</span>
+    <span id="pmeta-q">вопрос 1 из 20</span>
+  </div>
+  <div class="card">
+    <div class="qsection" id="q-section-name">&mdash;</div>
+    <div class="qnum" id="q-num">Вопрос 1</div>
+    <div class="qtext" id="q-text">&mdash;</div>
+    <textarea id="q-input" placeholder="Введи ответ так, как ты сказал бы гостю"></textarea>
+    <div class="hint" id="q-hint"></div>
+    <div id="q-review" class="hidden" style="margin-top:18px">
+      <div id="q-verdict" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--gold-ln);margin-bottom:14px">
+        <span id="q-verdict-icon" style="font-family:'Cormorant Garamond',serif;font-size:24px">&#9679;</span>
+        <span id="q-verdict-text" class="serif" style="font-size:18px">&mdash;</span>
+      </div>
+      <div style="background:rgba(200,169,110,0.06);border-left:3px solid var(--gold);padding:14px 18px;margin-bottom:10px">
+        <div class="qsection" style="margin-bottom:6px">правильный ответ</div>
+        <div id="q-correct" class="cream" style="font-size:14px;line-height:1.6;font-family:'Cormorant Garamond',serif;font-weight:500">&mdash;</div>
+      </div>
+    </div>
+    <div class="nav">
+      <button class="btn ghost" id="prev-btn">&larr; назад</button>
+      <button class="btn primary" id="next-btn">проверить &#9656;</button>
+    </div>
+  </div>
+</div>
+
+<div id="stage-result" class="hidden">
+  <div class="top-bar">
+    <span>сотрудник: <span class="who" id="result-name">&mdash;</span></span>
+    <span class="logout" id="logout-3">выйти</span>
+  </div>
+  <div class="card">
+    <div class="qsection center">итог аттестации меню</div>
+    <div class="score-big" id="score-big">0</div>
+    <div class="verdict" id="verdict">&mdash;</div>
+    <div class="verdict-sub" id="verdict-sub">&mdash;</div>
+    <div class="breakdown" id="breakdown"></div>
+    <div class="nav" style="margin-top:30px">
+      <button class="btn ghost" id="review-btn">показать ошибки</button>
+      <button class="btn" id="restart-btn">ещё попытка</button>
+    </div>
+  </div>
+  <div class="card hidden" id="review-card">
+    <h3 class="qsection center" style="margin-bottom:16px">разбор ответов</h3>
+    <div id="review-list"></div>
+  </div>
+</div>
+
+<div class="footer">
+  NOMO &middot; Земляной Вал 9А &middot; Москва<br>
+  <a href="index.html" class="back-link" style="margin-top:14px">&larr; основная аттестация</a>
+</div>
+</div>
+
+<script>
+// ============================================================
+// КОНФИГ
+// ============================================================
+const TELEGRAM_BOT_TOKEN = "8441895467:AAFS1OsuIK7EvMs2ofuXdcYe7Z04JzgYQUU";
+const TELEGRAM_CHAT_ID = "-5018199781";
+const PASS_THRESHOLD = 80;
+const TOTAL_Q = 20;
+const STORAGE_PREFIX = "nomo_menu_v1_";
+
+// 20 официантов + 10 хостес + менеджер тест
+const SEED_USERS = [
+  { pin: "0101", name: "ТЕСТ-РЕЖИМ (менеджер)" },
+  { pin: "1024" }, { pin: "1357" }, { pin: "1492" }, { pin: "2580" },
+  { pin: "3691" }, { pin: "4729" }, { pin: "5814" }, { pin: "6325" },
+  { pin: "7148" }, { pin: "8276" }, { pin: "9135" }, { pin: "1846" },
+  { pin: "2937" }, { pin: "5061" }, { pin: "7402" }, { pin: "3805" },
+  { pin: "6217" }, { pin: "4953" }, { pin: "8194" }, { pin: "5742" },
+  { pin: "5901" }, { pin: "6034" }, { pin: "7283" },
+  { pin: "8456" }, { pin: "9617" }, { pin: "1078" },
+  { pin: "2390" }, { pin: "3164" }, { pin: "4825" }, { pin: "5536" }
+];
+
+// ============================================================
+// БАНК ВОПРОСОВ — МЕНЮ КУХНЯ (17 блюд × 3 вопроса = 51 вопрос)
+// ============================================================
+const BANKS = {
+  strachatella: {
+    name: "Страчателла с манго",
+    bank: [
+      { q:"Из чего состоит сливочная страчателла с манго и орехами? Назови минимум 4 ключевых компонента из 7.",
+        groups:[["страчателл","stracciatella"],["манго"],["пекан","орех"],["карамел","коричнев сахар","тростник"],["чёрн соль","черн соль","кристал"],["зелён масл","зелен масл","петрушк"],["кресс","микрозелен"]],
+        min:4, hint:"Сыр + фрукт + орех + соль + декор.",
+        answer:"Страчателла 125 г, спелое манго, пекан в карамели на тростниковом сахаре, чёрная кристаллическая соль, зелёное масло на петрушке, сливочное масло, кресс-салат." },
+      { q:"Гость думает, что страчателла — это мороженое. Какой продающий крючок вернёт его к блюду?",
+        groups:[["буррат","burrata"],["сливк","нежност","нежн волокн"]],
+        min:2, hint:"Это начинка бурраты.",
+        answer:"Страчателла — нежная сырная начинка бурраты: сливки и волокна моцареллы. Манго и карамельный пекан превращают её в десерт-закуску. Не мороженое — нежный итальянский сыр." },
+      { q:"Какой напиток идеально подходит к страчателле с манго? Назови минимум одну категорию.",
+        groups:[["шампанск","champagne","игрист","prosecco","просекко","pinot rose","розов","брют"]],
+        min:1, hint:"Белое игристое или розовое.",
+        answer:"Шампанское, Просекко, Pinot Noir Rose Extra Brut. Сливочность сыра и сладость манго играют с пузырьками идеально." }
+    ]
+  },
+  panipuri: {
+    name: "Панипури с лососем",
+    bank: [
+      { q:"Из чего состоит блюдо Панипури с риетом из лосося? Минимум 4 компонента из 5.",
+        groups:[["сфер","6","шесть"],["риет","лосос","копчён лосос","копчен лосос"],["щучь икр"],["хрустящ гречк","гречк"],["виол","цвет"]],
+        min:4, hint:"Сферы + начинка + икра + хруст + цветы.",
+        answer:"6 хрустящих сфер из жареного теста, риет из подкопчённого лосося со сливочным сыром, щучья икра, хрустящая гречка, цветы виолы." },
+      { q:"Какой главный продающий крючок у Панипури — что цепляет гостя сильнее всего?",
+        groups:[["шесть","6"],["рук","руками"],["фотогр","инстаграм","снима"]],
+        min:2, hint:"Формат + поведение гостя.",
+        answer:"Шесть хрустящих сфер, едят руками, гости почти всегда фотографируют. Это маленькое шоу на тарелке — не закуска, а событие." },
+      { q:"Какой напиток подходит к Панипури с лососем?",
+        groups:[["шампанск","champagne","игрист","prosecco"],["цитрус коктейл","джин тоник","gin","коктейл","номер 2","номер2"]],
+        min:1, hint:"Игристое или цитрусовый коктейль.",
+        answer:"Шампанское или Просекко — хруст, икра и лосось играют с пузырьками. Также цитрусовые коктейли (например, наш №2)." }
+    ]
+  },
+  tataki: {
+    name: "Татаки с трюфелем",
+    bank: [
+      { q:"Какой состав Татаки из говядины с трюфелем? Минимум 4 ключевых ингредиента.",
+        groups:[["говяж вырезк","вырезк","говядин"],["чёрн трюфел","черн трюфел","свеж трюфел"],["трюфел крем"],["понзу"],["вешенк","гриб"],["кимчи"]],
+        min:4, hint:"Мясо + трюфель + соус + грибы.",
+        answer:"Говяжья вырезка маринованная, обжиг 20 секунд снаружи (сырая внутри — техника татаки), свежий чёрный трюфель ломтиками, трюфельный крем, соус понзу, грибы вешенки, кунжут с кимчи." },
+      { q:"Что такое татаки и в чём главный продающий крючок этого блюда?",
+        groups:[["япон техник","техник япон"],["обжиг","снаруж","обжар"],["сыр","сырая","розов"]],
+        min:2, hint:"Техника + результат.",
+        answer:"Татаки — японская техника: мясо обжигается снаружи 20 секунд, внутри остаётся сырым и розовым. Свежий чёрный трюфель + говяжья вырезка = атмосфера особого вечера. Премиум-блюдо." },
+      { q:"Какой напиток идеален к Татаки?",
+        groups:[["красн вин","красное вино","malbec","мальбек","amarone","амароне","barolo","бароло","cabernet","каберне"],["виски","whiskey","macallan","dalmore"]],
+        min:1, hint:"Выдержанное красное или виски.",
+        answer:"Выдержанное красное (Malbec Tamari, Amarone, Barolo) или виски на льду (Macallan, Dalmore). Земляные ноты трюфеля идеально с красным." }
+    ]
+  },
+  niokki: {
+    name: "Ньокки с уткой",
+    bank: [
+      { q:"Из чего состоит блюдо Ньокки с рваной уткой? Минимум 4 компонента.",
+        groups:[["ньокк","картофел клёцк","картофел клецк","клёцк","клецк"],["рван утк","томлён утк","томлен утк","утк"],["лисичк","гриб"],["шпинат"],["пармез"]],
+        min:4, hint:"Тесто + утка + грибы + зелень + сыр.",
+        answer:"Картофельные ньокки (итальянские клёцки), рваная утка томлёная 4 часа, грибы лисички на сливочном масле, свежий шпинат, пармезан. Соус — сливочное масло + жидкость от томления утки." },
+      { q:"Какой главный продающий крючок у Ньокки с уткой?",
+        groups:[["уютн","домашн","согрев"],["980","самый доступн","недорог"]],
+        min:1, hint:"Эмоция + цена.",
+        answer:"Самое уютное блюдо нового меню — томлёная 4 часа утка, лисички, картофельные клёцки. Идеально в холодный вечер. Цена 980 ₽ — самая доступная новинка горячего." },
+      { q:"Какое вино подходит к Ньокки с рваной уткой?",
+        groups:[["красн","pinot","пино","barolo","бароло","brunello","брунелло","среднетел","malbec","мальбек"]],
+        min:1, hint:"Среднетелое красное.",
+        answer:"Среднетелое красное — Pinot Noir, Brunello, Barolo. Утка с грибами идеально с красным." }
+    ]
+  },
+  tsukini: {
+    name: "Цветы цукини",
+    bank: [
+      { q:"Из чего состоит блюдо Цветы цукини с креветками и тремя муссами? Назови минимум 4 компонента (включая хотя бы 2 мусса).",
+        groups:[["цвет цукини","цвет кабачк"],["креветк"],["мусс пармез","пармез"],["гуакамол","авокадо","мусс гуак"],["икорн мусс","икра","мусс икр"],["кляр"]],
+        min:4, hint:"Цветы + начинка + кляр + муссы.",
+        answer:"Сезонные жёлтые цветы цукини в кляре с начинкой из тигровых креветок. Три мусса: пармезан, гуакамоле (авокадо+лайм+кинза), икорный мусс (сметана+красная икра+укроп)." },
+      { q:"Что главное в продаже Цветов цукини — какой образ создаёшь у гостя?",
+        groups:[["сезон"],["три мусс","разн мусс","3 мусс"],["фотогр","инстаграм","эффектн","арт"]],
+        min:2, hint:"Сезонность + муссы + эстетика.",
+        answer:"Сезонные жёлтые цветы кабачка + три разных мусса = арт-объект на тарелке. Гости фотографируют. Каждый цветок раскрывается по-новому в зависимости от мусса." },
+      { q:"Какой напиток подходит к Цветам цукини?",
+        groups:[["шампанск","champagne","prosecco","просекко","игрист"],["бел вин","белое вино","viognier","вионье","chablis","шабли","sancerre","сансер"]],
+        min:1, hint:"Игристое или белое.",
+        answer:"Шампанское, Просекко или сухое белое (Viognier, Chablis, Sancerre). Хрустящий кляр и пузырьки — идеальная пара." }
+    ]
+  },
+  lyulya: {
+    name: "Люля из креветок",
+    bank: [
+      { q:"Из чего состоит Люля из креветок с кукурузным кремом? Минимум 3 компонента.",
+        groups:[["креветк","тигр креветк"],["шпажк","на шпажк","решётк","решетк"],["кукуруз крем","кукуруз","кукуруз пюр"],["икра","тобико","масаго"],["трав","зелен"]],
+        min:3, hint:"Креветки + база + соус + декор.",
+        answer:"Тигровые креветки, рубленные с травами и приправами, формуются на шпажке и обжариваются. Подаются на кремовом кукурузном пюре с икрой летучей рыбы и зеленью." },
+      { q:"Какой продающий крючок у Люля из креветок?",
+        groups:[["авторск","нестандарт","оригинал","не классик"],["креветк нежн","сочн","шеф"]],
+        min:1, hint:"Неожиданное прочтение классики.",
+        answer:"Авторская версия классических люля — но из креветок, не из мяса. Нежные тигровые креветки на сладком кукурузном креме с икрой. Лёгкое и эффектное горячее." },
+      { q:"Какой напиток идеально к Люля из креветок?",
+        groups:[["бел вин","белое вино","viognier","вионье","рислинг","riesling","sancerre","сансер","моск","moscato"],["игрист","prosecco","шампанск"]],
+        min:1, hint:"Ароматное белое или игристое.",
+        answer:"Ароматное белое (Viognier, Riesling, Moscato) или игристое. Креветки и кукурузный крем хорошо с фруктовым белым." }
+    ]
+  },
+  hotdog: {
+    name: "Хот-дог",
+    bank: [
+      { q:"Из чего состоит Хот-дог с двумя сосисками? Минимум 4 компонента.",
+        groups:[["две сосиск","2 сосиск","сосиск"],["бриош","булк","булочк"],["соус"],["лук","жарен лук","карамел лук"],["сыр","расплавл сыр"],["огурц","корнишон","соленья"]],
+        min:4, hint:"Сосиски + булка + соус + добавки.",
+        answer:"Две премиальные сосиски (говядина+свинина) в булочке бриош, фирменный соус, карамелизованный лук, расплавленный сыр, корнишоны. 270 г порция." },
+      { q:"В чём главный продающий крючок Хот-дога? Кому его предложить?",
+        groups:[["две сосиск","2 сосиск","больш"],["компани","друз","спорт","барн","раслабл"]],
+        min:1, hint:"Формат + аудитория.",
+        answer:"Хот-дог премиум-уровня с двумя сосисками — большой, сытный, эффектный. Идеален для компаний, дружеских встреч, спортивных вечеров. 1 400 ₽ за плотную сытую порцию." },
+      { q:"Какой напиток лучше всего к Хот-догу?",
+        groups:[["пиво","beer","сидр","cider","крафт"],["коктейл","негрон","whiskey sour","виски сауэр"]],
+        min:1, hint:"Пиво или крепкий коктейль.",
+        answer:"Пиво или сидр — классическое сочетание. Также крепкие коктейли (Negroni, Whiskey Sour) — характер мяса требует чего-то с весом." }
+    ]
+  },
+  kraba_kotlety: {
+    name: "Котлеты камчатского краба",
+    bank: [
+      { q:"Из чего состоят Котлеты из камчатского краба с пак-чоем? Минимум 3 компонента.",
+        groups:[["камчат краб","краб"],["пак-чой","пак чой"],["соус","фирмен соус","авторск соус"],["пюр","крем","эмульс"],["лимон","цитрус"]],
+        min:3, hint:"Краб + овощ + соус.",
+        answer:"Котлеты из мяса камчатского краба (минимум обработки, чтоб слышать сам краб), обжаренный пак-чой (китайская капуста), фирменный соус, кремовое пюре, цитрусовая нота." },
+      { q:"Какой главный продающий крючок Котлет из камчатского краба?",
+        groups:[["камчат","далн восток","дальн восток"],["100","чист краб","настоящ краб","не имитац"],["премиум","2700","дорог"]],
+        min:2, hint:"Происхождение + чистота продукта.",
+        answer:"Камчатский краб с Дальнего Востока — чистое крабовое мясо, не имитация. Премиальная позиция 2 700 ₽. Один из главных гастро-акцентов нового меню." },
+      { q:"Какой напиток идеально к Котлетам из камчатского краба?",
+        groups:[["бел вин","белое вино","chablis","шабли","viognier","вионье","sancerre","сансер"],["шампанск","champagne","игрист"]],
+        min:1, hint:"Минеральное белое или шампанское.",
+        answer:"Минеральное белое (Chablis на устричных почвах — идеально к крабу) или шампанское. К сладкому крабовому мясу нужно вино с кислотой." }
+    ]
+  },
+  vyrezka_romano: {
+    name: "Говяжья вырезка с романо",
+    bank: [
+      { q:"Из чего состоит блюдо Говяжья вырезка со стейком из салата романо? Минимум 3 компонента.",
+        groups:[["говяж вырезк","вырезк","су-вид","су вид"],["романо","салат романо","стейк романо"],["соус","деми","перечн","авторск"],["масл","сливоч масл"],["микрозелен","трав","зелен"]],
+        min:3, hint:"Мясо + романо + соус.",
+        answer:"Говяжья вырезка су-вид, обжаренная до корочки, плюс стейк из салата романо (целая голова разрезана пополам и обжарена) с авторским соусом. 460 г порция." },
+      { q:"В чём главный продающий крючок Говяжьей вырезки с романо?",
+        groups:[["стейк","салат романо","обжарен салат","жарен салат","нестандарт","необычн"],["флагман","самый дорог","4200","премиум"]],
+        min:1, hint:"Что отличает + статус.",
+        answer:"Не просто стейк — стейк ИЗ САЛАТА романо. Целая голова романо обжаривается как стейк — это нестандартное прочтение классики. Флагманское горячее меню, 4 200 ₽." },
+      { q:"Какое вино идеально к Говяжьей вырезке с романо?",
+        groups:[["красн","barolo","бароло","brunello","брунелло","amarone","амароне","malbec","мальбек","cabernet","каберне"]],
+        min:1, hint:"Выдержанное красное.",
+        answer:"Выдержанное красное — Barolo, Brunello, Amarone, Malbec Tamari. Премиальная вырезка требует серьёзного вина." }
+    ]
+  },
+  sup_krab: {
+    name: "Томатный суп с крабом",
+    bank: [
+      { q:"Из чего состоит Томатный крем-суп со страчателлой и крабом? Минимум 3 компонента.",
+        groups:[["томат","спел томат","уварен томат"],["страчателл"],["камчат краб","краб"],["базилик"],["олив масл","оливков"]],
+        min:3, hint:"База + сыр + краб + травы.",
+        answer:"Бархатистая томатная база (уваренные спелые томаты + лук-шалот + чеснок + базилик + сливки + куриный бульон), страчателла горкой в центре, мясо камчатского краба, свежий базилик, оливковое масло, цветы виолы." },
+      { q:"Какой ритуал-крючок при подаче Томатного супа с крабом?",
+        groups:[["страчателл центр","в центр","разме","сам","раскрыв"]],
+        min:1, hint:"Что делает гость.",
+        answer:"Страчателла подаётся горкой в центре тарелки. Гость размешивает её сам — сыр медленно растекается по супу. Это эффектный момент, который запоминается." },
+      { q:"Какое вино подходит к Томатному супу с крабом?",
+        groups:[["бел вин","белое вино","viognier","вионье","sancerre","сансер","chablis","шабли"],["шампанск","prosecco","игрист"]],
+        min:1, hint:"Кислотное белое.",
+        answer:"Кислотное белое (Sancerre, Chablis, Viognier) — кислотность отрезает сладость томата и сливочность. Также шампанское или Просекко." }
+    ]
+  },
+  sup_bez_kraba: {
+    name: "Томатный суп без краба",
+    bank: [
+      { q:"Что входит в Томатный крем-суп со страчателлой БЕЗ краба? Минимум 3 компонента.",
+        groups:[["томат","спел томат"],["страчателл"],["базилик"],["олив масл","оливков"],["цвет виол","виол","кресс"]],
+        min:3, hint:"То же что с крабом, но без краба.",
+        answer:"Та же бархатистая томатная база + страчателла в центре + свежий базилик + оливковое масло + цветы виолы. ВСЁ ТО ЖЕ САМОЕ, ТОЛЬКО БЕЗ КРАБА. Подача и ритуал не меняются." },
+      { q:"Кому продавать Томатный суп БЕЗ краба? Назови минимум 2 типа гостей.",
+        groups:[["вегетариан"],["не ест морепродукт","без морепродукт","аллерги"],["пост","постн","великий пост"],["ребёнок","ребенок","дет"]],
+        min:2, hint:"Аудитория.",
+        answer:"Вегетарианцам, тем кто не ест морепродукты или с аллергией, в постный период, для детей. Та же эстетика и подача — без премиум-цены за краба." },
+      { q:"Гость спрашивает: Чем версия без краба отличается? Что отвечаешь?",
+        groups:[["та же баз","то же сам","всё то же","все то же","идентичн"],["без краб","убрали краб"]],
+        min:2, hint:"База идентичная, краб только убран.",
+        answer:"База абсолютно идентичная — те же спелые томаты, страчателла, базилик. Просто убран камчатский краб. Подача такая же эффектная — со страчателлой в центре." }
+    ]
+  },
+  ravioli: {
+    name: "Равиоли с рваной уткой",
+    bank: [
+      { q:"Что входит в Равиоли с рваной уткой? Минимум 3 компонента.",
+        groups:[["равиол","паст","домашн паст"],["рван утк","томлён утк","томлен утк","утк"],["соус","деми","сливоч соус","утин соус"],["пармез","сыр","грана"],["трюфел","масл трюфел","трав"]],
+        min:3, hint:"Тесто + начинка + соус + сыр.",
+        answer:"Домашние равиоли с начинкой из рваной утки (томлёной 4 часа), подаются в утином соусе/деми-глясе, посыпаются пармезаном. Может быть акцент трюфельного масла." },
+      { q:"Какой главный продающий крючок Равиоли с уткой?",
+        groups:[["домашн","ручн","свеж сделан","шеф","от шеф"],["утк","рван утк","томлён","томлен","4 час"]],
+        min:1, hint:"Домашняя паста + утка.",
+        answer:"Домашние равиоли ручной работы — лепятся в день подачи. Внутри — рваная утка, томлёная 4 часа в собственном жиру. Это шеф-блюдо, не магазинное тесто." },
+      { q:"Какое вино идеально к Равиоли с уткой?",
+        groups:[["красн","pinot","пино","barolo","бароло","brunello","брунелло","malbec","мальбек"]],
+        min:1, hint:"Среднетелое красное.",
+        answer:"Среднетелое красное — Pinot Noir, Barolo, Brunello. Утка с пастой требует красного с фруктовостью." }
+    ]
+  },
+  pasta_more: {
+    name: "Паста с морепродуктами",
+    bank: [
+      { q:"Что входит в Домашнюю пасту с морепродуктами? Минимум 3 компонента.",
+        groups:[["домашн паст","свеж паст","спагетт","лингвин","паст"],["креветк"],["мидии","ракушк"],["кальмар","осьминог"],["белое вин","сливк","соус белое","соус сливоч","томат соус"],["чеснок","петрушк","зелен"]],
+        min:3, hint:"Паста + минимум 2 морепродукта + соус.",
+        answer:"Домашняя паста (спагетти/лингвини), микс морепродуктов: тигровые креветки, мидии, кальмары. Соус на белом вине или сливочный, с чесноком и петрушкой." },
+      { q:"Какой главный продающий крючок Пасты с морепродуктами?",
+        groups:[["домашн паст","ручн","свежесделан"],["микс","четыр","разн морепродукт","ассорти"]],
+        min:1, hint:"Тесто + ассорти.",
+        answer:"Домашняя паста ручной работы плюс ассорти морепродуктов — креветки, мидии, кальмары в одном блюде. Это пляжная Италия за столом, 1 600 ₽." },
+      { q:"Какое вино идеально к Пасте с морепродуктами?",
+        groups:[["бел вин","белое вино","gavi","гави","viognier","вионье","sauvignon","совиньон","sancerre","сансер"],["игрист","prosecco","шампанск"]],
+        min:1, hint:"Сухое минеральное белое.",
+        answer:"Сухое минеральное белое (Gavi, Viognier, Sancerre) или игристое. Белое вино — классика к морепродуктам." }
+    ]
+  },
+  spagetti_utka: {
+    name: "Спагетти из цукини с уткой унаги",
+    bank: [
+      { q:"Что входит в Спагетти из цукини с уткой унаги? Минимум 3 компонента.",
+        groups:[["спагетт цукин","цукин","цуккини"],["утк","утин филе","филе утк"],["унаг","соус унаг"],["кунжут","сезам","семеч"],["имбир","мисо","азиатск"]],
+        min:3, hint:"Цукини + утка + соус унаги + азиатские акценты.",
+        answer:"Спагетти из цукини (овощные «спагетти», не паста), утиное филе, соус унаги (сладко-солёный японский глейз для угря), кунжут, азиатские акценты (имбирь/мисо)." },
+      { q:"Какой главный продающий крючок Спагетти из цукини с уткой унаги?",
+        groups:[["цукин","овощн","не паст","низк калор","полезн","зож"],["азиатск","утк унаг","япон акцент"]],
+        min:2, hint:"Полезность + азиатская подача.",
+        answer:"Спагетти не из теста — из цукини. Это полезная альтернатива пасте, плюс яркий азиатский характер: соус унаги (как для угря) на утином филе. Необычное прочтение." },
+      { q:"Какое вино/напиток идеально к Спагетти из цукини с уткой?",
+        groups:[["pinot","пино","рислинг","riesling","полусух"],["сакэ","sake","хана","awaka"]],
+        min:1, hint:"Лёгкое красное или сакэ.",
+        answer:"Лёгкое красное (Pinot Noir) или полусладкий Riesling — азиатские акценты соуса любят полусухое. Также сакэ (Hana-Awaka)." }
+    ]
+  },
+  rizotto_krab: {
+    name: "Ризотто с крабом",
+    bank: [
+      { q:"Что входит в Ризотто с крабом? Минимум 3 компонента.",
+        groups:[["рис","арборио","arborio","карнароли"],["камчат краб","краб"],["сливочн масл","масл","mantecatura","мантекатур"],["пармез","сыр"],["белое вин","вино","бульон"],["цитрус","лимон","цедр"]],
+        min:3, hint:"Рис + краб + масло + сыр.",
+        answer:"Рис Арборио или Карнароли (классический ризотто-рис), мясо камчатского краба, сливочное масло (mantecatura — финальное взбивание), пармезан, белое вино и бульон. Цитрусовая цедра в финале." },
+      { q:"Какой главный продающий крючок Ризотто с крабом?",
+        groups:[["сливочн","mantecatura","мантекатур","взбит"],["камчат краб","настоящ краб","100% краб"]],
+        min:1, hint:"Текстура + продукт.",
+        answer:"Шелковистая сливочная текстура (mantecatura — финальное взбивание с маслом и сыром) плюс мясо камчатского краба. Премиум-ризотто, 1 800 ₽." },
+      { q:"Какое вино идеально к Ризотто с крабом?",
+        groups:[["шампанск","champagne","игрист","prosecco","просекко"],["chablis","шабли","viognier","вионье","sancerre","сансер","gavi","гави"]],
+        min:1, hint:"Минеральное белое или шампанское.",
+        answer:"Минеральное белое (Chablis, Gavi) или шампанское/Просекко. Сливочность ризотто требует кислотного белого." }
+    ]
+  },
+  pasta_losos: {
+    name: "Паста с лососем",
+    bank: [
+      { q:"Что входит в Домашнюю пасту с лососем? Минимум 3 компонента.",
+        groups:[["домашн паст","свеж паст","паст","спагетт","лингвин","тальятел"],["лосос","свеж лосос","филе лосос"],["сливоч соус","сливк","сливочн","соус сливочн"],["икра","красн икр","щуч икр"],["шпинат","зелен","укроп","трав"]],
+        min:3, hint:"Тесто + лосось + соус + икра.",
+        answer:"Домашняя паста, филе свежего лосося, сливочный соус, красная или щучья икра, свежие травы (укроп/шпинат). Лимонная нота в финале." },
+      { q:"Какой главный продающий крючок Пасты с лососем?",
+        groups:[["домашн паст","ручн","шеф"],["лосос","икр","сливочн","нежн","балансир"]],
+        min:1, hint:"Тесто + продукт.",
+        answer:"Домашняя паста ручной работы плюс свежий лосось со сливочным соусом и икрой — нежная, сбалансированная, премиум 1 900 ₽. Любимое блюдо тех, кто ценит мягкие гастро-эмоции." },
+      { q:"Какое вино идеально к Пасте с лососем?",
+        groups:[["бел вин","белое вино","шардоне","chardonnay","viognier","вионье","sauvignon","совиньон","chablis","шабли"],["шампанск","champagne","prosecco"],["pinot","пино"]],
+        min:1, hint:"Округлое белое или лёгкое красное.",
+        answer:"Округлое белое (Chardonnay, Viognier) — сливочность соуса любит маслянистое вино. Или лёгкое красное Pinot Noir. Шампанское — классика к лососю с икрой." }
+    ]
+  },
+  grecheskiy_new: {
+    name: "Греческий обновлённый",
+    bank: [
+      { q:"Чем НАШ обновлённый Греческий салат отличается от классического? Назови минимум 3 ключевых отличия из 5.",
+        groups:[["брынз"],["рамиро","перц рамиро"],["романо","мини романо"],["каперс"],["розмарин","свеж розмарин"],["авторск соус"]],
+        min:3, hint:"5 апгрейдов.",
+        answer:"Брынза вместо феты (плотнее и сливочнее), перцы рамиро вместо болгарского (сладкие итальянские), романо мини (премиальный листовой салат), каперсы, свежий розмарин, авторский соус с горчицей и чесноком." },
+      { q:"Какой главный продающий крючок при продаже обновлённого Греческого?",
+        groups:[["не классик","не обычн","не как везд","премиум","премиум-редакция","редакц"],["480","больш порц","на двоих","шеринг"]],
+        min:1, hint:"Не классика + формат.",
+        answer:"Это не обычный греческий — премиум-редакция: брынза, рамиро, каперсы, романо, авторский соус. Большая порция 480 г — легко делится на двоих–троих." },
+      { q:"Какое вино идеально к обновлённому Греческому салату?",
+        groups:[["бел вин","белое вино","viognier","вионье","sancerre","сансер","sauvignon","совиньон","gavi","гави"],["розов","rose","pinot rose"]],
+        min:1, hint:"Сухое белое или розовое.",
+        answer:"Сухое белое (Viognier, Sancerre, Gavi) или розовое (Pinot Noir Rose). Солёная брынза и каперсы требуют кислотного вина." }
+    ]
+  }
+};
+
+const POSITIONS_ORDER = [
+  "strachatella","panipuri","tataki","niokki","tsukini","lyulya","hotdog","kraba_kotlety",
+  "vyrezka_romano","sup_krab","sup_bez_kraba","ravioli","pasta_more","spagetti_utka",
+  "rizotto_krab","pasta_losos","grecheskiy_new"
+];
+
+</script>
+
+<script>
+// ============================================================
+// ХРАНИЛИЩЕ
+// ============================================================
+const STORE = {
+  k(key){ return STORAGE_PREFIX + key; },
+  get(key){
+    try { const v = localStorage.getItem(this.k(key)); return v ? JSON.parse(v) : null; } catch(e){ return null; }
+  },
+  set(key, val){ try { localStorage.setItem(this.k(key), JSON.stringify(val)); } catch(e){} },
+  remove(key){ try { localStorage.removeItem(this.k(key)); } catch(e){} }
+};
+
+function getUsers(){
+  let users = STORE.get("users");
+  if (!users){
+    users = SEED_USERS.map(u => Object.assign({}, u));
+    STORE.set("users", users);
+  }
+  return users;
+}
+function saveUsers(users){ STORE.set("users", users); }
+
+function findUserByPin(pin){
+  const users = getUsers();
+  return users.find(u => u.pin === pin) || null;
+}
+
+// ============================================================
+// ТРАНСЛИТЕРАЦИЯ И ПРОВЕРКА ОТВЕТОВ
+// ============================================================
+const RU_TO_LAT = {
+  "а":"a","б":"b","в":"v","г":"g","д":"d","е":"e","ё":"e","ж":"zh","з":"z","и":"i","й":"i",
+  "к":"k","л":"l","м":"m","н":"n","о":"o","п":"p","р":"r","с":"s","т":"t","у":"u","ф":"f",
+  "х":"kh","ц":"ts","ч":"ch","ш":"sh","щ":"sh","ы":"y","э":"e","ю":"yu","я":"ya","ъ":"","ь":""
+};
+
+function transliterate(s){
+  return s.toLowerCase().split("").map(c => RU_TO_LAT[c] !== undefined ? RU_TO_LAT[c] : c).join("");
+}
+
+function normalize(s){
+  if(!s) return "";
+  return s.toLowerCase()
+    .replace(/ё/g,"е")
+    .replace(/[.,!?;:()«»"'`–—\-]/g," ")
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+function levenshtein(a, b){
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+  const m = a.length, n = b.length;
+  let prev = new Array(n+1), curr = new Array(n+1);
+  for (let j = 0; j <= n; j++) prev[j] = j;
+  for (let i = 1; i <= m; i++){
+    curr[0] = i;
+    for (let j = 1; j <= n; j++){
+      const cost = a[i-1] === b[j-1] ? 0 : 1;
+      curr[j] = Math.min(curr[j-1]+1, prev[j]+1, prev[j-1]+cost);
+    }
+    [prev, curr] = [curr, prev];
+  }
+  return prev[n];
+}
+
+function fuzzyMatch(haystack, needle){
+  // нормализованное содержание подстроки + транслит + допуск 1-2 опечатки
+  const h = normalize(haystack);
+  const n = normalize(needle);
+  if (!n) return false;
+  if (h.includes(n)) return true;
+  // транслит
+  const ht = transliterate(h);
+  const nt = transliterate(n);
+  if (ht.includes(nt)) return true;
+  // допуск опечаток для слов длиннее 5
+  if (n.length >= 5){
+    const words = h.split(" ");
+    for (const w of words){
+      if (Math.abs(w.length - n.length) > 2) continue;
+      const dist = levenshtein(w, n);
+      const allowed = n.length >= 8 ? 2 : 1;
+      if (dist <= allowed) return true;
+    }
+  }
+  return false;
+}
+
+function checkAnswer(userAnswer, groups, minGroups){
+  if (!userAnswer || !userAnswer.trim()) return { passed:false, hits:0, missed:[] };
+  let hits = 0;
+  const missed = [];
+  for (const group of groups){
+    let ok = false;
+    for (const variant of group){
+      if (fuzzyMatch(userAnswer, variant)){ ok = true; break; }
+    }
+    if (ok) hits++;
+    else missed.push(group[0]);
+  }
+  return { passed: hits >= minGroups, hits, missed };
+}
+
+// ============================================================
+// ВЫБОРКА ВОПРОСОВ
+// ============================================================
+function shuffle(arr){
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i+1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function buildQuestionSet(){
+  // Собираем все вопросы по 3 на блюдо, потом случайная выборка 20
+  const all = [];
+  for (const posKey of POSITIONS_ORDER){
+    const pos = BANKS[posKey];
+    if (!pos) continue;
+    const shuffled = shuffle(pos.bank);
+    const take = Math.min(3, shuffled.length);
+    for (let i = 0; i < take; i++){
+      all.push({ posKey, posName: pos.name, ...shuffled[i] });
+    }
+  }
+  return shuffle(all).slice(0, TOTAL_Q);
+}
+
+// ============================================================
+// СОСТОЯНИЕ
+// ============================================================
+let state = {
+  user: null,
+  questions: [],
+  answers: [],
+  current: 0,
+  reviewMode: false,
+  violations: 0,
+  startedAt: null,
+  finishedAt: null
+};
+
+// ============================================================
+// ВОДЯНОЙ ЗНАК
+// ============================================================
+function setWatermark(name){
+  const el = document.getElementById("watermark");
+  if (!el) return;
+  el.innerHTML = "";
+  if (!name) return;
+  const txt = (name + " · " + new Date().toLocaleDateString("ru-RU")).toUpperCase();
+  for (let i = 0; i < 18; i++){
+    const row = document.createElement("div");
+    row.className = "wm-row";
+    row.style.transform = "rotate(-30deg) translate(0px," + (i*100) + "px)";
+    row.textContent = (txt + "    ").repeat(20);
+    el.appendChild(row);
+  }
+}
+
+// ============================================================
+// SHIELD ПРИ ПЕРЕКЛЮЧЕНИИ
+// ============================================================
+let shieldArmed = false;
+
+function showShield(){
+  if (!shieldArmed) return;
+  document.getElementById("shield").classList.add("on");
+}
+function hideShield(){
+  document.getElementById("shield").classList.remove("on");
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden){
+    if (shieldArmed){
+      state.violations = (state.violations || 0) + 1;
+    }
+    showShield();
+  } else {
+    setTimeout(hideShield, 200);
+  }
+});
+window.addEventListener("blur", showShield);
+window.addEventListener("focus", () => setTimeout(hideShield, 200));
+
+// блокируем контекстное меню и часть клавиш
+document.addEventListener("contextmenu", e => { if (shieldArmed) e.preventDefault(); });
+document.addEventListener("keydown", e => {
+  if (!shieldArmed) return;
+  // F12, Ctrl+Shift+I/J/C, Ctrl+U, PrintScreen
+  if (e.key === "F12" || e.key === "PrintScreen" ||
+      (e.ctrlKey && e.shiftKey && ["I","J","C"].includes(e.key.toUpperCase())) ||
+      (e.ctrlKey && e.key.toLowerCase() === "u")){
+    e.preventDefault();
+    state.violations = (state.violations || 0) + 1;
+    showShield();
+    setTimeout(hideShield, 1500);
+  }
+});
+
+// ============================================================
+// СТАДИИ
+// ============================================================
+function showStage(name){
+  ["login","name","home","test","result"].forEach(s => {
+    const el = document.getElementById("stage-" + s);
+    if (el) el.classList.add("hidden");
+  });
+  const target = document.getElementById("stage-" + name);
+  if (target) target.classList.remove("hidden");
+  window.scrollTo(0, 0);
+}
+
+// ============================================================
+// ВХОД
+// ============================================================
+document.getElementById("login-btn").addEventListener("click", () => {
+  const pin = document.getElementById("pin-input").value.trim();
+  const errEl = document.getElementById("pin-error");
+  errEl.textContent = "";
+  if (!pin || !/^\d{4,6}$/.test(pin)){
+    errEl.textContent = "Введи 4–6 цифр";
+    return;
+  }
+  const user = findUserByPin(pin);
+  if (!user){
+    errEl.textContent = "Код не найден. Обратись к управляющему.";
+    return;
+  }
+  state.user = user;
+  if (!user.name){
+    showStage("name");
+  } else {
+    enterHome();
+  }
+});
+
+document.getElementById("pin-input").addEventListener("keypress", e => {
+  if (e.key === "Enter") document.getElementById("login-btn").click();
+});
+
+document.getElementById("save-name-btn").addEventListener("click", () => {
+  const name = document.getElementById("enter-name-input").value.trim();
+  const errEl = document.getElementById("name-error");
+  errEl.textContent = "";
+  if (name.length < 3){
+    errEl.textContent = "Введи имя и фамилию";
+    return;
+  }
+  const users = getUsers();
+  const u = users.find(x => x.pin === state.user.pin);
+  if (u){
+    u.name = name;
+    saveUsers(users);
+    state.user = u;
+    enterHome();
+  }
+});
+
+function enterHome(){
+  document.getElementById("home-name").textContent = state.user.name;
+  setWatermark(state.user.name);
+  showStage("home");
+}
+
+// ============================================================
+// ВЫХОД
+// ============================================================
+function doLogout(){
+  state = { user:null, questions:[], answers:[], current:0, reviewMode:false, violations:0, startedAt:null, finishedAt:null };
+  shieldArmed = false;
+  document.getElementById("pin-input").value = "";
+  setWatermark("");
+  showStage("login");
+}
+["logout-1","logout-2","logout-3"].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener("click", doLogout);
+});
+
+// ============================================================
+// СТАРТ ТЕСТА
+// ============================================================
+document.getElementById("start-btn").addEventListener("click", () => {
+  state.questions = buildQuestionSet();
+  state.answers = new Array(state.questions.length).fill(null);
+  state.current = 0;
+  state.reviewMode = false;
+  state.violations = 0;
+  state.startedAt = new Date().toISOString();
+  shieldArmed = true;
+  document.getElementById("test-name").textContent = state.user.name;
+  showStage("test");
+  renderQuestion();
+});
+
+// ============================================================
+// РЕНДЕР ВОПРОСА
+// ============================================================
+function renderQuestion(){
+  const q = state.questions[state.current];
+  if (!q) return;
+  const total = state.questions.length;
+  const num = state.current + 1;
+  document.getElementById("pbar").style.width = ((num-1) / total * 100) + "%";
+  document.getElementById("pmeta-section").textContent = "блюдо: " + q.posName;
+  document.getElementById("pmeta-q").textContent = "вопрос " + num + " из " + total;
+  document.getElementById("q-section-name").textContent = q.posName;
+  document.getElementById("q-num").textContent = "Вопрос " + num;
+  document.getElementById("q-text").textContent = q.q;
+  document.getElementById("q-input").value = state.answers[state.current]?.userAnswer || "";
+  document.getElementById("q-hint").textContent = q.hint ? "подсказка: " + q.hint : "";
+
+  const reviewBlock = document.getElementById("q-review");
+  const ans = state.answers[state.current];
+  if (ans && ans.checked){
+    reviewBlock.classList.remove("hidden");
+    document.getElementById("q-input").disabled = true;
+    const pass = ans.result.passed;
+    document.getElementById("q-verdict-text").textContent = pass ? "Зачёт" : "Не засчитано";
+    document.getElementById("q-verdict-text").style.color = pass ? "var(--green)" : "var(--red)";
+    document.getElementById("q-verdict-icon").style.color = pass ? "var(--green)" : "var(--red)";
+    document.getElementById("q-correct").textContent = q.answer;
+    document.getElementById("next-btn").textContent = (num === total) ? "завершить ▸" : "далее ▸";
+  } else {
+    reviewBlock.classList.add("hidden");
+    document.getElementById("q-input").disabled = false;
+    document.getElementById("next-btn").textContent = "проверить ▸";
+  }
+  document.getElementById("prev-btn").style.visibility = state.current === 0 ? "hidden" : "visible";
+}
+
+document.getElementById("prev-btn").addEventListener("click", () => {
+  if (state.current > 0){ state.current--; renderQuestion(); }
+});
+
+document.getElementById("next-btn").addEventListener("click", () => {
+  const q = state.questions[state.current];
+  const ans = state.answers[state.current];
+  // если ещё не проверено — проверяем
+  if (!ans || !ans.checked){
+    const userAnswer = document.getElementById("q-input").value;
+    const result = checkAnswer(userAnswer, q.groups, q.min);
+    state.answers[state.current] = { userAnswer, result, checked:true };
+    renderQuestion();
+    return;
+  }
+  // если уже проверено — двигаемся
+  if (state.current < state.questions.length - 1){
+    state.current++;
+    renderQuestion();
+  } else {
+    finishTest();
+  }
+});
+
+// ============================================================
+// ФИНАЛ
+// ============================================================
+function finishTest(){
+  shieldArmed = false;
+  state.finishedAt = new Date().toISOString();
+  showStage("result");
+
+  const total = state.questions.length;
+  let passed = 0;
+  for (const a of state.answers){
+    if (a && a.result && a.result.passed) passed++;
+  }
+  const pct = Math.round(passed / total * 100);
+  const overall = pct >= PASS_THRESHOLD;
+
+  document.getElementById("result-name").textContent = state.user.name;
+  const big = document.getElementById("score-big");
+  big.textContent = pct + "%";
+  big.classList.toggle("fail", !overall);
+
+  let verdict, sub;
+  if (pct >= 95){ verdict = "Идеально"; sub = "Знание уровня шеф-сомелье"; }
+  else if (pct >= PASS_THRESHOLD){ verdict = "Зачёт"; sub = passed + " из " + total + " вопросов на зачёт"; }
+  else if (pct >= 60){ verdict = "Пересдача"; sub = "Подучи разделы из ошибок и сдай ещё раз"; }
+  else { verdict = "Серьёзный провал"; sub = "Знаний недостаточно — нужен полный пересмотр меню"; }
+  document.getElementById("verdict").textContent = verdict;
+  document.getElementById("verdict-sub").textContent = sub;
+
+  // breakdown по блюдам
+  const byPos = {};
+  for (let i = 0; i < state.questions.length; i++){
+    const q = state.questions[i];
+    const a = state.answers[i];
+    if (!byPos[q.posKey]) byPos[q.posKey] = { name:q.posName, hits:0, total:0 };
+    byPos[q.posKey].total++;
+    if (a && a.result && a.result.passed) byPos[q.posKey].hits++;
+  }
+  const breakEl = document.getElementById("breakdown");
+  breakEl.innerHTML = "";
+  for (const key of POSITIONS_ORDER){
+    const p = byPos[key];
+    if (!p) continue;
+    const score = Math.round(p.hits / p.total * 100);
+    const row = document.createElement("div");
+    row.className = "br-row";
+    const passCls = score >= PASS_THRESHOLD ? "pass" : "fail";
+    row.innerHTML = '<div class="br-name">' + p.name + '</div>' +
+                    '<div class="br-score ' + passCls + '">' + p.hits + '/' + p.total + '</div>';
+    breakEl.appendChild(row);
+  }
+
+  // отчёт в Telegram
+  sendTelegramReport({
+    user: state.user.name,
+    pin: state.user.pin,
+    pct, passed, total, verdict,
+    violations: state.violations,
+    startedAt: state.startedAt,
+    finishedAt: state.finishedAt,
+    byPos,
+    questions: state.questions,
+    answers: state.answers,
+    isTest: !!state.user.isTest
+  });
+}
+
+document.getElementById("review-btn").addEventListener("click", () => {
+  const card = document.getElementById("review-card");
+  if (card.classList.contains("hidden")){
+    const list = document.getElementById("review-list");
+    list.innerHTML = "";
+    for (let i = 0; i < state.questions.length; i++){
+      const q = state.questions[i];
+      const a = state.answers[i];
+      const passed = a && a.result && a.result.passed;
+      const div = document.createElement("div");
+      div.className = "review-q " + (passed ? "correct" : "wrong");
+      div.innerHTML = '<div class="qt">' + (i+1) + '. ' + escapeHtml(q.q) + '</div>' +
+        '<div class="ans"><span class="lbl">блюдо</span>' + escapeHtml(q.posName) + '</div>' +
+        '<div class="ans"><span class="lbl">твой ответ</span>' + escapeHtml(a?.userAnswer || "—") + '</div>' +
+        '<div class="ans"><span class="lbl">правильно</span>' + escapeHtml(q.answer) + '</div>';
+      list.appendChild(div);
+    }
+    card.classList.remove("hidden");
+    document.getElementById("review-btn").textContent = "скрыть ошибки";
+  } else {
+    card.classList.add("hidden");
+    document.getElementById("review-btn").textContent = "показать ошибки";
+  }
+});
+
+document.getElementById("restart-btn").addEventListener("click", () => {
+  state.reviewMode = false;
+  enterHome();
+});
+
+function escapeHtml(s){
+  if (s == null) return "";
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+// ============================================================
+// ОТЧЁТ В TELEGRAM
+// ============================================================
+function buildReport(data){
+  const dt = new Date(data.finishedAt);
+  const dur = Math.round((new Date(data.finishedAt) - new Date(data.startedAt)) / 1000);
+  const min = Math.floor(dur/60), sec = dur % 60;
+  const tag = data.isTest ? "🧪 ТЕСТ-РЕЖИМ\n" : "";
+  const status = data.pct >= PASS_THRESHOLD ? "✅" : "❌";
+  let txt = tag + "🍽️ NOMO · МЕНЮ КУХНЯ\n\n";
+  txt += status + " " + data.user + " — " + data.pct + "%\n";
+  txt += "PIN: " + data.pin + " · " + data.passed + "/" + data.total + " зачётов\n";
+  txt += "Вердикт: " + data.verdict + "\n";
+  txt += "Длительность: " + min + "м " + sec + "с\n";
+  if (data.violations > 0){
+    txt += "⚠️ Нарушений: " + data.violations + "\n";
+  }
+  txt += "\nПо блюдам:\n";
+  for (const key of POSITIONS_ORDER){
+    const p = data.byPos[key];
+    if (!p) continue;
+    const ic = p.hits === p.total ? "✓" : (p.hits === 0 ? "✗" : "~");
+    txt += ic + " " + p.name + ": " + p.hits + "/" + p.total + "\n";
+  }
+  // ошибочные вопросы
+  const wrong = [];
+  for (let i = 0; i < data.questions.length; i++){
+    const q = data.questions[i];
+    const a = data.answers[i];
+    if (!a || !a.result || !a.result.passed){
+      wrong.push("\n— [" + q.posName + "] " + q.q + "\n  Ответ: " + (a?.userAnswer || "—").slice(0,200));
+    }
+  }
+  if (wrong.length){
+    txt += "\nОшибочные ответы (" + wrong.length + "):" + wrong.join("");
+  }
+  txt += "\n\n" + dt.toLocaleString("ru-RU");
+  return txt;
+}
+
+async function sendTelegramReport(data){
+  const text = buildReport(data);
+  const queue = STORE.get("queue") || [];
+  try {
+    const url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage";
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text, parse_mode: "HTML" })
+    });
+    if (!res.ok){
+      queue.push({ text, ts: Date.now() });
+      STORE.set("queue", queue);
+    } else {
+      // дослать застрявшие
+      flushQueue();
+    }
+  } catch(e){
+    queue.push({ text, ts: Date.now() });
+    STORE.set("queue", queue);
+  }
+}
+
+async function flushQueue(){
+  const queue = STORE.get("queue") || [];
+  if (!queue.length) return;
+  const remaining = [];
+  for (const item of queue){
+    try {
+      const url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage";
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: item.text, parse_mode: "HTML" })
+      });
+      if (!res.ok) remaining.push(item);
+    } catch(e){ remaining.push(item); }
+  }
+  STORE.set("queue", remaining);
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+(function boot(){
+  getUsers(); // инициализация SEED
+  flushQueue(); // дослать что застряло
+})();
+
+</script>
+
+</body>
+</html>
