@@ -586,7 +586,7 @@ h1.title{font-size:26px}
     <div class="qsection" id="q-section-name">&mdash;</div>
     <div class="qnum" id="q-num">Вопрос 1</div>
     <div class="qtext" id="q-text">&mdash;</div>
-    <textarea id="q-input" placeholder="Введи ответ так, как ты сказал бы гостю"></textarea>
+    <textarea id="q-input" placeholder="твой ответ"></textarea>
     <div class="hint" id="q-hint"></div>
     <div id="q-review" class="hidden" style="margin-top:18px">
       <div id="q-verdict" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--gold-ln);margin-bottom:14px">
@@ -3397,12 +3397,7 @@ function showQuestionReview(stored, qData){
   document.getElementById("q-correct").textContent = qData.answer;
 
   const missedBlock = document.getElementById("q-missed-block");
-  if (stored.missed && stored.missed.length){
-    missedBlock.classList.remove("hidden");
-    document.getElementById("q-missed").textContent = stored.missed.join(" · ");
-  } else {
-    missedBlock.classList.add("hidden");
-  }
+  missedBlock.classList.add("hidden");
   block.classList.remove("hidden");
 }
 
